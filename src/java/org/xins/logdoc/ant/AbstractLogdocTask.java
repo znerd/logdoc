@@ -299,15 +299,23 @@ public abstract class AbstractLogdocTask extends MatchingTask {
       checkDir("Destination directory",   _destDir, false,  true,  true);
 
       // Consider each individual file for processing/copying
-      log("Transforming from " + _sourceDir.getPath() + " to " + _destDir.getPath() + '.', MSG_VERBOSE);
+      log("Processing from " + _sourceDir.getPath() + " to " + _destDir.getPath() + '.', MSG_VERBOSE);
       long start = System.currentTimeMillis();
+
+      // Validate the definitions
+      validateDefinitions();
 
       // Do the actual work
       executeImpl();
 
       // Log the total result
       long duration = System.currentTimeMillis() - start;
-      log("Generated Logdoc web pages in " + duration + " ms.");
+      log("Processed definitions in " + duration + " ms.");
+   }
+
+   private final void validateDefinitions() {
+      // TODO: Validate log.xml file
+      // TODO: Validate each translation-bundle.xml file
    }
 
    protected abstract void executeImpl() throws BuildException;
