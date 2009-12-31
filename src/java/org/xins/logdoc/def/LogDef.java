@@ -4,12 +4,19 @@ package org.xins.logdoc.def;
 import java.io.File;
 import java.io.InputStream;
 import java.io.IOException;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.TransformerException;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 /**
  * Log definition. Typically read from a <code>log.xml</code> file with one or
@@ -33,7 +40,7 @@ public final class LogDef {
     *    cannot be <code>null</code>.
     *
     * @throws IllegalArgumentException
-    *    if <code>dir == null</code>.
+    *    if <code>dir == null</code>, or if it is not a directory.
     *
     * @throws IOException
     *    if the definition could not be loaded.
@@ -44,9 +51,28 @@ public final class LogDef {
       // Check preconditions
       if (dir == null) {
          throw new IllegalArgumentException("dir == null");
+      } else if (! dir.isDirectory()) {
+         throw new IllegalArgumentException("Path (\"" + dir.getPath() + "\") is not a directory.");
       }
 
-      return null; // TODO FIXME
+      Document xml;
+
+      try {
+         File                      file = new File(dir, "log.xml");
+         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+         DocumentBuilder     domBuilder = factory.newDocumentBuilder();
+                                    xml = domBuilder.parse(file);
+      } catch (ParserConfigurationException cause) {
+         IOException e = new IOException("Failed to parse \"log.xml\" file.");
+         e.initCause(cause);
+         throw e;
+      } catch (SAXException cause) {
+         IOException e = new IOException("Failed to parse \"log.xml\" file.");
+         e.initCause(cause);
+         throw e;
+      }
+
+      return new LogDef(xml);
    }
 
 
@@ -56,10 +82,34 @@ public final class LogDef {
 
    /**
     * Constructs a new <code>LogDef</code>.
+    *
+    * @param xml
+    *    the XML {@link Document} to construct this object from,
+    *    cannot be <code>null</code>.
+    *
+    * @throws IllegalArgumentException
+    *    if <code>xml == null</code>.
     */
-   private LogDef() {
-      // empty
+   private LogDef(Document xml) throws IllegalArgumentException {
+
+      // Check preconditions
+      if (xml == null) {
+         throw new IllegalArgumentException("xml == null");
+      }
+
+      // Initialize fields
+      _xml = xml;
    }
+
+
+   //-------------------------------------------------------------------------
+   // Fields
+   //-------------------------------------------------------------------------
+
+   /**
+    * The source file as a DOM document. Never <code>null</code>.
+    */
+   private final Document _xml;
 
 
    //-------------------------------------------------------------------------
@@ -107,8 +157,8 @@ public final class LogDef {
       transform(targetDir, packageName, "TranslationBundle", accessLevel);
    }
 
-   private StreamSource getStreamSource() {
-      return null; // TODO FIXME
+   private Source getSource() {
+      return new DOMSource(_xml);
    }
 
    private IOException newIOException(String detail, Throwable cause) {
@@ -129,13 +179,15 @@ public final class LogDef {
          TransformerFactory xformerFactory = TransformerFactory.newInstance();
          Transformer               xformer = xformerFactory.newTransformer(xsltStreamSource);
 
+         // TODO: Set the parameters for the template
+
          // Define where the output should go
          File               outDir = new File(baseDir, packageName.replace("\\.", "/"));
          File              outFile = new File(outDir, className + ".java");
          StreamResult streamResult = new StreamResult(outFile);
 
          // Perform the transformation
-         xformer.transform(getStreamSource(), streamResult);
+         xformer.transform(getSource(), streamResult);
 
       // Transformer configuration error
       } catch (TransformerConfigurationException cause) {
