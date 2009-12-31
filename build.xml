@@ -87,7 +87,7 @@
 			</fileset>
 		</copy>
 
-		<jar destfile="build/${project.name}.jar" basedir="build/classes/" manifest="build/${project.name}.manifest">
+		<jar destfile="build/${project.name}.jar" basedir="build/classes/">
 			<manifest>
 				<attribute name="Library-Version" value="${project.version}" />
 				<section name="org/xins/logdoc">
