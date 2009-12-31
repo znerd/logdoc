@@ -1,0 +1,17 @@
+This is Logdoc, a tool for managing log messages for Java code. 
+
+This software is available under the terms of a BSD-style license, see
+the accompanied COPYRIGHT file.
+
+Logdoc used to be part of XINS, see:
+
+   http://xins.sourceforge.net/
+
+If you want to file a bug report or a feature request, please do so here:
+
+   http://github.com/znerd/logdoc/issues
+
+
+--
+Ernst de Haan
+ernst@ernstdehaan.com
