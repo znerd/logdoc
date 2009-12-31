@@ -87,19 +87,20 @@
 			</fileset>
 		</copy>
 
-		<manifest file="build/${project.name}.manifest">
-			<attribute name="Library-Version" value="${project.version}" />
-			<section name="org/xins/logdoc">
-				<attribute name="Specification-Title"    value="${project.title}"   />
-				<attribute name="Specification-Version"  value="${project.version}" />
-				<attribute name="Specification-Vendor"   value="${project.vendor}"  />
-				<attribute name="Implementation-Title"   value="${project.title}"   />
-				<attribute name="Implementation-Version" value="${project.version}" />
-				<attribute name="Implementation-Vendor"  value="${project.vendor}"  />
-			</section>
-		</manifest>
+		<jar destfile="build/${project.name}.jar" basedir="build/classes/" manifest="build/${project.name}.manifest">
+			<manifest>
+				<attribute name="Library-Version" value="${project.version}" />
+				<section name="org/xins/logdoc">
+					<attribute name="Specification-Title"    value="${project.title}"   />
+					<attribute name="Specification-Version"  value="${project.version}" />
+					<attribute name="Specification-Vendor"   value="${project.vendor}"  />
+					<attribute name="Implementation-Title"   value="${project.title}"   />
+					<attribute name="Implementation-Version" value="${project.version}" />
+					<attribute name="Implementation-Vendor"  value="${project.vendor}"  />
+				</section>
+			</manifest>
+		</jar>
 
-		<jar destfile="build/${project.name}.jar" basedir="build/classes/" manifest="build/${project.name}.manifest" />
 	</target>
 
 	<target name="print-version" depends="java,internal-metadata" description="Prints the version of Logdoc">
