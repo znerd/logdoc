@@ -24,6 +24,8 @@ import org.apache.tools.ant.taskdefs.PumpStreamHandler;
 import org.apache.tools.ant.types.FileSet;
 import org.apache.tools.ant.util.FileUtils;
 
+import org.xins.logdoc.def.LogDef;
+
 /**
  * Abstract base class for the Logdoc Ant task implementations.
  *
@@ -298,25 +300,31 @@ public abstract class AbstractLogdocTask extends MatchingTask {
       checkDir("Source directory",      _sourceDir,  true, false, false);
       checkDir("Destination directory",   _destDir, false,  true,  true);
 
-      // Consider each individual file for processing/copying
+      // Process the files
       log("Processing from " + _sourceDir.getPath() + " to " + _destDir.getPath() + '.', MSG_VERBOSE);
       long start = System.currentTimeMillis();
 
-      // Validate the definitions
-      validateDefinitions();
+      // Load and validate the definitions
+      LogDef def = loadDefinitions();
 
       // Do the actual work
-      executeImpl();
+      executeImpl(def);
 
       // Log the total result
       long duration = System.currentTimeMillis() - start;
       log("Processed definitions in " + duration + " ms.");
    }
 
-   private final void validateDefinitions() {
+   private final LogDef loadDefinitions() throws BuildException {
+      // TODO: Make sure the log.xml file exists and each referenced translation-bundle file
       // TODO: Validate log.xml file
-      // TODO: Validate each translation-bundle.xml file
+      // TODO: Validate each translation-bundle file
+      return null; // TODO
    }
 
-   protected abstract void executeImpl() throws BuildException;
+   protected final void transform(String in, String templateName, String out)
+   throws BuildException {
+   }
+
+   protected abstract void executeImpl(LogDef def) throws BuildException;
 }

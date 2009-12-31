@@ -4,6 +4,8 @@ package org.xins.logdoc.ant;
 import org.apache.tools.ant.BuildException;
 import static org.apache.tools.ant.Project.MSG_VERBOSE;
 
+import org.xins.logdoc.def.LogDef;
+
 /**
  * An Apache Ant task for generating Java source files from Logdoc
  * definitions.
@@ -48,7 +50,7 @@ public final class LogdocJavaTask extends AbstractLogdocTask {
    }
 
    @Override
-   protected void executeImpl() throws BuildException {
+   protected void executeImpl(LogDef def) throws BuildException {
       // TODO FIXME
    }
 
