@@ -37,7 +37,7 @@ public final class LogCentral {
     * The name of the property that specifies the name of the
     * <code>LogFilter</code> class to use.
     *
-    * @since XINS 3.0
+    * @since Logdoc 3.0
     */
    public static final String LOG_FILTER_PROPERTY = "org.xins.logdoc.filterClass";
 
@@ -284,7 +284,7 @@ public final class LogCentral {
     * @throws IllegalArgumentException
     *    if <code>logFilter == null</code>.
     *
-    * @since XINS 3.0
+    * @since Logdoc 3.0
     */
    public static synchronized void setLogFilter(LogFilter logFilter)
    throws IllegalArgumentException {
@@ -313,7 +313,7 @@ public final class LogCentral {
     * @throws IllegalArgumentException
     *    if <code>className == null</code>.
     *
-    * @since XINS 3.0
+    * @since Logdoc 3.0
     */
    public static void setLogFilterByClass(String className)
    throws IllegalArgumentException {
@@ -345,7 +345,7 @@ public final class LogCentral {
     * @return
     *    the current {@link LogFilter}, never <code>null</code>.
     *
-    * @since XINS 3.0
+    * @since Logdoc 3.0
     */
    public static synchronized LogFilter getLogFilter() {
       return LOG_FILTER;

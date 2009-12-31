@@ -69,7 +69,7 @@ public final class ExceptionUtils {
     *    if <code>exception == null</code>.
     *
     * @deprecated
-    *    Since XINS 3.0, use {@link Throwable#getCause()} directly.
+    *    Since Logdoc 3.0, use {@link Throwable#getCause()} directly.
     *    This method was previously provided for backwards compatibility with
     *    Java 1.3, but that version is no longer supported.
     */
@@ -103,7 +103,7 @@ public final class ExceptionUtils {
     *    if the cause exception was already set.
     *
     * @deprecated
-    *    Since XINS 3.0, use {@link Throwable#initCause(Throwable)} instead.
+    *    Since Logdoc 3.0, use {@link Throwable#initCause(Throwable)} instead.
     *    This method was previously provided for backwards compatibility with
     *    Java 1.3, but that version is no longer supported.
     */
