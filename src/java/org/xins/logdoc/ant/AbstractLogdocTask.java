@@ -297,15 +297,20 @@ public abstract class AbstractLogdocTask extends MatchingTask {
       }
 
       // Check the directories
-      checkDir("Source directory",      _sourceDir,  true, false, false);
-      checkDir("Destination directory",   _destDir, false,  true,  true);
+      checkDir("Source directory",     _sourceDir,  true, false, false);
+      checkDir("Destination directory",  _destDir, false,  true,  true);
 
       // Process the files
       log("Processing from " + _sourceDir.getPath() + " to " + _destDir.getPath() + '.', MSG_VERBOSE);
       long start = System.currentTimeMillis();
 
       // Load and validate the definitions
-      LogDef def = loadDefinitions();
+      LogDef def;
+      try {
+         def = LogDef.loadFromDirectory(_sourceDir);
+      } catch (Exception cause) {
+         throw new BuildException("Failed to load log definition.", cause);
+      }
 
       // Do the actual work
       executeImpl(def);
@@ -313,17 +318,6 @@ public abstract class AbstractLogdocTask extends MatchingTask {
       // Log the total result
       long duration = System.currentTimeMillis() - start;
       log("Processed definitions in " + duration + " ms.");
-   }
-
-   private final LogDef loadDefinitions() throws BuildException {
-      // TODO: Make sure the log.xml file exists and each referenced translation-bundle file
-      // TODO: Validate log.xml file
-      // TODO: Validate each translation-bundle file
-      return null; // TODO
-   }
-
-   protected final void transform(String in, String templateName, String out)
-   throws BuildException {
    }
 
    protected abstract void executeImpl(LogDef def) throws BuildException;
