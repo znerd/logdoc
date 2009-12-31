@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<project name="logdoc" default="jar">
+<project name="logdoc" default="all">
+
+	<!-- Generate everything -->
+	<target name="all" depends="jar,javadoc" description="Generates everything" />
 
 	<!-- Determines current version by reading version file.  -->
 	<target name="-load-version">
@@ -142,7 +145,7 @@
 				<copy file="src/css/javadoc/style.css" tofile="@{destdir}/stylesheet.css" overwrite="true" />
 			</sequential>
 		</macrodef>
-		<generate-javadoc private="no" destdir="docs/javadoc" title="${project.title} ${project.version}" footer="See &lt;a target=&quot;_top&quot; href='${project.url}'&gt;${project.url}&lt;/a&gt;." />
+		<generate-javadoc private="no" destdir="build/javadoc" title="${project.title} ${project.version}" footer="See &lt;a target=&quot;_top&quot; href='${project.url}'&gt;${project.url}&lt;/a&gt;." />
 	</target>
 
 	<target name="print-version" depends="compile" description="Prints the version of Logdoc">
