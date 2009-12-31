@@ -41,8 +41,8 @@ public final class LogdocJavaTask extends AbstractLogdocTask {
    //-------------------------------------------------------------------------
 
    /**
-    * Sets the access level. This is optional, the default is
-    * {@link AccessLevel#PACKAGE}.
+    * Sets the access level, <code>"package"</code> or <code>"public"</code>.
+    * The default is <code>"package"</code>.
     */
    public void setAccessLevel(String s) {
       log("Setting \"accessLevel\" to: " + quote(s) + '.', MSG_VERBOSE);
