@@ -305,20 +305,20 @@ public abstract class AbstractLogdocTask extends MatchingTask {
       long start = System.currentTimeMillis();
 
       // Load and validate the definitions
-      LogDef def;
+      LogDef logDef;
       try {
-         def = LogDef.loadFromDirectory(_sourceDir);
+         logDef = LogDef.loadFromDirectory(_sourceDir);
       } catch (Exception cause) {
          throw new BuildException("Failed to load log definition.", cause);
       }
 
       // Do the actual work
-      executeImpl(def);
+      executeImpl(logDef);
 
       // Log the total result
       long duration = System.currentTimeMillis() - start;
       log("Processed definitions in " + duration + " ms.");
    }
 
-   protected abstract void executeImpl(LogDef def) throws BuildException;
+   protected abstract void executeImpl(LogDef logDef) throws BuildException;
 }

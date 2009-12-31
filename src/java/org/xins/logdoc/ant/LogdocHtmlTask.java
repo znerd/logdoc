@@ -3,6 +3,8 @@ package org.xins.logdoc.ant;
 
 import org.apache.tools.ant.BuildException;
 
+import org.xins.logdoc.def.LogDef;
+
 /**
  * An Apache Ant task for generating web pages from Logdoc definitions.
  *
@@ -27,7 +29,7 @@ public final class LogdocHtmlTask extends AbstractLogdocTask {
    //-------------------------------------------------------------------------
 
    @Override
-   protected void executeImpl() throws BuildException {
+   protected void executeImpl(LogDef logDef) throws BuildException {
       // TODO FIXME
    }
 }
