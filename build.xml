@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project name="logdoc" default="jar">
+
+	<!-- Determines current version by reading version file.  -->
+	<target name="-load-version">
+		<property name="version.file" value=".version.properties" />
+		<property file="${version.file}" />
+		<condition property="version.isset">
+			<and>
+				<isset property="version.major" />
+				<isset property="version.middle" />
+			</and>
+		</condition>
+		<fail unless="version.isset">Missing properties 'version.major' and 'version.middle'.</fail>
+		<condition property="dot.version.minor" value="${version.minor}">
+			<or>
+				<equals arg1="${version.minor}" arg2="-alpha" />
+				<equals arg1="${version.minor}" arg2="-beta" />
+				<equals arg1="${version.minor}" arg2="-rc" />
+				<equals arg1="${version.minor}" arg2="" />
+			</or>
+		</condition>
+		<property name="dot.version.minor" value=".${version.minor}" />
+	</target>
+
+	<!-- Initialization settings -->
+	<target name="-init" depends="-load-version">
+
+		<!-- General project properties -->
+		<property name="project.title"   value="Logdoc" />
+		<property name="project.name"    value="${ant.project.name}" />
+		<property name="project.version" value="${version.major}.${version.middle}${dot.version.minor}${version.build}${version.suffix}" />
+		<property name="project.vendor"  value="Online Breedband B.V." />
+
+		<!-- Java compiler-related settings -->
+		<property name="javac.sourceversion"   value="1.5"   />
+		<property name="javac.targetvm"        value="1.5"   />
+		<property name="javac.debug"           value="true"  />
+		<property name="javac.deprecation"     value="true"  />
+		<property name="javac.optimize"        value="false" />
+		<property name="javac.compilerargs"    value="-Xlint -Xmaxwarns 9999 -Xmaxerrs 9999" />
+		<property name="tests.deprecation"     value="false" />
+
+		<!-- Javadoc-related settings -->
+		<property name="javadoc.srcdir.javase" value="${java.home}/src" />
+		<property name="javadoc.srcdir.xins"   value="src/java" />
+	</target>
+
+	<target name="version" depends="-init">
+		<echo message="Java ${java.version}" />
+		<echo message="${ant.version}" />
+		<echo message="${title} ${project.version}" />
+	</target>
+
+	<target name="clean" description="Removes all generated files">
+		<delete dir="build" />
+	</target>
+
+	<target name="java" depends="-init" description="Compiles all Java code">
+		<mkdir dir="build/classes" />
+		<javac srcdir="src/java"
+		     includes="org/xins/**/*.java"
+		      destdir="build/classes"
+		        debug="${javac.debug}"
+		  deprecation="${javac.deprecation}"
+		     optimize="${javac.optimize}"
+		       source="${javac.sourceversion}"
+		       target="${javac.targetvm}">
+			<compilerarg line="${javac.compilerargs}" />
+			<classpath>
+				<fileset dir="lib" includes="*.jar" />
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="internal-metadata" depends="-init">
+		<mkdir dir="build/classes/" />
+		<concat destfile="build/classes/version.txt" eol="unix" outputencoding="UTF-8">${project.version}</concat>
+	</target>
+
+	<target name="jar" depends="java,internal-metadata" description="Generates the JAR file">
+		<copy todir="build/classes/">
+			<fileset dir="src/java">
+				<exclude name="**/*.java"       />
+				<exclude name="**/package.html" />
+			</fileset>
+		</copy>
+
+		<manifest file="build/${project.name}.manifest">
+			<attribute name="Library-Version" value="${project.version}" />
+			<section name="org/xins/logdoc">
+				<attribute name="Specification-Title"    value="${project.title}"   />
+				<attribute name="Specification-Version"  value="${project.version}" />
+				<attribute name="Specification-Vendor"   value="${project.vendor}"  />
+				<attribute name="Implementation-Title"   value="${project.title}"   />
+				<attribute name="Implementation-Version" value="${project.version}" />
+				<attribute name="Implementation-Vendor"  value="${project.vendor}"  />
+			</section>
+		</manifest>
+
+		<jar destfile="build/${project.name}.jar" basedir="build/classes/" manifest="build/${project.name}.manifest" />
+	</target>
+
+	<target name="print-version" depends="java,internal-metadata" description="Prints the version of Logdoc">
+		<mkdir dir="build/test-classes" />
+		<javac srcdir="src/test" includes="PrintVersion.java" destdir="build/test-classes">
+			<classpath>
+				<fileset dir="lib" includes="*.jar" />
+				<pathelement path="build/classes" />
+			</classpath>
+		</javac>
+		<java classname="PrintVersion">
+			<classpath>
+				<fileset dir="lib" includes="*.jar" />
+				<pathelement path="build/classes" />
+				<pathelement path="build/test-classes" />
+			</classpath>
+		</java>
+	</target>
+
+</project>
