@@ -53,27 +53,4 @@ public final class LogdocJavaTask extends AbstractLogdocTask {
    protected void executeImpl(LogDef def) throws BuildException {
       // TODO FIXME
    }
-
-
-   //-------------------------------------------------------------------------
-   // Inner classes
-   //-------------------------------------------------------------------------
-
-   /**
-    * Enumeration type for the different <em>accessLevel</em> options.
-    *
-    * @author <a href="mailto:ernst@pensioenpage.com">Ernst de Haan</a>
-    */
-   private enum AccessLevel {
-
-      /**
-       * Public: log messages can be generated from outside the package.
-       */
-      PUBLIC,
-         
-      /**
-       * Package: log message can only be generated from inside the package.
-       */
-      PACKAGE;
-   }
 }
