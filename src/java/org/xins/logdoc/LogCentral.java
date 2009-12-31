@@ -1,7 +1,7 @@
 /*
  * $Id: LogCentral.java,v 1.38 2007/04/25 15:32:43 agoubard Exp $
  *
- * Copyright 2003-2007 Orange Nederland Breedband B.V.
+ * Copyright 2003-2009 Online Breedband B.V.
  * See the COPYRIGHT file for redistribution and use restrictions.
  */
 package org.xins.logdoc;

@@ -1,7 +1,7 @@
 /*
  * $Id: UnsupportedLocaleException.java,v 1.16 2007/03/15 17:08:40 agoubard Exp $
  *
- * Copyright 2003-2007 Orange Nederland Breedband B.V.
+ * Copyright 2003-2009 Online Breedband B.V.
  * See the COPYRIGHT file for redistribution and use restrictions.
  */
 package org.xins.logdoc;
