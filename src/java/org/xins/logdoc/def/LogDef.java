@@ -18,8 +18,6 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import org.apache.xml.resolver.tools.CatalogResolver;
-
 /**
  * Log definition. Typically read from a <code>log.xml</code> file with one or
  * more associated translation bundles, see {@link TranslationBundleDef}.
@@ -68,7 +66,7 @@ public final class LogDef {
          factory.setValidating(true);
 
          DocumentBuilder domBuilder = factory.newDocumentBuilder();
-         CatalogResolver   resolver = new CatalogResolver();
+         LogdocResolver    resolver = new LogdocResolver();
          domBuilder.setEntityResolver(resolver);
 
          // Parse the file to produce a DOM/XML object
