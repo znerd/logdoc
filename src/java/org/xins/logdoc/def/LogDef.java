@@ -17,6 +17,7 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 /**
  * Log definition. Typically read from a <code>log.xml</code> file with one or
@@ -68,6 +69,7 @@ public final class LogDef {
          DocumentBuilder domBuilder = factory.newDocumentBuilder();
          LogdocResolver    resolver = new LogdocResolver();
          domBuilder.setEntityResolver(resolver);
+         domBuilder.setErrorHandler(new ErrorHandler());
 
          // Parse the file to produce a DOM/XML object
          xml = domBuilder.parse(file);
@@ -201,6 +203,21 @@ public final class LogDef {
       // Transformer error
       } catch (TransformerException cause) {
          throw newIOException("Failed to perform XSLT transformation.", cause);
+      }
+   }
+   
+   private static class ErrorHandler implements org.xml.sax.ErrorHandler {
+
+      public void error(SAXParseException exception) throws SAXException {
+         throw new SAXException(exception);
+      }
+
+      public void fatalError(SAXParseException exception) throws SAXException {
+         throw new SAXException(exception);
+      }
+
+      public void warning(SAXParseException exception) throws SAXException {
+         // TODO
       }
    }
 }
