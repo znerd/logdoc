@@ -17,10 +17,11 @@ import org.xml.sax.SAXException;
  * transformation.
  *
  * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
- *
- * @since Logdoc 3.0
  */
 class LogdocResolver implements EntityResolver, URIResolver {
+   
+   // TODO: Store the DTD information internally
+   // TODO: Consider supporting older DTDs as well
 
    //-------------------------------------------------------------------------
    // Class fields
