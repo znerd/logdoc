@@ -3,7 +3,7 @@
 <project name="logdoc" default="all">
 
 	<!-- Generate everything -->
-	<target name="all" depends="jar,javadoc" description="Generates everything" />
+	<target name="all" depends="unittests,jar,javadoc" description="Generates everything" />
 
 	<!-- Determines current version by reading version file.  -->
 	<target name="-load-version">
@@ -45,10 +45,21 @@
 		<property name="javac.optimize"        value="false" />
 		<property name="javac.compilerargs"    value="-Xlint -Xmaxwarns 9999 -Xmaxerrs 9999" />
 
-		<!-- Source directories -->
+		<!-- Source and output directories -->
 		<property name="project.sourcedir"      value="${basedir}/src" />
 		<property name="project.sourcedir.java" value="${project.sourcedir}/java" />
 		<property name="javase.sourcedir"       value="${java.home}/src" />
+		<property name="project.outputdir"      value="${basedir}/build" />
+		<property name="classes.outputdir"      value="${project.outputdir}/classes" />
+		<property name="metainf.outputdir"      value="${classes.outputdir}/META-INF" />
+
+		<!-- Unit tests -->
+		<property name="unittests.inputdir"    value="${project.sourcedir}/unittests/input"    />
+		<property name="unittests.expecteddir" value="${project.sourcedir}/unittests/expected" />
+		<property name="unittests.outputdir"   value="${project.outputdir}/unittests/output"   />
+
+		<!-- Verbose log message -->
+		<echo level="verbose" message="${ant.project.name} ${project.version}" />
 	</target>
 
 	<target name="version" depends="-init">
@@ -57,36 +68,36 @@
 		<echo message="${title} ${project.version}" />
 	</target>
 
-	<target name="clean" description="Removes all generated files">
-		<delete dir="build" />
+	<target name="clean" depends="-init" description="Removes all generated files">
+		<delete dir="${project.outputdir}" />
 	</target>
 
 	<!-- Prepare for compilation (typically used inside IDEs, too) -->
 	<target name="prepare-compile" depends="-init" description="Prepares for the compilation, by generating source files and/or other files to be placed with the compiled files">
 
 		<!-- Stick auxiliary files in location where compiled code will go --> 
-		<mkdir dir="build/classes/META-INF" />
-		<copy todir="build/classes">
+		<mkdir dir="${metainf.outputdir}" />
+		<copy todir="${classes.outputdir}">
 			<fileset dir="${project.sourcedir.java}">
 				<exclude name="**/*.java" />
 				<exclude name="**/package.html" />
 			</fileset>
 		</copy>
-		<copy todir="build/classes/META-INF">
+		<copy todir="${metainf.outputdir}">
 			<fileset dir="${project.sourcedir}">
 				<include name="xslt/*.xslt" />
 				<include name="dtd/catalog.xml" />
 				<include name="dtd/*.dtd" />
 			</fileset>
 		</copy>
-		<concat destfile="build/classes/META-INF/version.txt" eol="unix" outputencoding="UTF-8">${project.version}</concat>
+		<concat destfile="${metainf.outputdir}/version.txt" eol="unix" outputencoding="UTF-8">${project.version}</concat>
 	</target>
 
 	<!-- Compile all source files -->
 	<target name="compile" depends="prepare-compile" description="Compiles the source code">
 		<javac srcdir="src/java"
 		     includes="**/*.java"
-		      destdir="build/classes"
+		      destdir="${classes.outputdir}"
 		        debug="${javac.debug}"
 		  deprecation="${javac.deprecation}"
 		     optimize="${javac.optimize}"
@@ -99,16 +110,45 @@
 		</javac>
 	</target>
 
+	<!-- Unit tests -->
+	<target name="unittests" depends="compile" description="Runs all available unit tests">
+
+		<taskdef resource="org/xins/logdoc/ant/antlib.xml">
+			<classpath>
+				<pathelement location="${classes.outputdir}" />
+			</classpath>
+		</taskdef>
+
+		<mkdir dir="${unittests.outputdir}" />
+
+		<macrodef name="unittest">
+			<attribute name="testnum" />
+			<attribute name="input"    default="${unittests.inputdir}/@{testnum}"    />
+			<attribute name="expected" default="${unittests.expecteddir}/@{testnum}" />
+			<attribute name="actual"   default="${unittests.outputdir}/@{testnum}"   />
+
+			<sequential>
+				<logdoc-java in="@{input}" out="${actual}" />
+				<condition property="test@{testnum}.success">
+					<filesmatch file1="@{expected}" file2="@{actual}" />
+				</condition>
+				<fail unless="test@{testnum}.success">Output file "@{actual}" differs from what was expected: "@{expected}".</fail>
+			</sequential>
+		</macrodef>
+
+		<unittest testnum="1" />
+	</target>
+
 	<!-- Generate JAR file -->
 	<target name="jar" depends="compile" description="Generates the JAR file">
-		<copy todir="build/classes/">
+		<copy todir="${classes.outputdir}/">
 			<fileset dir="src/java">
 				<exclude name="**/*.java"       />
 				<exclude name="**/package.html" />
 			</fileset>
 		</copy>
 
-		<jar destfile="build/${project.name}.jar" basedir="build/classes/">
+		<jar destfile="build/${project.name}.jar" basedir="${classes.outputdir}/">
 			<manifest>
 				<attribute name="Library-Version" value="${project.version}" />
 				<section name="org/xins/logdoc">
@@ -166,7 +206,7 @@
 		<java classname="org.xins.logdoc.Library">
 			<classpath>
 				<fileset dir="lib" includes="*.jar" />
-				<pathelement path="build/classes" />
+				<pathelement path="${classes.outputdir}" />
 			</classpath>
 		</java>
 	</target>
