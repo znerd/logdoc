@@ -8,9 +8,6 @@ package org.xins.logdoc;
 
 import java.io.InputStream;
 import java.io.IOException;
-import java.util.Map;
-import java.util.jar.Manifest;
-import java.util.jar.Attributes;
 
 import org.apache.commons.io.IOUtils;
 
