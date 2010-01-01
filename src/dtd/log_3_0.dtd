@@ -4,8 +4,9 @@
 <!DOCTYPE log PUBLIC "-//XINS//DTD XINS Logdoc 3.0//EN" "http://www.xins.org/dtd/log_3_0.dtd">
 -->
 <!ELEMENT log (translation-bundle*, group*)>
-<!ATTLIST log since  CDATA          #IMPLIED
-              public (true | false) #IMPLIED>
+<!ATTLIST log domain CDATA          #REQUIRED
+              public (true | false) #IMPLIED
+              since  CDATA          #IMPLIED>
 
 <!ELEMENT translation-bundle EMPTY>
 <!ATTLIST translation-bundle locale CDATA #REQUIRED>

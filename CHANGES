@@ -3,4 +3,6 @@
 * Added support for parameter filtering.
 * Added Ant tasks, with antlib.xml descriptor.
 * Access level is now specified in log.xml, e.g. public="true".
+* Domain is now specified in log.xml, e.g. domain="com.example.util".
 * Only supporting Logdoc 3.0 DTDs.
+* Unit tests.
