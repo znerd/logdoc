@@ -24,6 +24,17 @@ public final class Library {
    }
 
    /**
+    * Returns the official human-readable name of this library.
+    *
+    * @return
+    *    the name, for example <code>"Logdoc"</code>,
+    *    never <code>null</code>.
+    */
+   public static final String getName() {
+      return "Logdoc";
+   }
+
+   /**
     * Returns the version of this library.
     *
     * @return
@@ -46,5 +57,12 @@ public final class Library {
       }
 
       return version;
+   }
+
+   /**
+    * Prints the name and version of this library.
+    */
+   public static final void main(String[] args) {
+      System.out.println(getName() + " " + getVersion());
    }
 }

@@ -44,7 +44,6 @@
 		<property name="javac.deprecation"     value="true"  />
 		<property name="javac.optimize"        value="false" />
 		<property name="javac.compilerargs"    value="-Xlint -Xmaxwarns 9999 -Xmaxerrs 9999" />
-		<property name="tests.deprecation"     value="false" />
 
 		<!-- Source directories -->
 		<property name="project.sourcedir"      value="${basedir}/src" />
@@ -164,18 +163,10 @@
 	</target>
 
 	<target name="print-version" depends="compile" description="Prints the version of Logdoc">
-		<mkdir dir="build/test-classes" />
-		<javac srcdir="src/test" includes="PrintVersion.java" destdir="build/test-classes">
+		<java classname="org.xins.logdoc.Library">
 			<classpath>
 				<fileset dir="lib" includes="*.jar" />
 				<pathelement path="build/classes" />
-			</classpath>
-		</javac>
-		<java classname="PrintVersion">
-			<classpath>
-				<fileset dir="lib" includes="*.jar" />
-				<pathelement path="build/classes" />
-				<pathelement path="build/test-classes" />
 			</classpath>
 		</java>
 	</target>
