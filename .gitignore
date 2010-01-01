@@ -1,3 +1,5 @@
 build
 META-INF
 *.swp
+.classpath
+.project
