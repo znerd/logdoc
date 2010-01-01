@@ -6,11 +6,6 @@
  */
 package org.xins.logdoc;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-import java.util.WeakHashMap;
-
 /**
  * Utility functions related to exceptions.
  *
