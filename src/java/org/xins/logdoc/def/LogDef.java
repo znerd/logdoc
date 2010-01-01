@@ -138,9 +138,6 @@ public final class LogDef {
     *    the name of the package for the Java code,
     *    cannot be <code>null</code>.
     *
-    * @param accessLevel
-    *    the access level for the Java code, cannot be <code>null</code>.
-    *
     * @throws IllegalArgumentException
     *    if <code>targetDir == null || packageName == null || accessLevel == null</code>
     *    or if <code>packageName</code> is not a valid Java package name.
@@ -148,7 +145,7 @@ public final class LogDef {
     * @throws IOException
     *    if the Java code could not be generated.
     */
-   public void generateJavaCode(File targetDir, String packageName, AccessLevel accessLevel)
+   public void generateJavaCode(File targetDir, String packageName)
    throws IllegalArgumentException, IOException {
 
       // Check preconditions
@@ -156,15 +153,13 @@ public final class LogDef {
          throw new IllegalArgumentException("targetDir == null");
       } else if (packageName == null) {
          throw new IllegalArgumentException("packageName == null");
-      } else if (accessLevel == null) {
-         throw new IllegalArgumentException("packageName == null");
       } else if (! packageName.matches("[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)")) {
          throw new IllegalArgumentException("Invalid package name \"" + packageName + "\".");
       }
 
       // Perform transformations
-      transform(targetDir, packageName, "Log",               accessLevel);
-      transform(targetDir, packageName, "TranslationBundle", accessLevel);
+      transform(targetDir, packageName, "Log");
+      transform(targetDir, packageName, "TranslationBundle");
    }
 
    private Source getSource() {
@@ -177,7 +172,7 @@ public final class LogDef {
       return e;
    }
 
-   private void transform(File baseDir, String packageName, String className, AccessLevel accessLevel)
+   private void transform(File baseDir, String packageName, String className)
    throws IOException {
 
       try {
@@ -207,28 +202,5 @@ public final class LogDef {
       } catch (TransformerException cause) {
          throw newIOException("Failed to perform XSLT transformation.", cause);
       }
-   }
-
-
-   //-------------------------------------------------------------------------
-   // Inner classes
-   //-------------------------------------------------------------------------
-
-   /**
-    * Enumeration type for the different <em>accessLevel</em> options.
-    *
-    * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
-    */
-   private enum AccessLevel {
-
-      /**
-       * Public: log messages can be generated from outside the package.
-       */
-      PUBLIC,
-         
-      /**
-       * Package: log message can only be generated from inside the package.
-       */
-      PACKAGE;
    }
 }

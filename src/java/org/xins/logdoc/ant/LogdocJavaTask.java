@@ -2,7 +2,6 @@
 package org.xins.logdoc.ant;
 
 import org.apache.tools.ant.BuildException;
-import static org.apache.tools.ant.Project.MSG_VERBOSE;
 
 import org.xins.logdoc.def.LogDef;
 
@@ -27,27 +26,8 @@ public final class LogdocJavaTask extends AbstractLogdocTask {
 
 
    //-------------------------------------------------------------------------
-   // Fields
-   //-------------------------------------------------------------------------
-
-   /**
-    * The access level.
-    */
-   private String _accessLevel;
-
-
-   //-------------------------------------------------------------------------
    // Methods
    //-------------------------------------------------------------------------
-
-   /**
-    * Sets the access level, <code>"package"</code> or <code>"public"</code>.
-    * The default is <code>"package"</code>.
-    */
-   public void setAccessLevel(String s) {
-      log("Setting \"accessLevel\" to: " + quote(s) + '.', MSG_VERBOSE);
-      _accessLevel = s;
-   }
 
    @Override
    protected void executeImpl(LogDef def) throws BuildException {

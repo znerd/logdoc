@@ -2,3 +2,4 @@
 
 * Added support for parameter filtering.
 * Added Ant tasks, with antlib.xml descriptor.
+* Access level is now specified in log.xml, e.g. public="true".
