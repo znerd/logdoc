@@ -158,7 +158,6 @@
 					<link offline="true" packagelistloc="src/package-lists/log4j/"  href="http://jakarta.apache.org/log4j/docs/api/" />
 					<link offline="true" packagelistloc="src/package-lists/ant/"    href="http://api.dpml.net/ant/1.7.0/"            />
 				</javadoc>
-				<copy file="src/css/javadoc/style.css" tofile="@{destdir}/stylesheet.css" overwrite="true" />
 			</sequential>
 		</macrodef>
 		<generate-javadoc private="no" destdir="build/javadoc" title="${project.title} ${project.version}" footer="See &lt;a target=&quot;_top&quot; href='${project.url}'&gt;${project.url}&lt;/a&gt;." />
