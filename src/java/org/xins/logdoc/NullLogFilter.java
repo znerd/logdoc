@@ -1,9 +1,4 @@
-/*
- * $Id: NullLogFilter.java 9034 2009-04-16 13:53:04Z ernst $
- *
- * Copyright 2009 PensioenPage B.V.
- * See the COPYRIGHT file for redistribution and use restrictions.
- */
+// See the COPYRIGHT file for copyright and license information
 package org.xins.logdoc;
 
 /**

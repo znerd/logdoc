@@ -1,4 +1,4 @@
-/* Copyright 2009, Ernst de Haan */
+// See the COPYRIGHT file for copyright and license information
 package org.xins.logdoc.def;
 
 import java.io.File;
@@ -17,6 +17,8 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
+
+import org.apache.xml.resolver.tools.CatalogResolver;
 
 /**
  * Log definition. Typically read from a <code>log.xml</code> file with one or
@@ -55,13 +57,23 @@ public final class LogDef {
          throw new IllegalArgumentException("Path (\"" + dir.getPath() + "\") is not a directory.");
       }
 
-      Document xml;
+      // Define the location of the log.xml file
+      File file = new File(dir, "log.xml");
 
+      Document xml;
       try {
-         File                      file = new File(dir, "log.xml");
+
+         // Create a validating DOM/XML parser
          DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-         DocumentBuilder     domBuilder = factory.newDocumentBuilder();
-                                    xml = domBuilder.parse(file);
+         factory.setValidating(true);
+
+         DocumentBuilder domBuilder = factory.newDocumentBuilder();
+         CatalogResolver   resolver = new CatalogResolver();
+         domBuilder.setEntityResolver(resolver);
+
+         // Parse the file to produce a DOM/XML object
+         xml = domBuilder.parse(file);
+
       } catch (ParserConfigurationException cause) {
          IOException e = new IOException("Failed to parse \"log.xml\" file.");
          e.initCause(cause);

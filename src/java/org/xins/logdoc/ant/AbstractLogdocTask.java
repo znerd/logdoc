@@ -1,4 +1,4 @@
-// Copyright 2007-2009, PensioenPage B.V.
+// See the COPYRIGHT file for copyright and license information
 package org.xins.logdoc.ant;
 
 import java.io.File;

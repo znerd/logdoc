@@ -1,9 +1,4 @@
-/*
- * $Id$
- *
- * Copyright 2003-2009 Ernst de Haan
- * See the COPYRIGHT file for redistribution and use restrictions.
- */
+// See the COPYRIGHT file for copyright and license information
 package org.xins.logdoc;
 
 import java.io.InputStream;

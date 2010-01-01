@@ -1,9 +1,4 @@
-/*
- * $Id: AbstractLog.java,v 1.28 2007/03/15 17:08:40 agoubard Exp $
- *
- * Copyright 2003-2009 Online Breedband B.V.
- * See the COPYRIGHT file for redistribution and use restrictions.
- */
+// See the COPYRIGHT file for copyright and license information
 package org.xins.logdoc;
 
 import org.apache.log4j.Level;
