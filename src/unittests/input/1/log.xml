@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log PUBLIC "-//Logdoc//DTD Logdoc 3.0//EN" "http://www.xins.org/dtd/log_3_0.dtd">
+
+<log since="MyLibrary 5.5.3" domain="com.znerd.mylibrary" public="true">
+	<translation-bundle locale="en_US" />
+
+	<group id="transactions" name="Transactions">
+		<entry id="100" level="NOTICE">
+			<description>Transaction system initializing.</description>
+		</entry>
+		<entry id="101" level="NOTICE">
+			<description>Transaction system initialized.</description>
+			<param name="duration" type="int64" nullable="false"  />
+		</entry>
+		<entry id="102" level="NOTICE">
+			<description>Transaction starting.</description>
+			<param name="id"          type="int32" nullable="false"  />
+			<param name="description" type="text"  nullable="true"  />
+		</entry>
+		<entry id="103" level="INFO">
+			<description>Transaction fully started.</description>
+			<param name="id" type="int32" nullable="false"  />
+		</entry>
+	</group>
+</log>
