@@ -185,10 +185,11 @@ public final class LogDef {
       try {
 
          // Create an XSLT Transforer
-         String                   xsltPath = "/xslt/log_to_" + className + "_java.xslt";
+         String                   xsltPath = "/META-INF/xslt/log_to_" + className + "_java.xslt";
          InputStream            xsltStream = getClass().getResourceAsStream(xsltPath);
          StreamSource     xsltStreamSource = new StreamSource(xsltStream);
          TransformerFactory xformerFactory = TransformerFactory.newInstance();
+         xformerFactory.setURIResolver(new LogdocResolver());
          Transformer               xformer = xformerFactory.newTransformer(xsltStreamSource);
 
          // TODO: Set the parameters for the template
@@ -199,6 +200,7 @@ public final class LogDef {
          StreamResult streamResult = new StreamResult(outFile);
 
          // Perform the transformation
+         System.err.println("About to perform XSLT transformation.");
          xformer.transform(getSource(), streamResult);
 
       // Transformer configuration error

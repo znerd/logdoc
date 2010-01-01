@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.URIResolver;
 
@@ -53,7 +54,14 @@ class LogdocResolver implements EntityResolver, URIResolver {
    // Constructors
    //-------------------------------------------------------------------------
 
+   /**
+    * Constructs a new <code>LogdocResolver</code>.
+    */
+   LogdocResolver() {
+      // empty
+   }
 
+   
    //-------------------------------------------------------------------------
    // Class functions
    //-------------------------------------------------------------------------
@@ -69,7 +77,6 @@ class LogdocResolver implements EntityResolver, URIResolver {
 
 	public Source resolve(String href, String base) throws TransformerException {
       System.err.println("LogdocResolver.resolve called with href=\"" + href + "\" and base=\"" + base + "\".");
-		return null; // TODO
+		return new StreamSource(LogdocResolver.class.getResourceAsStream("/META-INF/xslt/" + href));
 	}
-
 }
