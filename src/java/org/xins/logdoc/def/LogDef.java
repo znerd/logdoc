@@ -83,8 +83,11 @@ public final class LogDef {
          e.initCause(cause);
          throw e;
       }
+      
+      // Parse the domain name
+      String domainName = xml.getDocumentElement().getAttribute("domain");
 
-      return new LogDef(xml);
+      return new LogDef(xml, domainName);
    }
 
 
@@ -98,19 +101,25 @@ public final class LogDef {
     * @param xml
     *    the XML {@link Document} to construct this object from,
     *    cannot be <code>null</code>.
+    *    
+    * @param domainName
+    *    the domain name, cannot be <code>null</code>.
     *
     * @throws IllegalArgumentException
-    *    if <code>xml == null</code>.
+    *    if <code>xml == null || domainName == null</code>.
     */
-   private LogDef(Document xml) throws IllegalArgumentException {
+   private LogDef(Document xml, String domainName) throws IllegalArgumentException {
 
       // Check preconditions
       if (xml == null) {
          throw new IllegalArgumentException("xml == null");
+      } else if (domainName == null) {
+         throw new IllegalArgumentException("domainName == null");
       }
 
       // Initialize fields
-      _xml = xml;
+      _xml        = xml;
+      _domainName = domainName;
    }
 
 
@@ -122,6 +131,11 @@ public final class LogDef {
     * The source file as a DOM document. Never <code>null</code>.
     */
    private final Document _xml;
+   
+   /**
+    * The domain name. Never <code>null</code>.
+    */
+   private final String _domainName;
 
 
    //-------------------------------------------------------------------------
@@ -136,32 +150,23 @@ public final class LogDef {
     *    cannot be <code>null</code>, and must be an existent writable
     *    directory.
     *
-    * @param packageName
-    *    the name of the package for the Java code,
-    *    cannot be <code>null</code>.
-    *
     * @throws IllegalArgumentException
-    *    if <code>targetDir == null || packageName == null || accessLevel == null</code>
-    *    or if <code>packageName</code> is not a valid Java package name.
+    *    if <code>targetDir == null</code>.
     *
     * @throws IOException
     *    if the Java code could not be generated.
     */
-   public void generateJavaCode(File targetDir, String packageName)
+   public void generateJavaCode(File targetDir)
    throws IllegalArgumentException, IOException {
 
       // Check preconditions
       if (targetDir == null) {
          throw new IllegalArgumentException("targetDir == null");
-      } else if (packageName == null) {
-         throw new IllegalArgumentException("packageName == null");
-      } else if (! packageName.matches("[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)")) {
-         throw new IllegalArgumentException("Invalid package name \"" + packageName + "\".");
       }
 
       // Perform transformations
-      transform(targetDir, packageName, "Log");
-      transform(targetDir, packageName, "TranslationBundle");
+      transform(targetDir, "Log");
+      transform(targetDir, "TranslationBundle");
    }
 
    private Source getSource() {
@@ -174,7 +179,7 @@ public final class LogDef {
       return e;
    }
 
-   private void transform(File baseDir, String packageName, String className)
+   private void transform(File baseDir, String className)
    throws IOException {
 
       try {
@@ -189,7 +194,7 @@ public final class LogDef {
          // TODO: Set the parameters for the template
 
          // Define where the output should go
-         File               outDir = new File(baseDir, packageName.replace("\\.", "/"));
+         File               outDir = new File(baseDir, _domainName.replace("\\.", "/"));
          File              outFile = new File(outDir, className + ".java");
          StreamResult streamResult = new StreamResult(outFile);
 

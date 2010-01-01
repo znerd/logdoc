@@ -1,8 +1,6 @@
 // See the COPYRIGHT file for copyright and license information
 package org.xins.logdoc.ant;
 
-import org.apache.tools.ant.BuildException;
-
 import org.xins.logdoc.def.LogDef;
 
 /**
@@ -30,7 +28,7 @@ public final class LogdocJavaTask extends AbstractLogdocTask {
    //-------------------------------------------------------------------------
 
    @Override
-   protected void executeImpl(LogDef def) throws BuildException {
-      // TODO FIXME
+   protected void executeImpl(LogDef def) throws Exception {
+      def.generateJavaCode(_destDir);
    }
 }

@@ -298,12 +298,22 @@ public abstract class AbstractLogdocTask extends MatchingTask {
       }
 
       // Do the actual work
-      executeImpl(logDef);
+      try {
+         executeImpl(logDef);
+      } catch (Exception cause) {
+         if (cause instanceof RuntimeException) {
+            throw (RuntimeException) cause;
+         } else if (cause instanceof BuildException) {
+               throw (BuildException) cause;
+         } else {
+            throw new BuildException(cause);
+         }
+      }
 
       // Log the total result
       long duration = System.currentTimeMillis() - start;
       log("Processed definitions in " + duration + " ms.");
    }
 
-   protected abstract void executeImpl(LogDef logDef) throws BuildException;
+   protected abstract void executeImpl(LogDef logDef) throws Exception;
 }
