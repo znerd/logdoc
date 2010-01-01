@@ -39,7 +39,7 @@ public final class Library {
     *    or <code>null</code> if unknown.
     */
    public static final String getVersion() {
-      InputStream stream = Library.class.getResourceAsStream("/version.txt");
+      InputStream stream = Library.class.getResourceAsStream("/META-INF/version.txt");
       if (stream == null) {
          System.err.println("File version.txt not found.");
          return null;

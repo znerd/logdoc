@@ -47,8 +47,9 @@
 		<property name="tests.deprecation"     value="false" />
 
 		<!-- Source directories -->
-		<property name="project.sourcedir" value="src/java" />
-		<property name="javase.sourcedir"  value="${java.home}/src" />
+		<property name="project.sourcedir"      value="${basedir}/src" />
+		<property name="project.sourcedir.java" value="${project.sourcedir}/java" />
+		<property name="javase.sourcedir"       value="${java.home}/src" />
 	</target>
 
 	<target name="version" depends="-init">
@@ -63,8 +64,23 @@
 
 	<!-- Prepare for compilation (typically used inside IDEs, too) -->
 	<target name="prepare-compile" depends="-init" description="Prepares for the compilation, by generating source files and/or other files to be placed with the compiled files">
-		<mkdir dir="build/classes/" />
-		<concat destfile="build/classes/version.txt" eol="unix" outputencoding="UTF-8">${project.version}</concat>
+
+		<!-- Stick auxiliary files in location where compiled code will go --> 
+		<mkdir dir="build/classes/META-INF" />
+		<copy todir="build/classes">
+			<fileset dir="${project.sourcedir.java}">
+				<exclude name="**/*.java" />
+				<exclude name="**/package.html" />
+			</fileset>
+		</copy>
+		<copy todir="build/classes/META-INF">
+			<fileset dir="${project.sourcedir}">
+				<include name="xslt/*.xslt" />
+				<include name="dtd/catalog.xml" />
+				<include name="dtd/*.dtd" />
+			</fileset>
+		</copy>
+		<concat destfile="build/classes/META-INF/version.txt" eol="unix" outputencoding="UTF-8">${project.version}</concat>
 	</target>
 
 	<!-- Compile all source files -->
@@ -114,11 +130,11 @@
 		<available file="${javase.sourcedir}" type="dir" property="jdksrc.available" />
 	</target>
 	<target name="-javadoc-sourcepath-nojdksrc" depends="-jdksrc-avail" unless="jdksrc.available">
-		<property name="javadoc.sourcepath" value="${project.sourcedir}" />
+		<property name="javadoc.sourcepath" value="${project.sourcedir.java}" />
 		<echo level="verbose" message="JDK source code not available." />
 	</target>
 	<target name="-javadoc-sourcepath-jdksrc" depends="-jdksrc-avail" if="jdksrc.available">
-		<property name="javadoc.sourcepath" value="${project.sourcedir}:${javase.sourcedir}" />
+		<property name="javadoc.sourcepath" value="${project.sourcedir.java}:${javase.sourcedir}" />
 		<echo level="verbose" message="JDK source code available." />
 	</target>
 	<target name="javadoc" depends="-javadoc-sourcepath-nojdksrc,-javadoc-sourcepath-jdksrc" description="Generates the Javadoc API documentation" unless="nodocs">
