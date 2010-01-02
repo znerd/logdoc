@@ -2,4 +2,5 @@ build
 META-INF
 *.swp
 .classpath
+.externalToolBuilders
 .project
