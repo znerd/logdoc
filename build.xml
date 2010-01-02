@@ -141,7 +141,7 @@
 				<condition property="diff-contents-empty">
 					<equals arg1="${diff-contents}" arg2="" />
 				</condition>
-				<fail unless="diff-contents-empty">Output file "@{actual}" differs from what was expected: "@{expected}".</fail>
+				<fail unless="diff-contents-empty">Output directory "@{actual}" differs from what was expected: "@{expected}". See ${diff-file} for details.</fail>
 				<delete file="${diff-file}" />
 			</sequential>
 		</macrodef>
