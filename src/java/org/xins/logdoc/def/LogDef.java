@@ -86,8 +86,9 @@ public final class LogDef {
       
       // Parse the domain name
       String domainName = xml.getDocumentElement().getAttribute("domain");
+      boolean isPublic = Boolean.parseBoolean(xml.getDocumentElement().getAttribute("public"));
 
-      return new LogDef(xml, domainName);
+      return new LogDef(xml, domainName, isPublic);
    }
 
 
@@ -104,12 +105,17 @@ public final class LogDef {
     *    
     * @param domainName
     *    the domain name, cannot be <code>null</code>.
+    *    
+    * @param isPublic
+    *    flag that indicates if the generated code should be considered
+    *    public, even outside its own domain/namespace.
     *
     * @throws IllegalArgumentException
     *    if <code>xml == null || domainName == null</code>.
     */
-   private LogDef(Document xml, String domainName) throws IllegalArgumentException {
-
+   private LogDef(Document xml, String domainName, boolean isPublic)
+   throws IllegalArgumentException {
+      
       // Check preconditions
       if (xml == null) {
          throw new IllegalArgumentException("xml == null");
@@ -120,6 +126,7 @@ public final class LogDef {
       // Initialize fields
       _xml        = xml;
       _domainName = domainName;
+      _public     = isPublic;
    }
 
 
@@ -136,6 +143,12 @@ public final class LogDef {
     * The domain name. Never <code>null</code>.
     */
    private final String _domainName;
+   
+   /**
+    * Flag that indicates if the generated code should be considered
+    * accessible even outside its own domain/namespace.
+    */
+   private final boolean _public;
 
 
    //-------------------------------------------------------------------------
@@ -192,20 +205,33 @@ public final class LogDef {
          xformerFactory.setURIResolver(new LogdocResolver());
          Transformer               xformer = xformerFactory.newTransformer(xsltStreamSource);
 
-         // TODO: Set the parameters for the template
+         // Set the parameters for the template
+         xformer.setParameter("package_name", _domainName);
+         xformer.setParameter("accesslevel",  _public ? "public" : "protected");
 
-         // Define where the output should go
-         File               outDir = new File(baseDir, _domainName.replace("\\.", "/"));
-         File              outFile = new File(outDir, className + ".java");
-         StreamResult streamResult = new StreamResult(outFile);
+         // Make sure the output directory exists
+         String     domainPath = _domainName.replace(".", "/");
+         File           outDir = new File(baseDir, domainPath);
+         if (! outDir.exists()) {
+            boolean outDirCreated = outDir.mkdirs();
+            if (! outDirCreated) {
+               throw new IOException("Failed to create output directory \"" + outDir.getPath() + "\".");
+            }
+         } else if (! outDir.isDirectory()) {
+            throw new IOException("Path \"" + outDir.getPath() + "\" exists, but it is not a directory.");
+         }
+
+         // Declare where the XSLT output should go
+         File        outFile = new File(outDir, className + ".java");
+         StreamResult result = new StreamResult(outFile);
 
          // Perform the transformation
-         System.err.println("About to perform XSLT transformation.");
-         xformer.transform(getSource(), streamResult);
+         System.err.println("About to perform XSLT transformation. xsltPath=\"" + xsltPath + "\"; domainName=\"" + _domainName + "\"; domainPath=\"" + domainPath + "\".");
+         xformer.transform(getSource(), result);
 
       // Transformer configuration error
       } catch (TransformerConfigurationException cause) {
-         throw newIOException("Failed to perform XSLT transformation.", cause);
+         throw newIOException("Unable to perform XSLT transformation due to configuration problem.", cause);
 
       // Transformer error
       } catch (TransformerException cause) {
@@ -216,10 +242,12 @@ public final class LogDef {
    private static class ErrorHandler implements org.xml.sax.ErrorHandler {
 
       public void error(SAXParseException exception) throws SAXException {
+         exception.printStackTrace();
          throw new SAXException(exception);
       }
 
       public void fatalError(SAXParseException exception) throws SAXException {
+         exception.printStackTrace();
          throw new SAXException(exception);
       }
 
