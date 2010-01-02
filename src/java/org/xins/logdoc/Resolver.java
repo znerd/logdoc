@@ -57,7 +57,7 @@ class Resolver implements EntityResolver, URIResolver {
    //-------------------------------------------------------------------------
 
    /**
-    * Constructs a new <code>LogdocResolver</code>.
+    * Constructs a new <code>Resolver</code>.
     */
    Resolver() {
       // empty
@@ -70,7 +70,7 @@ class Resolver implements EntityResolver, URIResolver {
 
    public InputSource resolveEntity(String publicId, String systemId)
 	throws SAXException, IOException {
-      System.err.println("LogdocResolver.resolveEntity called with publicId=\"" + publicId + "\" and systemId=\"" + systemId + "\".");
+      //System.err.println("Resolver.resolveEntity called with publicId=\"" + publicId + "\" and systemId=\"" + systemId + "\".");
       if ("-//Logdoc//DTD Logdoc 3.0//EN".equals(publicId)) {
          return new InputSource(LOG_DTD_URL.openStream());
       }
@@ -79,7 +79,7 @@ class Resolver implements EntityResolver, URIResolver {
 
 	public Source resolve(String href, String base) throws TransformerException {
 	   String resultURL = "xslt/" + href;
-      System.err.println("LogdocResolver.resolve called with href=\"" + href + "\" and base=\"" + base + "\"; result is \"" + resultURL + "\".");
+      //System.err.println("Resolver.resolve called with href=\"" + href + "\" and base=\"" + base + "\"; result is \"" + resultURL + "\".");
       try {
 		   return new StreamSource(Library.getMetaResourceAsStream(resultURL));
       } catch (IOException cause) {

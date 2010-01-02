@@ -104,17 +104,20 @@ public final class Library {
     *    or <code>null</code> if unknown.
     */
    public static final String getVersion() {
-      InputStream stream = Library.class.getResourceAsStream("/META-INF/version.txt");
-      if (stream == null) {
-         System.err.println("File version.txt not found.");
+      String filePath = "version.txt";
+      InputStream stream;
+      try {
+         stream = getMetaResourceAsStream(filePath);
+      } catch (IOException cause) {
+         System.err.println("Meta resource could not be opened: " + filePath);
          return null;
       }
 
       String version;
       try {
          version = IOUtils.toString(stream, "UTF-8").trim();
-      } catch (IOException e) {
-         System.err.println("Failed to read version.txt file.");
+      } catch (IOException cause) {
+         System.err.println("I/O error while reading meta resource: " + filePath);
          return null;
       }
 

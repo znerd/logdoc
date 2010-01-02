@@ -226,10 +226,10 @@ public final class LogDef {
          StreamResult result = new StreamResult(outFile);
 
          // Perform the transformation
-         System.err.println("About to perform XSLT transformation. xsltPath=\"" + xsltPath + "\"; domainName=\"" + _domainName + "\"; domainPath=\"" + domainPath + "\".");
+         //System.err.println("About to perform XSLT transformation. xsltPath=\"" + xsltPath + "\"; domainName=\"" + _domainName + "\"; domainPath=\"" + domainPath + "\".");
          xformer.transform(getSource(), result);
          
-         System.err.println("Generated file \"" + outFile.getPath() + "\".");
+         //System.err.println("Generated file \"" + outFile.getPath() + "\".");
 
       // Transformer configuration error
       } catch (TransformerConfigurationException cause) {
