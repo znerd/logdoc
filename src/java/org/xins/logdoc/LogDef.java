@@ -4,6 +4,8 @@ package org.xins.logdoc;
 import java.io.File;
 import java.io.InputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -16,12 +18,13 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 /**
- * Log definition. Typically read from a <code>log.xml</code> file with one or
- * more associated translation bundles, see {@link TranslationBundleDef}.
+ * Log definition. Typically read from a <code>log.xml</code> file.
  *
  * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
  *
@@ -86,9 +89,19 @@ public final class LogDef {
       
       // Parse the domain name
       String domainName = xml.getDocumentElement().getAttribute("domain");
-      boolean isPublic = Boolean.parseBoolean(xml.getDocumentElement().getAttribute("public"));
+      Element docElem = xml.getDocumentElement();
+      boolean isPublic = Boolean.parseBoolean(docElem.getAttribute("public"));
+      
+      // Parse the locales for the translation bundles
+      // Typical is: <translation-bundle locale="en_US" />
+      List<String> locales = new ArrayList<String>();
+      NodeList elems = docElem.getElementsByTagName("translation-bundle");
+      for (int index = 0; index < elems.getLength(); index++) {
+         Element elem = (Element) elems.item(index);
+         locales.add(elem.getAttribute("locale"));
+      }
 
-      return new LogDef(xml, domainName, isPublic);
+      return new LogDef(xml, domainName, isPublic, locales);
    }
 
 
@@ -109,11 +122,14 @@ public final class LogDef {
     * @param isPublic
     *    flag that indicates if the generated code should be considered
     *    public, even outside its own domain/namespace.
+    *    
+    * @param locales
+    *    the locales, cannot be <code>null</code>.
     *
     * @throws IllegalArgumentException
-    *    if <code>xml == null || domainName == null</code>.
+    *    if <code>xml == null || domainName == null || locales == null</code>.
     */
-   private LogDef(Document xml, String domainName, boolean isPublic)
+   private LogDef(Document xml, String domainName, boolean isPublic, List<String> locales)
    throws IllegalArgumentException {
       
       // Check preconditions
@@ -121,12 +137,15 @@ public final class LogDef {
          throw new IllegalArgumentException("xml == null");
       } else if (domainName == null) {
          throw new IllegalArgumentException("domainName == null");
+      } else if (locales == null) {
+         throw new IllegalArgumentException("locales == null");
       }
 
       // Initialize fields
       _xml        = xml;
       _domainName = domainName;
       _public     = isPublic;
+      _locales    = locales;
    }
 
 
@@ -149,6 +168,11 @@ public final class LogDef {
     * accessible even outside its own domain/namespace.
     */
    private final boolean _public;
+   
+   /**
+    * The locales for the log. Never <code>null</code>.
+    */
+   private final List<String> _locales;
 
 
    //-------------------------------------------------------------------------
@@ -180,6 +204,10 @@ public final class LogDef {
       // Perform transformations
       transform(targetDir, "Log");
       transform(targetDir, "TranslationBundle");
+      for (String locale : _locales) {
+         transformForLocale(targetDir, locale);
+      }
+      
    }
 
    private Source getSource() {
@@ -241,6 +269,56 @@ public final class LogDef {
       }
    }
    
+   private void transformForLocale(File baseDir, String locale)
+   throws IOException {
+
+      try {
+
+         // Create an XSLT Transforer
+         String                   xsltPath = "xslt/translation-bundle_to_java.xslt";
+         InputStream            xsltStream = Library.getMetaResourceAsStream(xsltPath);
+         StreamSource     xsltStreamSource = new StreamSource(xsltStream);
+         TransformerFactory xformerFactory = TransformerFactory.newInstance();
+         xformerFactory.setURIResolver(new Resolver());
+         Transformer               xformer = xformerFactory.newTransformer(xsltStreamSource);
+
+         // Set the parameters for the template
+         xformer.setParameter("package_name", _domainName);
+         xformer.setParameter("accesslevel",  _public ? "public" : "protected");
+
+         // Make sure the output directory exists
+         String     domainPath = _domainName.replace(".", "/");
+         File           outDir = new File(baseDir, domainPath);
+         if (! outDir.exists()) {
+            boolean outDirCreated = outDir.mkdirs();
+            if (! outDirCreated) {
+               throw new IOException("Failed to create output directory \"" + outDir.getPath() + "\".");
+            }
+         } else if (! outDir.isDirectory()) {
+            throw new IOException("Path \"" + outDir.getPath() + "\" exists, but it is not a directory.");
+         }
+
+         // Declare where the XSLT output should go
+         String    className = "TranslationBundle_" + locale;
+         File        outFile = new File(outDir, className + ".java");
+         StreamResult result = new StreamResult(outFile);
+
+         // Perform the transformation
+         System.err.println("About to perform XSLT transformation. xsltPath=\"" + xsltPath + "\"; domainName=\"" + _domainName + "\"; domainPath=\"" + domainPath + "\".");
+         xformer.transform(getSource(), result);
+         
+         System.err.println("Generated file \"" + outFile.getPath() + "\".");
+
+      // Transformer configuration error
+      } catch (TransformerConfigurationException cause) {
+         throw newIOException("Unable to perform XSLT transformation due to configuration problem.", cause);
+
+      // Transformer error
+      } catch (TransformerException cause) {
+         throw newIOException("Failed to perform XSLT transformation.", cause);
+      }
+   }
+
    private static class ErrorHandler implements org.xml.sax.ErrorHandler {
 
       public void error(SAXParseException exception) throws SAXException {
