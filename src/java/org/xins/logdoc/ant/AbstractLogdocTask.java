@@ -9,7 +9,7 @@ import org.apache.tools.ant.BuildException;
 import static org.apache.tools.ant.Project.MSG_VERBOSE;
 import org.apache.tools.ant.taskdefs.MatchingTask;
 
-import org.xins.logdoc.def.LogDef;
+import org.xins.logdoc.LogDef;
 
 /**
  * Abstract base class for the Logdoc Ant task implementations.

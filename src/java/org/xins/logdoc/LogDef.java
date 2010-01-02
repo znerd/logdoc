@@ -1,5 +1,5 @@
 // See the COPYRIGHT file for copyright and license information
-package org.xins.logdoc.def;
+package org.xins.logdoc;
 
 import java.io.File;
 import java.io.InputStream;
@@ -67,7 +67,7 @@ public final class LogDef {
          factory.setValidating(true);
 
          DocumentBuilder domBuilder = factory.newDocumentBuilder();
-         LogdocResolver    resolver = new LogdocResolver();
+         Resolver          resolver = new Resolver();
          domBuilder.setEntityResolver(resolver);
          domBuilder.setErrorHandler(new ErrorHandler());
 
@@ -202,7 +202,7 @@ public final class LogDef {
          InputStream            xsltStream = getClass().getResourceAsStream(xsltPath);
          StreamSource     xsltStreamSource = new StreamSource(xsltStream);
          TransformerFactory xformerFactory = TransformerFactory.newInstance();
-         xformerFactory.setURIResolver(new LogdocResolver());
+         xformerFactory.setURIResolver(new Resolver());
          Transformer               xformer = xformerFactory.newTransformer(xsltStreamSource);
 
          // Set the parameters for the template
@@ -254,7 +254,7 @@ public final class LogDef {
       }
 
       public void warning(SAXParseException exception) throws SAXException {
-         // TODO
+         // empty
       }
    }
 }

@@ -1,7 +1,7 @@
 // See the COPYRIGHT file for copyright and license information
 package org.xins.logdoc.ant;
 
-import org.xins.logdoc.def.LogDef;
+import org.xins.logdoc.LogDef;
 
 /**
  * An Apache Ant task for generating Java source files from Logdoc

@@ -3,7 +3,7 @@ package org.xins.logdoc.ant;
 
 import org.apache.tools.ant.BuildException;
 
-import org.xins.logdoc.def.LogDef;
+import org.xins.logdoc.LogDef;
 
 /**
  * An Apache Ant task for generating web pages from Logdoc definitions.

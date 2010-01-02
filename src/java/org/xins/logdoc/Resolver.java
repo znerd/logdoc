@@ -1,13 +1,14 @@
 // See the COPYRIGHT file for copyright and license information
-package org.xins.logdoc.def;
+package org.xins.logdoc;
 
 import java.io.IOException;
 import java.net.URL;
 
 import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.URIResolver;
+import javax.xml.transform.stream.StreamSource;
+
 
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
@@ -19,7 +20,7 @@ import org.xml.sax.SAXException;
  *
  * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
  */
-class LogdocResolver implements EntityResolver, URIResolver {
+class Resolver implements EntityResolver, URIResolver {
    
    // TODO: Cache the DTD information internally
    // TODO: Consider supporting older DTDs as well
@@ -43,7 +44,8 @@ class LogdocResolver implements EntityResolver, URIResolver {
     * Class initializer that reads the Logdoc 3.0 DTD into memory.
     */
    static {
-      LOG_DTD_URL = LogdocResolver.class.getResource("/META-INF/dtd/log_3_0.dtd");
+      // TODO: Move this to the Library class
+      LOG_DTD_URL = Library.getMetaResource("dtd/log_3_0.dtd");
       if (LOG_DTD_URL == null) {
          throw new Error("Failed to load log_3_0.dtd file.");
       }
@@ -57,7 +59,7 @@ class LogdocResolver implements EntityResolver, URIResolver {
    /**
     * Constructs a new <code>LogdocResolver</code>.
     */
-   LogdocResolver() {
+   Resolver() {
       // empty
    }
 
@@ -78,6 +80,6 @@ class LogdocResolver implements EntityResolver, URIResolver {
 	public Source resolve(String href, String base) throws TransformerException {
 	   String resultURL = "/META-INF/xslt/" + href;
       System.err.println("LogdocResolver.resolve called with href=\"" + href + "\" and base=\"" + base + "\"; result is \"" + resultURL + "\".");
-		return new StreamSource(LogdocResolver.class.getResourceAsStream(resultURL));
+		return new StreamSource(Resolver.class.getResourceAsStream(resultURL));
 	}
 }
