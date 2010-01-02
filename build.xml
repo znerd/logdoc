@@ -128,7 +128,7 @@
 			<attribute name="actual"   default="${unittests.outputdir}/@{testnum}"   />
 
 			<sequential>
-				<logdoc-java in="@{input}" out="${actual}" />
+				<logdoc-java in="@{input}" out="@{actual}" />
 				<condition property="test@{testnum}.success">
 					<filesmatch file1="@{expected}" file2="@{actual}" />
 				</condition>
@@ -202,6 +202,7 @@
 		<generate-javadoc private="no" destdir="build/javadoc" title="${project.title} ${project.version}" footer="See &lt;a target=&quot;_top&quot; href='${project.url}'&gt;${project.url}&lt;/a&gt;." />
 	</target>
 
+	<!-- Prints the name and version of this library -->
 	<target name="print-version" depends="compile" description="Prints the version of Logdoc">
 		<java classname="org.xins.logdoc.Library">
 			<classpath>
