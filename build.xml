@@ -129,10 +129,20 @@
 
 			<sequential>
 				<logdoc-java in="@{input}" out="@{actual}" />
-				<condition property="test@{testnum}.success">
-					<filesmatch file1="@{expected}" file2="@{actual}" />
+
+				<tempfile destdir="${java.io.tmpdir}" prefix="${project.name}-unittest." property="diff-file" suffix=".diff" />
+				<exec executable="diff" output="${diff-file}">
+					<arg value="-r" />
+					<arg value="@{expected}" />
+					<arg value="@{actual}" />
+				</exec>
+				<loadfile srcfile="${diff-file}" property="diff-contents" />
+				<property name="diff-contents" value="" />
+				<condition property="diff-contents-empty">
+					<equals arg1="${diff-contents}" arg2="" />
 				</condition>
-				<fail unless="test@{testnum}.success">Output file "@{actual}" differs from what was expected: "@{expected}".</fail>
+				<fail unless="diff-contents-empty">Output file "@{actual}" differs from what was expected: "@{expected}".</fail>
+				<delete file="${diff-file}" />
 			</sequential>
 		</macrodef>
 
