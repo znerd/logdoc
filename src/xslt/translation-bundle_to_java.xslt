@@ -16,7 +16,7 @@
 
 	<!-- Perform includes -->
 	<xsl:include href="shared.xslt"         />
-	<xsl:include href="../xml_to_java.xslt" />
+	<xsl:include href="xml_to_java.xslt" />
 
 	<!-- Set output method -->
 	<xsl:output method="text" />
