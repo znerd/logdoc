@@ -21,7 +21,7 @@ import org.xml.sax.SAXException;
  */
 class LogdocResolver implements EntityResolver, URIResolver {
    
-   // TODO: Store the DTD information internally
+   // TODO: Cache the DTD information internally
    // TODO: Consider supporting older DTDs as well
 
    //-------------------------------------------------------------------------
@@ -76,7 +76,8 @@ class LogdocResolver implements EntityResolver, URIResolver {
 	}
 
 	public Source resolve(String href, String base) throws TransformerException {
-      System.err.println("LogdocResolver.resolve called with href=\"" + href + "\" and base=\"" + base + "\".");
-		return new StreamSource(LogdocResolver.class.getResourceAsStream("/META-INF/xslt/" + href));
+	   String resultURL = "/META-INF/xslt/" + href;
+      System.err.println("LogdocResolver.resolve called with href=\"" + href + "\" and base=\"" + base + "\"; result is \"" + resultURL + "\".");
+		return new StreamSource(LogdocResolver.class.getResourceAsStream(resultURL));
 	}
 }
