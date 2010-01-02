@@ -228,6 +228,8 @@ public final class LogDef {
          // Perform the transformation
          System.err.println("About to perform XSLT transformation. xsltPath=\"" + xsltPath + "\"; domainName=\"" + _domainName + "\"; domainPath=\"" + domainPath + "\".");
          xformer.transform(getSource(), result);
+         
+         System.err.println("Generated file \"" + outFile.getPath() + "\".");
 
       // Transformer configuration error
       } catch (TransformerConfigurationException cause) {
