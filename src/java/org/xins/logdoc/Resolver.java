@@ -78,8 +78,12 @@ class Resolver implements EntityResolver, URIResolver {
 	}
 
 	public Source resolve(String href, String base) throws TransformerException {
-	   String resultURL = "/META-INF/xslt/" + href;
+	   String resultURL = "xslt/" + href;
       System.err.println("LogdocResolver.resolve called with href=\"" + href + "\" and base=\"" + base + "\"; result is \"" + resultURL + "\".");
-		return new StreamSource(Resolver.class.getResourceAsStream(resultURL));
+      try {
+		   return new StreamSource(Library.getMetaResourceAsStream(resultURL));
+      } catch (IOException cause) {
+         throw new TransformerException("Failed to open meta resource \"" + resultURL + "\".", cause);
+      }
 	}
 }

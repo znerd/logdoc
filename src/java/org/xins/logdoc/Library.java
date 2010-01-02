@@ -41,11 +41,11 @@ public final class Library {
     *    
     * @return
     *    the resource as a {@link URL}.
-    *    
+    *
     * @throws IllegalArgumentException
     *    if <code>path == null</code>.
     */
-   public static URL getMetaResource(String path) throws IllegalArgumentException {
+   static URL getMetaResource(String path) throws IllegalArgumentException {
       
       // Check preconditions
       if (path == null) {
@@ -62,6 +62,27 @@ public final class Library {
       }
       
       return url;
+   }
+
+   /**
+    * Retrieves a meta resource and returns it as an <code>InputStream</code>.
+    * Calling this function will not trigger initialization of the library.
+    * 
+    * @param path
+    *    the path to the meta resource, cannot be <code>null</code>.
+    *    
+    * @return
+    *    the resource as an {@link InputStream}.
+    *
+    * @throws IllegalArgumentException
+    *    if <code>path == null</code>.
+    *    
+    * @throws IOException
+    *    if the stream could not be opened.
+    */
+   static InputStream getMetaResourceAsStream(String path)
+   throws IllegalArgumentException, IOException {
+      return getMetaResource(path).openStream();
    }
    
    /**

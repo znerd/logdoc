@@ -198,8 +198,8 @@ public final class LogDef {
       try {
 
          // Create an XSLT Transforer
-         String                   xsltPath = "/META-INF/xslt/log_to_" + className + "_java.xslt";
-         InputStream            xsltStream = getClass().getResourceAsStream(xsltPath);
+         String                   xsltPath = "xslt/log_to_" + className + "_java.xslt";
+         InputStream            xsltStream = Library.getMetaResourceAsStream(xsltPath);
          StreamSource     xsltStreamSource = new StreamSource(xsltStream);
          TransformerFactory xformerFactory = TransformerFactory.newInstance();
          xformerFactory.setURIResolver(new Resolver());
