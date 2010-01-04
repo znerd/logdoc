@@ -1,4 +1,5 @@
-This is Logdoc, a tool for managing log messages for Java code. 
+This is Logdoc, a tool for managing log messages for Java code,
+contract-first. 
 
 This software is available under the terms of a BSD-style license, see
 the accompanied COPYRIGHT file.
