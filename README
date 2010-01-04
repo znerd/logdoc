@@ -4,9 +4,49 @@ contract-first.
 This software is available under the terms of a BSD-style license, see
 the accompanied COPYRIGHT file.
 
+
+EXAMPLE
+
+Example Logdoc log.xml file:
+
+   <log since="MyLibrary 5.5.3" domain="com.znerd.mylibrary" public="true">
+      <translation-bundle locale="en_US" />
+      <group id="transactions" name="Transactions">
+         <entry id="102" level="NOTICE">
+            <description>Transaction starting.</description>
+            <param name="id"          type="int32" nullable="false"  />
+            <param name="description" type="text"  nullable="true"  />
+         </entry>
+         <entry id="103" level="INFO">
+            <description>Transaction fully started.</description>
+            <param name="id" type="int32" nullable="false"  />
+         </entry>
+      </group>
+   </log>
+
+For more examples, see src/unittests/input/.
+
+Input files can be translated to Java and HTML code using Ant tasks. Define it
+in your Ant build.xml file as follows:
+
+   <taskdef resource="org/xins/logdoc/ant/antlib.xml" classpath="lib/logdoc.jar" />
+
+Then the tasks can be used as follows:
+
+   <logdoc-java in="src/logdoc" out="src/java" />
+   <logdoc-html in="src/logdoc" out="build/logdoc-htdocs" />
+
+
+HISTORY
+
 Logdoc used to be part of XINS, see:
 
    http://xins.sourceforge.net/
+
+It has been factored out of XINS by Ernst de Haan.
+
+
+BUG REPORTS AND FEATURE REQUESTS
 
 If you want to file a bug report or a feature request, please do so here:
 
