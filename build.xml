@@ -128,7 +128,7 @@
 			<attribute name="actual"   default="${unittests.outputdir}/@{testnum}"   />
 
 			<sequential>
-				<logdoc-java in="@{input}" out="@{actual}" />
+				<logdoc-code in="@{input}" out="@{actual}" />
 
 				<tempfile destdir="${java.io.tmpdir}" prefix="${project.name}-unittest." property="diff-file" suffix=".diff" />
 				<exec executable="diff" output="${diff-file}">

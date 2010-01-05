@@ -4,12 +4,11 @@ package org.xins.logdoc.ant;
 import org.xins.logdoc.LogDef;
 
 /**
- * An Apache Ant task for generating Java source files from Logdoc
- * definitions.
+ * An Apache Ant task for generating source files from Logdoc definitions.
  *
  * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
  */
-public final class LogdocJavaTask extends AbstractLogdocTask {
+public final class LogdocCodeTask extends AbstractLogdocTask {
 
    //-------------------------------------------------------------------------
    // Constructors
@@ -18,7 +17,7 @@ public final class LogdocJavaTask extends AbstractLogdocTask {
    /**
     * Constructs a new <code>LogdocJavaTask</code> object.
     */
-   public LogdocJavaTask() {
+   public LogdocCodeTask() {
       // empty
    }
 
