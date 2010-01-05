@@ -5,7 +5,7 @@
 	<!-- Generate everything -->
 	<target name="all" depends="unittests,jar,javadoc" description="Generates everything" />
 
-	<!-- Determines current version by reading version file.  -->
+	<!-- Determines current version by reading version file -->
 	<target name="-load-version">
 		<property name="version.file" value=".version.properties" />
 		<property file="${version.file}" />
