@@ -1,0 +1,24 @@
+------------------------------------------------------------------------------
+
+Support multiple types of code generation, e.g.:
+- Java Logging Framework (available since J2SE 1.4), see http://java.sun.com/javase/6/docs/technotes/guides/logging/
+- Apache Commons Logging, see http://commons.apache.org/logging/
+- SLF4J, see http://slf4j.org/
+- Log4c, see http://log4c.sourceforge.net/
+- Log4PHP, see http://logging.apache.org/log4php/
+- Log::Log4perl, see http://mschilli.github.com/log4perl/
+
+------------------------------------------------------------------------------
+
+Support custom code generation, letting the user specify how to generate code.
+Possibly requires the user to provide XSLT.
+
+------------------------------------------------------------------------------
+
+Do not require a translation for all log messages. If no translation is
+available, then fall back to a default format that displays the parameters in
+a quoted form. E.g.:
+
+   10202 transaction="FNC-5569"; label=null; grtID=null; grxID="1233890-22"
+
+------------------------------------------------------------------------------
