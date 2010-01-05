@@ -33,7 +33,7 @@ in your Ant build.xml file as follows:
 
 Then the tasks can be used as follows:
 
-   <logdoc-java in="src/logdoc" out="src/java" />
+   <logdoc-code in="src/logdoc" out="src/java" />
    <logdoc-html in="src/logdoc" out="build/logdoc-htdocs" />
 
 
