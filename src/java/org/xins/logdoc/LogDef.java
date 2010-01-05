@@ -193,7 +193,7 @@ public final class LogDef {
     * @throws IOException
     *    if the Java code could not be generated.
     */
-   public void generateJavaCode(File targetDir)
+   public void generateCode(File targetDir)
    throws IllegalArgumentException, IOException {
 
       // Check preconditions

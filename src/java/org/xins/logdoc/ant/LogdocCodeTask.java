@@ -28,6 +28,6 @@ public final class LogdocCodeTask extends AbstractLogdocTask {
 
    @Override
    protected void executeImpl(LogDef def) throws Exception {
-      def.generateJavaCode(_destDir);
+      def.generateCode(_destDir);
    }
 }
