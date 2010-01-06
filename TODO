@@ -22,3 +22,8 @@ a quoted form. E.g.:
    10202 transaction="FNC-5569"; label=null; grtID=null; grxID="1233890-22"
 
 ------------------------------------------------------------------------------
+
+Use XML Schema definitions (XSDs) to validate the XML input files before
+processing them.
+
+------------------------------------------------------------------------------
