@@ -4,8 +4,8 @@ package org.xins.logdoc;
 import java.io.File;
 import java.io.InputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -94,14 +94,44 @@ public final class LogDef {
       
       // Parse the locales for the translation bundles
       // Typical is: <translation-bundle locale="en_US" />
-      List<String> locales = new ArrayList<String>();
+      Map<String,Document> translations = new HashMap<String,Document>();
       NodeList elems = docElem.getElementsByTagName("translation-bundle");
       for (int index = 0; index < elems.getLength(); index++) {
          Element elem = (Element) elems.item(index);
-         locales.add(elem.getAttribute("locale"));
+         String locale = elem.getAttribute("locale");
+ 
+         // Define the location of the log.xml file
+         File tbFile = new File(dir, "translation-bundle-" + locale + ".xml");
+
+         Document tbXML;
+         try {
+
+            // Create a validating DOM/XML parser
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setValidating(true);
+
+            DocumentBuilder domBuilder = factory.newDocumentBuilder();
+            Resolver          resolver = new Resolver();
+            domBuilder.setEntityResolver(resolver);
+            domBuilder.setErrorHandler(new ErrorHandler());
+
+            // Parse the file to produce a DOM/XML object
+            tbXML = domBuilder.parse(tbFile);
+
+         } catch (ParserConfigurationException cause) {
+            IOException e = new IOException("Failed to parse \"log.xml\" file.");
+            e.initCause(cause);
+            throw e;
+         } catch (SAXException cause) {
+            IOException e = new IOException("Failed to parse \"log.xml\" file.");
+            e.initCause(cause);
+            throw e;
+         }
+         
+         translations.put(locale, tbXML);
       }
 
-      return new LogDef(xml, domainName, isPublic, locales);
+      return new LogDef(xml, domainName, isPublic, translations);
    }
 
 
@@ -123,13 +153,14 @@ public final class LogDef {
     *    flag that indicates if the generated code should be considered
     *    public, even outside its own domain/namespace.
     *    
-    * @param locales
-    *    the locales, cannot be <code>null</code>.
+    * @param translations
+    *    the translation bundle XML {@link Document}s, indexed by name;
+    *    cannot be <code>null</code>.
     *
     * @throws IllegalArgumentException
-    *    if <code>xml == null || domainName == null || locales == null</code>.
+    *    if <code>xml == null || domainName == null || locales == null || translations == null</code>.
     */
-   private LogDef(Document xml, String domainName, boolean isPublic, List<String> locales)
+   private LogDef(Document xml, String domainName, boolean isPublic, Map<String,Document> translations)
    throws IllegalArgumentException {
       
       // Check preconditions
@@ -137,15 +168,15 @@ public final class LogDef {
          throw new IllegalArgumentException("xml == null");
       } else if (domainName == null) {
          throw new IllegalArgumentException("domainName == null");
-      } else if (locales == null) {
-         throw new IllegalArgumentException("locales == null");
+      } else if (translations == null) {
+         throw new IllegalArgumentException("translations == null");
       }
 
       // Initialize fields
-      _xml        = xml;
-      _domainName = domainName;
-      _public     = isPublic;
-      _locales    = locales;
+      _xml          = xml;
+      _domainName   = domainName;
+      _public       = isPublic;
+      _translations = translations;
    }
 
 
@@ -170,9 +201,9 @@ public final class LogDef {
    private final boolean _public;
    
    /**
-    * The locales for the log. Never <code>null</code>.
+    * The translation bundles, indexed by name. Never <code>null</code>.
     */
-   private final List<String> _locales;
+   private final Map<String,Document> _translations;
 
 
    //-------------------------------------------------------------------------
@@ -204,14 +235,17 @@ public final class LogDef {
       // Perform transformations
       transform(targetDir, "Log");
       transform(targetDir, "TranslationBundle");
-      for (String locale : _locales) {
+      for (String locale : _translations.keySet()) {
          transformForLocale(targetDir, locale);
       }
-      
    }
 
    private Source getSource() {
       return new DOMSource(_xml);
+   }
+   
+   private Source getTranslationBundleSource(String locale) {
+	   return new DOMSource(_translations.get(locale));
    }
 
    private IOException newIOException(String detail, Throwable cause) {
@@ -287,8 +321,8 @@ public final class LogDef {
          xformer.setParameter("accesslevel",  _public ? "public" : "protected");
 
          // Make sure the output directory exists
-         String     domainPath = _domainName.replace(".", "/");
-         File           outDir = new File(baseDir, domainPath);
+         String domainPath = _domainName.replace(".", "/");
+         File       outDir = new File(baseDir, domainPath);
          if (! outDir.exists()) {
             boolean outDirCreated = outDir.mkdirs();
             if (! outDirCreated) {
@@ -305,7 +339,7 @@ public final class LogDef {
 
          // Perform the transformation
          System.err.println("About to perform XSLT transformation. xsltPath=\"" + xsltPath + "\"; domainName=\"" + _domainName + "\"; domainPath=\"" + domainPath + "\".");
-         xformer.transform(getSource(), result);
+         xformer.transform(getTranslationBundleSource(locale), result);
          
          System.err.println("Generated file \"" + outFile.getPath() + "\".");
 

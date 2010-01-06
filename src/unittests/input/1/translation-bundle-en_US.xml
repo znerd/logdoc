@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!DOCTYPE translation-bundle PUBLIC "-//Logdoc//DTD Translation Bundle 3.0//EN" "http://www.xins.org/dtd/log_3_0.dtd">
+
+<translation-bundle>
+	<translation entry="100">Initializing transaction system.</translation>
+	<translation entry="101">Transaction system initialized in <value-of-param name="duration" /> ms.</translation>
+	<translation entry="102">Starting transaction <value-of-param name="id" /> (description: <value-of-param name="description" format="quoted" />).</translation>
+	<translation entry="103">Transaction <value-of-param name="id" /> fully started.</translation>
+</translation-bundle>
