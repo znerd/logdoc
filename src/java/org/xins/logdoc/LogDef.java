@@ -6,9 +6,6 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
@@ -20,8 +17,6 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 
 /**
  * Log definition. Typically read from a <code>log.xml</code> file.
@@ -51,87 +46,7 @@ public final class LogDef {
     */
    public static final LogDef loadFromDirectory(File dir)
    throws IllegalArgumentException, IOException {
-
-      // Check preconditions
-      if (dir == null) {
-         throw new IllegalArgumentException("dir == null");
-      } else if (! dir.isDirectory()) {
-         throw new IllegalArgumentException("Path (\"" + dir.getPath() + "\") is not a directory.");
-      }
-
-      // Define the location of the log.xml file
-      File file = new File(dir, "log.xml");
-
-      Document xml;
-      try {
-
-         // Create a validating DOM/XML parser
-         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-         factory.setValidating(true);
-
-         DocumentBuilder domBuilder = factory.newDocumentBuilder();
-         Resolver          resolver = new Resolver();
-         domBuilder.setEntityResolver(resolver);
-         domBuilder.setErrorHandler(new ErrorHandler());
-
-         // Parse the file to produce a DOM/XML object
-         xml = domBuilder.parse(file);
-
-      } catch (ParserConfigurationException cause) {
-         IOException e = new IOException("Failed to parse \"log.xml\" file.");
-         e.initCause(cause);
-         throw e;
-      } catch (SAXException cause) {
-         IOException e = new IOException("Failed to parse \"log.xml\" file.");
-         e.initCause(cause);
-         throw e;
-      }
-      
-      // Parse the domain name
-      String domainName = xml.getDocumentElement().getAttribute("domain");
-      Element docElem = xml.getDocumentElement();
-      boolean isPublic = Boolean.parseBoolean(docElem.getAttribute("public"));
-      
-      // Parse the locales for the translation bundles
-      // Typical is: <translation-bundle locale="en_US" />
-      Map<String,Document> translations = new HashMap<String,Document>();
-      NodeList elems = docElem.getElementsByTagName("translation-bundle");
-      for (int index = 0; index < elems.getLength(); index++) {
-         Element elem = (Element) elems.item(index);
-         String locale = elem.getAttribute("locale");
- 
-         // Define the location of the log.xml file
-         File tbFile = new File(dir, "translation-bundle-" + locale + ".xml");
-
-         Document tbXML;
-         try {
-
-            // Create a validating DOM/XML parser
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            factory.setValidating(true);
-
-            DocumentBuilder domBuilder = factory.newDocumentBuilder();
-            Resolver          resolver = new Resolver();
-            domBuilder.setEntityResolver(resolver);
-            domBuilder.setErrorHandler(new ErrorHandler());
-
-            // Parse the file to produce a DOM/XML object
-            tbXML = domBuilder.parse(tbFile);
-
-         } catch (ParserConfigurationException cause) {
-            IOException e = new IOException("Failed to parse \"log.xml\" file.");
-            e.initCause(cause);
-            throw e;
-         } catch (SAXException cause) {
-            IOException e = new IOException("Failed to parse \"log.xml\" file.");
-            e.initCause(cause);
-            throw e;
-         }
-         
-         translations.put(locale, tbXML);
-      }
-
-      return new LogDef(xml, domainName, isPublic, translations);
+      return new LogDef(dir);
    }
 
 
@@ -142,47 +57,59 @@ public final class LogDef {
    /**
     * Constructs a new <code>LogDef</code>.
     *
-    * @param xml
-    *    the XML {@link Document} to construct this object from,
-    *    cannot be <code>null</code>.
-    *    
-    * @param domainName
-    *    the domain name, cannot be <code>null</code>.
-    *    
-    * @param isPublic
-    *    flag that indicates if the generated code should be considered
-    *    public, even outside its own domain/namespace.
-    *    
-    * @param translations
-    *    the translation bundle XML {@link Document}s, indexed by name;
+    * @param dir
+    *    the directory to load the log definition from,
     *    cannot be <code>null</code>.
     *
     * @throws IllegalArgumentException
-    *    if <code>xml == null || domainName == null || locales == null || translations == null</code>.
+    *    if <code>dir == null</code>, or if it is not a directory.
+    *
+    * @throws IOException
+    *    if the definition(s) could not be loaded.
     */
-   private LogDef(Document xml, String domainName, boolean isPublic, Map<String,Document> translations)
-   throws IllegalArgumentException {
-      
-      // Check preconditions
-      if (xml == null) {
-         throw new IllegalArgumentException("xml == null");
-      } else if (domainName == null) {
-         throw new IllegalArgumentException("domainName == null");
-      } else if (translations == null) {
-         throw new IllegalArgumentException("translations == null");
-      }
+   private LogDef(File dir)
+   throws IllegalArgumentException, IOException {
 
-      // Initialize fields
-      _xml          = xml;
-      _domainName   = domainName;
-      _public       = isPublic;
-      _translations = translations;
+      // Check preconditions
+      if (dir == null) {
+         throw new IllegalArgumentException("dir == null");
+      } else if (! dir.isDirectory()) {
+         throw new IllegalArgumentException("Path (\"" + dir.getPath() + "\") is not a directory.");
+      }
+      
+      // Create a resolver for the specified input directory
+      _resolver = new Resolver(dir);
+      
+      // Load the log.xml file
+      _xml = _resolver.loadInputDocument("log.xml");
+      
+      // Parse the domain name and determine access level
+      Element docElem = _xml.getDocumentElement();
+      _domainName     = docElem.getAttribute("domain");
+      _public         = Boolean.parseBoolean(docElem.getAttribute("public"));
+            
+      // Load the translation bundles
+      _translations = new HashMap<String,Document>();
+      NodeList elems = docElem.getElementsByTagName("translation-bundle");
+      for (int index = 0; index < elems.getLength(); index++) {
+         Element elem = (Element) elems.item(index);
+         String locale = elem.getAttribute("locale");
+ 
+         Document tbXML = _resolver.loadInputDocument("translation-bundle-" + locale + ".xml");
+         _translations.put(locale, tbXML);
+      }
    }
 
 
    //-------------------------------------------------------------------------
    // Fields
    //-------------------------------------------------------------------------
+
+   /**
+    * The resolver that can resolve input files and XSLT files.
+    * Never <code>null</code>.
+    */
+   private final Resolver _resolver;
 
    /**
     * The source file as a DOM document. Never <code>null</code>.
@@ -264,7 +191,7 @@ public final class LogDef {
          InputStream            xsltStream = Library.getMetaResourceAsStream(xsltPath);
          StreamSource     xsltStreamSource = new StreamSource(xsltStream);
          TransformerFactory xformerFactory = TransformerFactory.newInstance();
-         xformerFactory.setURIResolver(new Resolver());
+         xformerFactory.setURIResolver(_resolver);
          Transformer               xformer = xformerFactory.newTransformer(xsltStreamSource);
 
          // Set the parameters for the template
@@ -313,7 +240,7 @@ public final class LogDef {
          InputStream            xsltStream = Library.getMetaResourceAsStream(xsltPath);
          StreamSource     xsltStreamSource = new StreamSource(xsltStream);
          TransformerFactory xformerFactory = TransformerFactory.newInstance();
-         xformerFactory.setURIResolver(new Resolver());
+         xformerFactory.setURIResolver(_resolver);
          Transformer               xformer = xformerFactory.newTransformer(xsltStreamSource);
 
          // Set the parameters for the template
@@ -350,23 +277,6 @@ public final class LogDef {
       // Transformer error
       } catch (TransformerException cause) {
          throw newIOException("Failed to perform XSLT transformation.", cause);
-      }
-   }
-
-   private static class ErrorHandler implements org.xml.sax.ErrorHandler {
-
-      public void error(SAXParseException exception) throws SAXException {
-         exception.printStackTrace();
-         throw new SAXException(exception);
-      }
-
-      public void fatalError(SAXParseException exception) throws SAXException {
-         exception.printStackTrace();
-         throw new SAXException(exception);
-      }
-
-      public void warning(SAXParseException exception) throws SAXException {
-         // empty
       }
    }
 }
