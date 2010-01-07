@@ -244,8 +244,10 @@ public final class LogDef {
          Transformer               xformer = xformerFactory.newTransformer(xsltStreamSource);
 
          // Set the parameters for the template
+         xformer.setParameter("locale",       locale);
          xformer.setParameter("package_name", _domainName);
          xformer.setParameter("accesslevel",  _public ? "public" : "protected");
+         xformer.setParameter("log_file",     "log.xml");
 
          // Make sure the output directory exists
          String domainPath = _domainName.replace(".", "/");
