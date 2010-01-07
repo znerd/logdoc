@@ -22,8 +22,6 @@ import org.w3c.dom.NodeList;
  * Log definition. Typically read from a <code>log.xml</code> file.
  *
  * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
- *
- * @since Logdoc 3.0
  */
 public final class LogDef {
 
@@ -175,12 +173,6 @@ public final class LogDef {
 	   return new DOMSource(_translations.get(locale));
    }
 
-   private IOException newIOException(String detail, Throwable cause) {
-      IOException e = new IOException(detail);
-      e.initCause(cause);
-      return e;
-   }
-
    private void transform(File baseDir, String className)
    throws IOException {
 
@@ -222,11 +214,11 @@ public final class LogDef {
 
       // Transformer configuration error
       } catch (TransformerConfigurationException cause) {
-         throw newIOException("Unable to perform XSLT transformation due to configuration problem.", cause);
+         throw ExceptionUtils.newIOException("Unable to perform XSLT transformation due to configuration problem.", cause);
 
       // Transformer error
       } catch (TransformerException cause) {
-         throw newIOException("Failed to perform XSLT transformation.", cause);
+         throw ExceptionUtils.newIOException("Failed to perform XSLT transformation.", cause);
       }
    }
    
@@ -274,11 +266,11 @@ public final class LogDef {
 
       // Transformer configuration error
       } catch (TransformerConfigurationException cause) {
-         throw newIOException("Unable to perform XSLT transformation due to configuration problem.", cause);
+         throw ExceptionUtils.newIOException("Unable to perform XSLT transformation due to configuration problem.", cause);
 
       // Transformer error
       } catch (TransformerException cause) {
-         throw newIOException("Failed to perform XSLT transformation.", cause);
+         throw ExceptionUtils.newIOException("Failed to perform XSLT transformation.", cause);
       }
    }
 }

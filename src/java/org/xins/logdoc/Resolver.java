@@ -129,13 +129,9 @@ class Resolver implements EntityResolver, URIResolver {
          return domBuilder.parse(file);
  
       } catch (ParserConfigurationException cause) {
-         IOException e = new IOException("Failed to parse \"log.xml\" file.");
-         e.initCause(cause);
-         throw e;
+         throw ExceptionUtils.newIOException("Failed to parse \"log.xml\" file.", cause);
       } catch (SAXException cause) {
-         IOException e = new IOException("Failed to parse \"log.xml\" file.");
-         e.initCause(cause);
-         throw e;
+         throw ExceptionUtils.newIOException("Failed to parse \"log.xml\" file.", cause);
       }
    }
    
@@ -146,8 +142,9 @@ class Resolver implements EntityResolver, URIResolver {
          return new InputSource(LOG_DTD_URL.openStream());
       } else if ("-//Logdoc//DTD Translation Bundle 3.0//EN".equals(publicId)) {
          return new InputSource(TRANSLATION_BUNDLE_DTD_URL.openStream());
+      } else {
+         throw new IOException("Unable to find DTD with public ID \"" + publicId + "\" and system ID \"" + systemId + "\".");
       }
-		return null;
 	}
 
 	public Source resolve(String href, String base) throws TransformerException {

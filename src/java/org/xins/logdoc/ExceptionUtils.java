@@ -1,22 +1,18 @@
 // See the COPYRIGHT file for copyright and license information
 package org.xins.logdoc;
 
+import java.io.IOException;
+
 /**
  * Utility functions related to exceptions.
  *
- * @version $Revision: 1.18 $ $Date: 2007/06/07 08:27:52 $
  * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
- *
- * @since XINS 1.2.0
  */
 public final class ExceptionUtils {
-
-   /**
-    * Constructs a new <code>ExceptionUtils</code> object.
-    */
-   private ExceptionUtils() {
-      // empty
-   }
+   
+   //-------------------------------------------------------------------------
+   // Class functions
+   //-------------------------------------------------------------------------
 
    /**
     * Determines the root cause for the specified exception.
@@ -36,80 +32,47 @@ public final class ExceptionUtils {
       }
 
       // Get the root cause of the exception
-      Throwable cause = getCause(exception);
+      Throwable cause = exception.getCause();
       while (cause != null) {
          exception = cause;
-         cause = getCause(exception);
+         cause = exception.getCause();
       }
 
       return exception;
    }
 
    /**
-    * Determines the cause for the specified exception.
-    *
-    * @param exception
-    *    the exception to determine the cause for, cannot be
-    *    <code>null</code>.
-    *
+    * Creates a new <code>IOException</code> with the specified cause
+    * exception. This is a utility function that is useful in Java 1.5, since
+    * an {@link IOException} constructor that accepts both a detail message
+    * and a cause exception is not available until Java 6.
+    * 
+    * @param detail
+    *    the detail message, can be <code>null</code>.
+    *    
+    * @param cause
+    *    the cause exception, or <code>null</code> if none.
+    *    
     * @return
-    *    the cause exception, can be <code>null</code>.
-    *
-    * @throws IllegalArgumentException
-    *    if <code>exception == null</code>.
-    *
-    * @deprecated
-    *    Since Logdoc 3.0, use {@link Throwable#getCause()} directly.
-    *    This method was previously provided for backwards compatibility with
-    *    Java 1.3, but that version is no longer supported.
+    *    the new {@link IOException}, never <code>null</code>.
     */
-   @Deprecated
-   public static Throwable getCause(Throwable exception)
-   throws IllegalArgumentException {
-
-      // Check preconditions
-      if (exception == null) {
-         throw new IllegalArgumentException("exception  == null");
+   static IOException newIOException(String detail, Throwable cause) {
+      IOException e = new IOException(detail);
+      if (cause != null) {
+         e.initCause(cause);
       }
-
-      // Use the Throwable.getCause() method, available as of J2SE v1.4
-      return exception.getCause();
+      return e;
    }
 
+
+   //-------------------------------------------------------------------------
+   // Constructors
+   //-------------------------------------------------------------------------
+
    /**
-    * Sets the cause for the specified exception.
-    *
-    * @param exception
-    *    the exception to set the cause for, cannot be <code>null</code>.
-    *
-    * @param cause
-    *    the cause exception, can be <code>null</code> but cannot be the
-    *    same as <code>exception</code>.
-    *
-    * @throws IllegalArgumentException
-    *    if <code>exception == null || exception == cause</code>.
-    *
-    * @throws IllegalStateException
-    *    if the cause exception was already set.
-    *
-    * @deprecated
-    *    Since Logdoc 3.0, use {@link Throwable#initCause(Throwable)} instead.
-    *    This method was previously provided for backwards compatibility with
-    *    Java 1.3, but that version is no longer supported.
+    * Constructs a new <code>ExceptionUtils</code> object.
     */
-   @Deprecated
-   public static void setCause(Throwable exception, Throwable cause)
-   throws IllegalArgumentException, IllegalStateException {
-
-      // Check preconditions
-      if (exception == null) {
-         throw new IllegalArgumentException("exception  == null");
-      } else if (exception == cause) {
-         throw new IllegalArgumentException("exception == cause");
-
-      // Use the Throwable.initCause() method, available as of J2SE v1.4
-      } else if (cause != null) {
-         exception.initCause(cause);
-      }
+   private ExceptionUtils() {
+      // empty
    }
 }
