@@ -35,3 +35,12 @@ Use Maven to build Logdoc self and execute the unit tests.
 Allow users to use Maven to invoke Logdoc functionality (build code/docs).
 
 ------------------------------------------------------------------------------
+
+Move the Java package from org.xins.logdoc to org.znerd.logdoc, to affirm that
+Logdoc is now independent of XINS.
+
+------------------------------------------------------------------------------
+
+Consider applying as an Apache project.
+
+------------------------------------------------------------------------------
