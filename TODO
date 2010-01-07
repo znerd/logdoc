@@ -44,3 +44,7 @@ Logdoc is now independent of XINS.
 Consider applying as an Apache project.
 
 ------------------------------------------------------------------------------
+
+Remove @since and @version tags.
+
+------------------------------------------------------------------------------
