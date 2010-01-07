@@ -29,7 +29,6 @@ import org.xml.sax.SAXParseException;
 class Resolver implements EntityResolver, URIResolver {
    
    // TODO: Cache the DTD information internally
-   // TODO: Consider supporting older DTDs as well
 
    //-------------------------------------------------------------------------
    // Class fields
@@ -47,12 +46,13 @@ class Resolver implements EntityResolver, URIResolver {
     */
    private static final URL TRANSLATION_BUNDLE_DTD_URL;
 
+   
    //-------------------------------------------------------------------------
    // Class functions
    //-------------------------------------------------------------------------
 
    /**
-    * Class initializer that reads the Logdoc 3.0 DTD into memory.
+    * Class initializer that reads the DTDs into memory.
     */
    static {
       // TODO: Move this to the Library class
@@ -152,7 +152,7 @@ class Resolver implements EntityResolver, URIResolver {
 
 	public Source resolve(String href, String base) throws TransformerException {
 
-      //System.err.println("Resolver.resolve called with href=\"" + href + "\" and base=\"" + base + "\"; result is \"" + resultURL + "\".");
+      System.err.println("Resolver.resolve called with href=\"" + href + "\" and base=\"" + base + "\".");
 
 	   // Check preconditions
 	   if (href == null) {
@@ -176,6 +176,7 @@ class Resolver implements EntityResolver, URIResolver {
 	      throw new TransformerException("File with href \"" + href + "\" is not recognized.");
 	   }
 	}
+	
 	
    //-------------------------------------------------------------------------
 	// Inner classes
