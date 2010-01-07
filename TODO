@@ -27,3 +27,11 @@ Use XML Schema definitions (XSDs) to validate the XML input files before
 processing them.
 
 ------------------------------------------------------------------------------
+
+Use Maven to build Logdoc self and execute the unit tests.
+
+------------------------------------------------------------------------------
+
+Allow users to use Maven to invoke Logdoc functionality (build code/docs).
+
+------------------------------------------------------------------------------
