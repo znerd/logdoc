@@ -49,3 +49,8 @@ Move CustomLevel out of the AbstractLog class to a package/library that is
 Log4J-specific.
 
 ------------------------------------------------------------------------------
+
+Consider losing the Commons IO dependency, since it is only used once, to
+determine the current version number.
+
+------------------------------------------------------------------------------
