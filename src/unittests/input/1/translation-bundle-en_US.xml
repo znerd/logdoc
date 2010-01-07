@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE translation-bundle PUBLIC "-//Logdoc//DTD Translation Bundle 3.0//EN" "http://www.xins.org/dtd/log_3_0.dtd">
+<!DOCTYPE translation-bundle PUBLIC "-//Logdoc//DTD Translation Bundle 3.0//EN" "http://www.xins.org/dtd/translation-bundle_3_0.dtd">
 
 <translation-bundle>
 	<translation entry="100">Initializing transaction system.</translation>
