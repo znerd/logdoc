@@ -1,28 +1,26 @@
 // See the COPYRIGHT file for copyright and license information
-package org.xins.logdoc;
+package org.znerd.logdoc;
 
 /**
- * Log filter that always returns an empty string. This filter provides
- * maximum security.
- *
- * <p>An empty string is returned instead of plain <code>null</code>, to avoid
- * any {@link NullPointerException} issues.
+ * Log filter that always returns the original parameter value. This filter
+ * provides no security at all.
  *
  * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
  */
-public final class NullLogFilter extends LogFilter {
+public final class SimpleLogFilter extends LogFilter {
 
    //-------------------------------------------------------------------------
    // Constructors
    //-------------------------------------------------------------------------
 
    /**
-    * Constructs a new <code>NullLogFilter</code>.
+    * Constructs a new <code>SimpleLogFilter</code>.
     */
-   public NullLogFilter() {
+   public SimpleLogFilter() {
       // empty
    }
 
+   
    //-------------------------------------------------------------------------
    // Methods
    //-------------------------------------------------------------------------
@@ -30,12 +28,12 @@ public final class NullLogFilter extends LogFilter {
    @Override
    public String filter(String logger, String param, String value)
    throws IllegalArgumentException {
-      return "";
+      return value;
    }
 
    @Override
    public Object filter(String logger, String param, Object value)
    throws IllegalArgumentException {
-      return "";
+      return value;
    }
 }

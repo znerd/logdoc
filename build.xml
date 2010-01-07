@@ -214,7 +214,7 @@
 
 	<!-- Prints the name and version of this library -->
 	<target name="print-version" depends="compile" description="Prints the version of Logdoc">
-		<java classname="org.xins.logdoc.Library">
+		<java classname="org.znerd.logdoc.Library">
 			<classpath>
 				<fileset dir="lib" includes="*.jar" />
 				<pathelement path="${classes.outputdir}" />

@@ -1,9 +1,9 @@
 // See the COPYRIGHT file for copyright and license information
-package org.xins.logdoc.ant;
+package org.znerd.logdoc.ant;
 
 import org.apache.tools.ant.BuildException;
 
-import org.xins.logdoc.LogDef;
+import org.znerd.logdoc.LogDef;
 
 /**
  * An Apache Ant task for generating web pages from Logdoc definitions.

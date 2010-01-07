@@ -1,5 +1,5 @@
 // See the COPYRIGHT file for copyright and license information
-package org.xins.logdoc;
+package org.znerd.logdoc;
 
 import java.io.InputStream;
 import java.io.IOException;

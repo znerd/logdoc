@@ -45,7 +45,7 @@
  */
 </xsl:text>
 		<xsl:value-of select="$accessmodifier" />
-		<xsl:text>class Log extends org.xins.logdoc.AbstractLog {
+		<xsl:text>class Log extends org.znerd.logdoc.AbstractLog {
 
    /**
     * The fully-qualified name for this class.
@@ -127,10 +127,10 @@
       /**
        * Constructs a new <code>Controller</code> for this log.
        *
-       * @throws org.xins.logdoc.UnsupportedLocaleException
+       * @throws org.znerd.logdoc.UnsupportedLocaleException
        *    if the current locale is unsupported.
        */
-      public Controller() throws org.xins.logdoc.UnsupportedLocaleException {
+      public Controller() throws org.znerd.logdoc.UnsupportedLocaleException {
          super();
       }
 
@@ -209,7 +209,7 @@
 			<xsl:text>
       </xsl:text>
 			<xsl:value-of select="@name" />
-			<xsl:text> = org.xins.logdoc.LogCentral.getLogFilter().filter("</xsl:text>
+			<xsl:text> = org.znerd.logdoc.LogCentral.getLogFilter().filter("</xsl:text>
 			<xsl:value-of select="$category" />
 			<xsl:text>", "</xsl:text>
 			<xsl:value-of select="@name" />
@@ -243,16 +243,16 @@
 		<xsl:text>, _translation, </xsl:text>
 		<xsl:choose>
 			<xsl:when test="$exception and @level = 'DEBUG'">
-				<xsl:text>org.xins.logdoc.ExceptionUtils.getRootCause(_exception));</xsl:text>
+				<xsl:text>org.znerd.logdoc.ExceptionUtils.getRootCause(_exception));</xsl:text>
 			</xsl:when>
 			<xsl:when test="$exception">
-				<xsl:text>org.xins.logdoc.LogCentral.isStackTraceAtMessageLevel() ? org.xins.logdoc.ExceptionUtils.getRootCause(_exception) : null);
-         if (_exception != null &amp;&amp; !org.xins.logdoc.LogCentral.isStackTraceAtMessageLevel() &amp;&amp; LOGGER_</xsl:text>
+				<xsl:text>org.znerd.logdoc.LogCentral.isStackTraceAtMessageLevel() ? org.znerd.logdoc.ExceptionUtils.getRootCause(_exception) : null);
+         if (_exception != null &amp;&amp; !org.znerd.logdoc.LogCentral.isStackTraceAtMessageLevel() &amp;&amp; LOGGER_</xsl:text>
 				<xsl:value-of select="@id" />
 				<xsl:text>.isEnabledFor(DEBUG)) {
             LOGGER_</xsl:text>
 				<xsl:value-of select="@id" />
-				<xsl:text>.log(FQCN, DEBUG, _translation, org.xins.logdoc.ExceptionUtils.getRootCause(_exception));
+				<xsl:text>.log(FQCN, DEBUG, _translation, org.znerd.logdoc.ExceptionUtils.getRootCause(_exception));
          }</xsl:text>
 			</xsl:when>
 			<xsl:otherwise>

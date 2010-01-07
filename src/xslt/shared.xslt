@@ -27,7 +27,7 @@
 				<xsl:text>String</xsl:text>
 			</xsl:when>
 			<xsl:when test="@type = 'serializable'">
-				<xsl:text>org.xins.logdoc.LogdocSerializable</xsl:text>
+				<xsl:text>org.znerd.logdoc.LogdocSerializable</xsl:text>
 			</xsl:when>
 			<xsl:when test="@type = 'object'">
 				<xsl:text>Object</xsl:text>

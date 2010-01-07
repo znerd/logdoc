@@ -1,5 +1,5 @@
 // See the COPYRIGHT file for copyright and license information
-package org.xins.logdoc.ant;
+package org.znerd.logdoc.ant;
 
 import java.io.File;
 import java.util.regex.Pattern;
@@ -9,7 +9,7 @@ import org.apache.tools.ant.BuildException;
 import static org.apache.tools.ant.Project.MSG_VERBOSE;
 import org.apache.tools.ant.taskdefs.MatchingTask;
 
-import org.xins.logdoc.LogDef;
+import org.znerd.logdoc.LogDef;
 
 /**
  * Abstract base class for the Logdoc Ant task implementations.

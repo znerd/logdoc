@@ -5,7 +5,7 @@ package com.znerd.mylibrary;
  *
  * @since MyLibrary 5.5.3
  */
-public class Log extends org.xins.logdoc.AbstractLog {
+public class Log extends org.znerd.logdoc.AbstractLog {
 
    /**
     * The fully-qualified name for this class.
@@ -149,10 +149,10 @@ public class Log extends org.xins.logdoc.AbstractLog {
       /**
        * Constructs a new <code>Controller</code> for this log.
        *
-       * @throws org.xins.logdoc.UnsupportedLocaleException
+       * @throws org.znerd.logdoc.UnsupportedLocaleException
        *    if the current locale is unsupported.
        */
-      public Controller() throws org.xins.logdoc.UnsupportedLocaleException {
+      public Controller() throws org.znerd.logdoc.UnsupportedLocaleException {
          super();
       }
 

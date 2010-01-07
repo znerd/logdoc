@@ -1,5 +1,5 @@
 // See the COPYRIGHT file for copyright and license information
-package org.xins.logdoc;
+package org.znerd.logdoc;
 
 /**
  * Exception thrown if a specified locale is not supported by at least one

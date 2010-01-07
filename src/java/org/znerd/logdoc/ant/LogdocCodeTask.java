@@ -1,39 +1,33 @@
 // See the COPYRIGHT file for copyright and license information
-package org.xins.logdoc;
+package org.znerd.logdoc.ant;
+
+import org.znerd.logdoc.LogDef;
 
 /**
- * Log filter that always returns the original parameter value. This filter
- * provides no security at all.
+ * An Apache Ant task for generating source files from Logdoc definitions.
  *
  * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
  */
-public final class SimpleLogFilter extends LogFilter {
+public final class LogdocCodeTask extends AbstractLogdocTask {
 
    //-------------------------------------------------------------------------
    // Constructors
    //-------------------------------------------------------------------------
 
    /**
-    * Constructs a new <code>SimpleLogFilter</code>.
+    * Constructs a new <code>LogdocJavaTask</code> object.
     */
-   public SimpleLogFilter() {
+   public LogdocCodeTask() {
       // empty
    }
 
-   
+
    //-------------------------------------------------------------------------
    // Methods
    //-------------------------------------------------------------------------
 
    @Override
-   public String filter(String logger, String param, String value)
-   throws IllegalArgumentException {
-      return value;
-   }
-
-   @Override
-   public Object filter(String logger, String param, Object value)
-   throws IllegalArgumentException {
-      return value;
+   protected void executeImpl(LogDef def) throws Exception {
+      def.generateCode(_destDir);
    }
 }

@@ -1,5 +1,5 @@
 // See the COPYRIGHT file for copyright and license information
-package org.xins.logdoc;
+package org.znerd.logdoc;
 
 /**
  * Parameter value log filters. Implementations of this abstract class can be

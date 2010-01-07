@@ -1,5 +1,5 @@
 // See the COPYRIGHT file for copyright and license information
-package org.xins.logdoc;
+package org.znerd.logdoc;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.NDC;
@@ -18,20 +18,20 @@ public final class LogCentral {
    /**
     * The name of the property that specifies which locale should be used.
     */
-   public static final String LOG_LOCALE_PROPERTY = "org.xins.logdoc.locale";
+   public static final String LOG_LOCALE_PROPERTY = "org.znerd.logdoc.locale";
 
    /**
     * The name of the property that specifies if all stack traces should be
     * displayed at the message level. By default, stack traces are displayed
     * at the <em>DEBUG</em> level.
     */
-   public static final String LOG_STACK_TRACE_AT_MESSAGE_LEVEL = "org.xins.logdoc.stackTraceAtMessageLevel";
+   public static final String LOG_STACK_TRACE_AT_MESSAGE_LEVEL = "org.znerd.logdoc.stackTraceAtMessageLevel";
 
    /**
     * The name of the property that specifies the name of the
     * <code>LogFilter</code> class to use.
     */
-   public static final String LOG_FILTER_PROPERTY = "org.xins.logdoc.filterClass";
+   public static final String LOG_FILTER_PROPERTY = "org.znerd.logdoc.filterClass";
 
    /**
     * The default locale used at start-up, if no locale is specified in a
@@ -274,7 +274,7 @@ public final class LogCentral {
          throw new IllegalArgumentException("logFilter == null");
       }
 
-      Logger.getLogger("org.xins.logdoc.LogCentral.0000").debug("Set LogFilter to instance of class " + logFilter.getClass().getName() + '.');
+      Logger.getLogger("org.znerd.logdoc.LogCentral.0000").debug("Set LogFilter to instance of class " + logFilter.getClass().getName() + '.');
 
       // Store the filter in this class
       LOG_FILTER = logFilter;
@@ -309,7 +309,7 @@ public final class LogCentral {
       // Instance construction failed, eclipse potential issues using a
       // NullLogFilter
       } catch (Throwable cause) {
-         Logger.getLogger("org.xins.logdoc.LogCentral.0001").error("Failed to construct LogFilter of class: " + className + ". Using NullLogFilter.", cause);
+         Logger.getLogger("org.znerd.logdoc.LogCentral.0001").error("Failed to construct LogFilter of class: " + className + ". Using NullLogFilter.", cause);
          logFilter = new NullLogFilter();
       }
 
