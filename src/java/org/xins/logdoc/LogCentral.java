@@ -7,13 +7,14 @@ import org.apache.log4j.NDC;
 /**
  * Central class for <em>logdoc</em> logging.
  *
- * @version $Revision: 1.38 $ $Date: 2007/04/25 15:32:43 $
  * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
- *
- * @since XINS 1.0.0
  */
 public final class LogCentral {
-
+   
+   //-------------------------------------------------------------------------
+   // Class fields
+   //-------------------------------------------------------------------------
+   
    /**
     * The name of the property that specifies which locale should be used.
     */
@@ -23,16 +24,12 @@ public final class LogCentral {
     * The name of the property that specifies if all stack traces should be
     * displayed at the message level. By default, stack traces are displayed
     * at the <em>DEBUG</em> level.
-    *
-    * @since XINS 1.4.0
     */
    public static final String LOG_STACK_TRACE_AT_MESSAGE_LEVEL = "org.xins.logdoc.stackTraceAtMessageLevel";
 
    /**
     * The name of the property that specifies the name of the
     * <code>LogFilter</code> class to use.
-    *
-    * @since Logdoc 3.0
     */
    public static final String LOG_FILTER_PROPERTY = "org.xins.logdoc.filterClass";
 
@@ -55,8 +52,8 @@ public final class LogCentral {
    private static String LOCALE = null;
 
    /**
-    * Flag indicating whether the stack trace shol be displayed at the same
-    * level of the message or not.
+    * Flag indicating whether the stack trace should be displayed at the same
+    * level of the message or not. Default is <code>false</code>.
     */
    private static boolean STACK_TRACE_AT_MESSAGE_LEVEL = false;
 
@@ -64,16 +61,12 @@ public final class LogCentral {
     * The active <code>LogFilter</code> instance.
     */
    private static LogFilter LOG_FILTER;
-
-   /**
-    * Constructs a new <code>LogCentral</code> instance. This constructor is
-    * intentionally made <code>private</code>, since no instances should be
-    * constructed of this class.
-    */
-   private LogCentral() {
-      // empty
-   }
-
+   
+   
+   //-------------------------------------------------------------------------
+   // Class functions
+   //-------------------------------------------------------------------------
+   
    /**
     * Registers the specified <code>LogController</code>, which represents a
     * <em>logdoc</em> <code>Log</code> class.
@@ -224,8 +217,6 @@ public final class LogCentral {
    /**
     * Sets the locale on all <em>logdoc</em> <code>Log</code> classes to the
     * default locale.
-    *
-    * @since XINS 1.3.0
     */
    public static void useDefaultLocale() {
       setLocale(DEFAULT_LOCALE);
@@ -248,8 +239,6 @@ public final class LogCentral {
     * @param sameLevel
     *    <code>true</code> if the stack trace should be at the same level,
     *    <code>false</code> if the stack trace should be at DEBUG level.
-    *
-    * @since XINS 1.4.0
     */
    public static void setStackTraceAtMessageLevel(boolean sameLevel) {
        STACK_TRACE_AT_MESSAGE_LEVEL = sameLevel;
@@ -262,8 +251,6 @@ public final class LogCentral {
     * @return
     *    <code>true</code> if the stack trace should be at the same level,
     *    <code>false</code> if the stack trace should be at DEBUG level.
-    *
-    * @since XINS 1.4.0
     */
    public static boolean isStackTraceAtMessageLevel() {
        return STACK_TRACE_AT_MESSAGE_LEVEL;
@@ -278,8 +265,6 @@ public final class LogCentral {
     *
     * @throws IllegalArgumentException
     *    if <code>logFilter == null</code>.
-    *
-    * @since Logdoc 3.0
     */
    public static synchronized void setLogFilter(LogFilter logFilter)
    throws IllegalArgumentException {
@@ -307,8 +292,6 @@ public final class LogCentral {
     *
     * @throws IllegalArgumentException
     *    if <code>className == null</code>.
-    *
-    * @since Logdoc 3.0
     */
    public static void setLogFilterByClass(String className)
    throws IllegalArgumentException {
@@ -339,10 +322,22 @@ public final class LogCentral {
     *
     * @return
     *    the current {@link LogFilter}, never <code>null</code>.
-    *
-    * @since Logdoc 3.0
     */
    public static synchronized LogFilter getLogFilter() {
       return LOG_FILTER;
+   }
+
+   
+   //-------------------------------------------------------------------------
+   // Constructors
+   //-------------------------------------------------------------------------
+   
+   /**
+    * Constructs a new <code>LogCentral</code> instance. This constructor is
+    * intentionally made <code>private</code>, since no instances should be
+    * constructed of this class.
+    */
+   private LogCentral() {
+      // empty
    }
 }

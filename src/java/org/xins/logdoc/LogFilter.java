@@ -8,12 +8,13 @@ package org.xins.logdoc;
  * <p>A typical use is to filter out passwords so these will not be stored in
  * a logging store.
  *
- * @version $Revision: 9034 $ $Date: 2009-04-16 15:53:04 +0200 (do, 16 apr 2009) $
  * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
- *
- * @since Logdoc 3.0
  */
 public abstract class LogFilter {
+   
+   //-------------------------------------------------------------------------
+   // Constructors
+   //-------------------------------------------------------------------------
 
    /**
     * Constructs a new <code>LogFilter</code>.
@@ -21,6 +22,11 @@ public abstract class LogFilter {
    protected LogFilter() {
       // empty
    }
+
+   
+   //-------------------------------------------------------------------------
+   // Methods
+   //-------------------------------------------------------------------------
 
    /**
     * Filters the specified <code>String</code> value.

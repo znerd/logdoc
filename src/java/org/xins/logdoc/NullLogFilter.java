@@ -8,12 +8,13 @@ package org.xins.logdoc;
  * <p>An empty string is returned instead of plain <code>null</code>, to avoid
  * any {@link NullPointerException} issues.
  *
- * @version $Revision: 9034 $ $Date: 2009-04-16 15:53:04 +0200 (do, 16 apr 2009) $
  * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
- *
- * @since Logdoc 3.0
  */
 public final class NullLogFilter extends LogFilter {
+
+   //-------------------------------------------------------------------------
+   // Constructors
+   //-------------------------------------------------------------------------
 
    /**
     * Constructs a new <code>NullLogFilter</code>.
@@ -21,6 +22,10 @@ public final class NullLogFilter extends LogFilter {
    public NullLogFilter() {
       // empty
    }
+
+   //-------------------------------------------------------------------------
+   // Methods
+   //-------------------------------------------------------------------------
 
    @Override
    public String filter(String logger, String param, String value)

@@ -45,10 +45,6 @@ Consider applying as an Apache project.
 
 ------------------------------------------------------------------------------
 
-Remove @since and @version tags.
-
-------------------------------------------------------------------------------
-
 Move CustomLevel out of the AbstractLog class to a package/library that is
 Log4J-specific.
 

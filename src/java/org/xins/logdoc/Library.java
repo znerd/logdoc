@@ -10,10 +10,7 @@ import org.apache.commons.io.IOUtils;
 /**
  * Class that represents the Logdoc library.
  *
- * @version $Revision$ $Date$
  * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
- *
- * @since Logdoc 3.0
  */
 public final class Library {
    

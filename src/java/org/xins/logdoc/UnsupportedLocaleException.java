@@ -5,20 +5,20 @@ package org.xins.logdoc;
  * Exception thrown if a specified locale is not supported by at least one
  * <em>logdoc</em> <code>Log</code> class.
  *
- * @version $Revision: 1.16 $ $Date: 2007/03/15 17:08:40 $
  * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
- *
- * @since XINS 1.0.0
  */
 public final class UnsupportedLocaleException extends RuntimeException {
 
+   //-------------------------------------------------------------------------
+   // Class fields
+   //-------------------------------------------------------------------------
+
    private static final long serialVersionUID = -991987123777189023L;
 
-   /**
-    * The locale that is unsupported. The value of this field cannot be
-    * <code>null</code>.
-    */
-   private final String _locale;
+   
+   //-------------------------------------------------------------------------
+   // Constructors
+   //-------------------------------------------------------------------------
 
    /**
     * Constructs a new <code>UnsupportedLocaleException</code>.
@@ -43,6 +43,23 @@ public final class UnsupportedLocaleException extends RuntimeException {
       // Store locale?
       _locale = locale;
    }
+
+
+
+   //-------------------------------------------------------------------------
+   // Fields
+   //-------------------------------------------------------------------------
+
+   /**
+    * The locale that is unsupported. The value of this field cannot be
+    * <code>null</code>.
+    */
+   private final String _locale;
+
+   
+   //-------------------------------------------------------------------------
+   // Methods
+   //-------------------------------------------------------------------------
 
    /**
     * Retrieves the unsupported locale.

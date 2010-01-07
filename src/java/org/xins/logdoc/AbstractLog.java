@@ -6,13 +6,14 @@ import org.apache.log4j.Level;
 /**
  * Abstract base class for <em>logdoc</em> <code>Log</code> classes.
  *
- * @version $Revision: 1.28 $ $Date: 2007/03/15 17:08:40 $
  * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
- *
- * @since XINS 1.0.0
  */
 public abstract class AbstractLog {
 
+   //-------------------------------------------------------------------------
+   // Class fields
+   //-------------------------------------------------------------------------
+   
    /**
     * The <em>debug</em> log level.
     */
@@ -42,6 +43,11 @@ public abstract class AbstractLog {
     * The <em>fatal</em> log level.
     */
    public static final Level FATAL;
+   
+   
+   //-------------------------------------------------------------------------
+   // Class functions
+   //-------------------------------------------------------------------------
 
    /**
     * Initializes this class.
@@ -59,7 +65,12 @@ public abstract class AbstractLog {
       ERROR   = Level.ERROR;
       FATAL   = Level.FATAL;
    }
-
+   
+   
+   //-------------------------------------------------------------------------
+   // Constructors
+   //-------------------------------------------------------------------------
+   
    /**
     * Constructs a new <code>AbstractLog</code> instance.
     */
@@ -67,18 +78,23 @@ public abstract class AbstractLog {
       // empty
    }
 
+   //-------------------------------------------------------------------------
+   // Inner classes   
+   //-------------------------------------------------------------------------
+   
    /**
     * Log controller. Can be used by the <code>LogCentral</code> class to set
     * the locale on a specific <code>Log</code> class. Each <code>Log</code>
     * class should create exactly one <code>LogController</code> object, in a
     * class initializer.
     *
-    * @version $Revision: 1.28 $ $Date: 2007/03/15 17:08:40 $
     * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
-    *
-    * @since XINS 1.0.0
     */
    protected static abstract class LogController {
+      
+      //----------------------------------------------------------------------
+      // Constructors
+      //-------------------------------------------------------------------------
 
       /**
        * Constructs a new <code>LogController</code> object.
@@ -93,7 +109,12 @@ public abstract class AbstractLog {
          // instance
          LogCentral.registerLog(this);
       }
+      
 
+      //----------------------------------------------------------------------
+      // Methods
+      //----------------------------------------------------------------------
+      
       /**
        * Checks if the specified locale is supported.
        *
@@ -122,15 +143,24 @@ public abstract class AbstractLog {
    /**
     * Custom log level.
     *
-    * @version $Revision: 1.28 $ $Date: 2007/03/15 17:08:40 $
     * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
-    *
-    * @since XINS 1.0.0
     */
    private static final class CustomLevel extends Level {
-
+      
+      //----------------------------------------------------------------------
+      // Class fields
+      //----------------------------------------------------------------------
+      
+      /**
+       * Unique ID used to determine serialization compatibility.
+       */
       private static final long serialVersionUID = 1909887126346631322L;
 
+      
+      //----------------------------------------------------------------------
+      // Constructors
+      //----------------------------------------------------------------------
+      
       /**
        * Constructs a new <code>CustomLevel</code> object.
        *
@@ -144,10 +174,7 @@ public abstract class AbstractLog {
        *    the syslog equivalent.
        */
       private CustomLevel(int value, String name, int syslogEquivalent) {
-
-         // Call superconstructor
          super(value, name, syslogEquivalent);
-
       }
    }
 }
