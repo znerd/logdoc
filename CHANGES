@@ -1,8 +1,11 @@
---- CHANGES SINCE LOGDOC 3.0 -------------------------------------------------
+--- CHANGES SINCE LOGDOC 0.1 (COMPARED TO XINS 2.X) --------------------------
 
+* Changed package names from org.xins.logdoc to org.znerd.logdoc.
+* Removed all deprecated members.
+* Now only Java 1.5 and up are supported.
 * Added support for parameter filtering.
 * Added Ant tasks, with antlib.xml descriptor.
 * Access level is now specified in log.xml, e.g. public="true".
 * Domain is now specified in log.xml, e.g. domain="com.example.util".
-* Only supporting Logdoc 3.0 DTDs.
+* Only supporting new DTDs.
 * Unit tests.
