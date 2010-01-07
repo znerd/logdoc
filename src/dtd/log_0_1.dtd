@@ -1,7 +1,7 @@
 <!--
  XINS logdoc DTD. This DTD should be added to all log.xml file
  by adding the following lines at the top of the file :
-<!DOCTYPE log PUBLIC "-//XINS//DTD XINS Logdoc 3.0//EN" "http://www.xins.org/dtd/log_3_0.dtd">
+<!DOCTYPE log PUBLIC "-//znerd//DTD Logdoc Log 0.1//EN" "http://www.znerd.org/logdoc/dtd/log_0_1.dtd">
 -->
 <!ELEMENT log (translation-bundle*, group*)>
 <!ATTLIST log domain CDATA          #REQUIRED

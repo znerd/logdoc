@@ -57,14 +57,14 @@ class Resolver implements EntityResolver, URIResolver {
    static {
       // TODO: Move this to the Library class
 
-      LOG_DTD_URL = Library.getMetaResource("dtd/log_3_0.dtd");
+      LOG_DTD_URL = Library.getMetaResource("dtd/log_0_1.dtd");
       if (LOG_DTD_URL == null) {
-         throw new Error("Failed to load log_3_0.dtd file.");
+         throw new Error("Failed to load log_0_1.dtd file.");
       }
       
-      TRANSLATION_BUNDLE_DTD_URL = Library.getMetaResource("dtd/translation-bundle_3_0.dtd");
+      TRANSLATION_BUNDLE_DTD_URL = Library.getMetaResource("dtd/translation-bundle_0_1.dtd");
       if (TRANSLATION_BUNDLE_DTD_URL == null) {
-         throw new Error("Failed to load translation-bundle_3_0.dtd file.");
+         throw new Error("Failed to load translation-bundle_0_1.dtd file.");
       }
    }
 
@@ -138,9 +138,9 @@ class Resolver implements EntityResolver, URIResolver {
    public InputSource resolveEntity(String publicId, String systemId)
 	throws SAXException, IOException {
       //System.err.println("Resolver.resolveEntity called with publicId=\"" + publicId + "\" and systemId=\"" + systemId + "\".");
-      if ("-//Logdoc//DTD Logdoc 3.0//EN".equals(publicId)) {
+      if ("-//znerd//DTD Logdoc Log 0.1//EN".equals(publicId)) {
          return new InputSource(LOG_DTD_URL.openStream());
-      } else if ("-//Logdoc//DTD Translation Bundle 3.0//EN".equals(publicId)) {
+      } else if ("-//znerd//DTD Logdoc Translation Bundle 0.1//EN".equals(publicId)) {
          return new InputSource(TRANSLATION_BUNDLE_DTD_URL.openStream());
       } else {
          throw new IOException("Unable to find DTD with public ID \"" + publicId + "\" and system ID \"" + systemId + "\".");

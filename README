@@ -29,7 +29,7 @@ For more examples, see src/unittests/input/.
 Input files can be translated to Java and HTML code using Ant tasks. Define it
 in your Ant build.xml file as follows:
 
-   <taskdef resource="org/xins/logdoc/ant/antlib.xml" classpath="lib/logdoc.jar" />
+   <taskdef resource="org/znerd/logdoc/ant/antlib.xml" classpath="lib/logdoc.jar" />
 
 Then the tasks can be used as follows:
 

@@ -1,7 +1,7 @@
 <!--
  XINS translation bundle DTD. This DTD should be added to all translation-bundle-xx-XX.xml file
  by adding the following lines at the top of the file :
-<!DOCTYPE translation-bundle PUBLIC "-//XINS//DTD XINS Translation Bundle 3.0//EN" "http://www.xins.org/dtd/translation-bundle_3_0.dtd">
+<!DOCTYPE translation-bundle PUBLIC "-//znerd//DTD Logdoc Translation Bundle 0.1//EN" "http://www.znerd.org/logdoc/dtd/translation-bundle_0_1.dtd">
 -->
 <!ELEMENT translation-bundle (translation*)>
 <!ELEMENT translation (#PCDATA|value-of-param|exception-property)*>
