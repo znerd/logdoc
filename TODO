@@ -66,3 +66,11 @@ Have internal logging methods.
 Disable all internal logging unless a specific system property is set.
 
 ------------------------------------------------------------------------------
+
+Make sure unit tests reference correct on-line location for DTDs.
+
+------------------------------------------------------------------------------
+
+Make sure no on-line DTDs are required to run the unit tests.
+
+------------------------------------------------------------------------------
