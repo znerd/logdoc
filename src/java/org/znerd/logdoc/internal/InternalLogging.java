@@ -1,6 +1,8 @@
 // See the COPYRIGHT file for copyright and license information
 package org.znerd.logdoc.internal;
 
+import org.znerd.logdoc.LogLevel;
+
 /**
  * Logdoc-internal logging.
  *
@@ -19,7 +21,7 @@ public final class InternalLogging {
     *    the message, or <code>null</code>.
     */
    public static void debug(String message) {
-      // TODO
+      log(LogLevel.DEBUG, message);
    }
 
    /**
@@ -29,7 +31,7 @@ public final class InternalLogging {
     *    the message, or <code>null</code>.
     */
    public static void info(String message) {
-      // TODO
+      log(LogLevel.INFO, message);
    }
    
    /**
@@ -39,7 +41,7 @@ public final class InternalLogging {
     *    the message, or <code>null</code>.
     */
    public static void notice(String message) {
-      // TODO
+      log(LogLevel.NOTICE, message);
    }
    
    /**
@@ -49,7 +51,7 @@ public final class InternalLogging {
     *    the message, or <code>null</code>.
     */
    public static void warn(String message) {
-      // TODO
+      log(LogLevel.WARNING, message);
    }
 
    /**
@@ -59,7 +61,7 @@ public final class InternalLogging {
     *    the message, or <code>null</code>.
     */
    public static void error(String message) {
-      // TODO
+      log(LogLevel.ERROR, message);
    }
 
    /**
@@ -69,7 +71,11 @@ public final class InternalLogging {
     *    the message, or <code>null</code>.
     */
    public static void fatal(String message) {
-      // TODO
+      log(LogLevel.FATAL, message);
+   }
+   
+   private static void log(LogLevel level, String message) {
+      System.err.println("" + level.name().charAt(0) + ' ' + message);
    }
 
    
