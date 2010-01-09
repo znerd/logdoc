@@ -62,3 +62,7 @@ Change the Level class to an enumeration.
 Have internal logging methods.
 
 ------------------------------------------------------------------------------
+
+Disable all internal logging unless a specific system property is set.
+
+------------------------------------------------------------------------------
