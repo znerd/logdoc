@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringEscapeUtils;
+import org.znerd.logdoc.internal.InternalLogging;
 
 /**
  * Class that represents the Logdoc library.
@@ -42,7 +44,8 @@ public final class Library {
     * @throws IllegalArgumentException
     *    if <code>path == null</code>.
     */
-   static URL getMetaResource(String path) throws IllegalArgumentException {
+   static URL getMetaResource(String path)
+   throws IllegalArgumentException, NoSuchResourceException {
       
       // Check preconditions
       if (path == null) {
@@ -55,8 +58,11 @@ public final class Library {
       
       // Resource not found - this is fatal
       if (url == null) {
-         throw new Error("Failed to load resource \"" + absPath + "\" from class loader.");
+         InternalLogging.log(LogLevel.ERROR, "Failed to load resource \"" + absPath + "\".");
+         throw new NoSuchResourceException("Failed to load resource \"" + absPath + "\".");
       }
+      
+      InternalLogging.log(LogLevel.DEBUG, "Loaded \"" + absPath + "\".");
       
       return url;
    }
@@ -80,6 +86,28 @@ public final class Library {
    static InputStream getMetaResourceAsStream(String path)
    throws IllegalArgumentException, IOException {
       return getMetaResource(path).openStream();
+   }
+   
+   /**
+    * Utility function that quotes the specified text. For example, when the
+    * string <code>Hello "there"</code> is passed as input, then the string
+    * <code>"Hello \"there\""</code> is returned as output. When
+    * <code>null</code> is passed as input, then the string
+    * <code>(null)</code> is returned as output.
+    * 
+    * @param input
+    *    the input text, can be <code>null</code>.
+    *    
+    * @return
+    *    the quoted output string, or <code>(null)</code> if the input string
+    *    is <code>null</code>.
+    */
+   static String quote(String input) {
+      if (input == null) {
+         return "(null)";
+      } else {
+         return "\"" + StringEscapeUtils.escapeJava(input) + '"';
+      }
    }
    
    /**

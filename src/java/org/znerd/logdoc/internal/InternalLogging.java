@@ -15,67 +15,45 @@ public final class InternalLogging {
    //-------------------------------------------------------------------------
 
    /**
-    * Logs a debug message.
+    * Logs a message at a specified level.
+    * 
+    * @param level
+    *    the {@link LogLevel}, <code>null</code> is equivalent to passing
+    *    {@link LogLevel#DEBUG}.
     * 
     * @param message
     *    the message, or <code>null</code>.
     */
-   public static void debug(String message) {
-      log(LogLevel.DEBUG, message);
-   }
-
-   /**
-    * Logs an informational message.
-    * 
-    * @param message
-    *    the message, or <code>null</code>.
-    */
-   public static void info(String message) {
-      log(LogLevel.INFO, message);
+   public static void log(LogLevel level, String message) {
+      log(level, message, (Throwable) null);
    }
    
    /**
-    * Logs an informational message that should typically be noticed.
+    * Logs a message at a specified level, with an optional exception.
+    * 
+    * @param level
+    *    the {@link LogLevel}, <code>null</code> is equivalent to passing
+    *    {@link LogLevel#DEBUG}.
     * 
     * @param message
-    *    the message, or <code>null</code>.
+    *    the message, or <code>null</code> if an empty message should be
+    *    logged.
+    *    
+    * @param exception
+    *    the exception to log, or <code>null</code> if there is no exception
+    *    to log.
     */
-   public static void notice(String message) {
-      log(LogLevel.NOTICE, message);
-   }
-   
-   /**
-    * Logs a warning message.
-    * 
-    * @param message
-    *    the message, or <code>null</code>.
-    */
-   public static void warn(String message) {
-      log(LogLevel.WARNING, message);
-   }
-
-   /**
-    * Logs an error message.
-    * 
-    * @param message
-    *    the message, or <code>null</code>.
-    */
-   public static void error(String message) {
-      log(LogLevel.ERROR, message);
-   }
-
-   /**
-    * Logs a fatal error message.
-    * 
-    * @param message
-    *    the message, or <code>null</code>.
-    */
-   public static void fatal(String message) {
-      log(LogLevel.FATAL, message);
-   }
-   
-   private static void log(LogLevel level, String message) {
-      System.err.println("" + level.name().charAt(0) + ' ' + message);
+   public static void log(LogLevel level, String message, Throwable exception) {
+      if (level == null) {
+         level = LogLevel.DEBUG;
+      }
+      if (message == null) {
+         message = "";
+      }
+      System.err.println(level.name() + ' ' + message);
+      if (exception != null) {
+         exception.printStackTrace();
+      }
    }
 
    

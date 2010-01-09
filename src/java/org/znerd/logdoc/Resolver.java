@@ -15,10 +15,15 @@ import javax.xml.transform.URIResolver;
 import javax.xml.transform.stream.StreamSource;
 
 import org.w3c.dom.Document;
+
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+
+import static org.znerd.logdoc.Library.quote;
+
+import static org.znerd.logdoc.internal.InternalLogging.log;
 
 /**
  * Entity/URI resolver that can be used during XML parsing and during XSLT
@@ -85,10 +90,15 @@ class Resolver implements EntityResolver, URIResolver {
     *    if <code>dir == null</code>.
     */
    Resolver(File dir) throws IllegalArgumentException {
+      
+      // Check preconditions
       if (dir == null) {
          throw new IllegalArgumentException("dir == null");
       }
+      
+      // Initialize object
       _inputDir = dir;
+      log(LogLevel.DEBUG, "Created Resolver for input directory " + quote(dir.getAbsolutePath()) + '.');
    }
 
    
@@ -113,6 +123,8 @@ class Resolver implements EntityResolver, URIResolver {
          throw new IllegalArgumentException("fileName == null");
       }
       
+      log(LogLevel.DEBUG, "Loading input document " + quote(fileName) + '.');
+      
       File file = new File(_inputDir, fileName);
       
       try {
@@ -129,9 +141,9 @@ class Resolver implements EntityResolver, URIResolver {
          return domBuilder.parse(file);
  
       } catch (ParserConfigurationException cause) {
-         throw ExceptionUtils.newIOException("Failed to parse \"log.xml\" file.", cause);
+         throw ExceptionUtils.newIOException("Failed to parse \"" + fileName + "\" file.", cause);
       } catch (SAXException cause) {
-         throw ExceptionUtils.newIOException("Failed to parse \"log.xml\" file.", cause);
+         throw ExceptionUtils.newIOException("Failed to parse \"" + fileName + "\" file.", cause);
       }
    }
    
