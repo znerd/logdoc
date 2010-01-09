@@ -9,3 +9,4 @@
 * Domain is now specified in log.xml, e.g. domain="com.example.util".
 * Only supporting new DTDs.
 * Unit tests.
+* Internal logging, from inside Logdoc.
