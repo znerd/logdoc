@@ -4,13 +4,15 @@ package com.znerd.mylibrary;
  * Translation bundle for the <em>en_US</em> locale.
  *
  * @see Log
+ *
+ * @since MyLibrary 5.5.3
  */
 public final class TranslationBundle_en_US extends TranslationBundle {
 
    /**
     * The one and only instance of this class.
     */
-   public static final TranslationBundle_en_US SINGLETON = new TranslationBundle_();
+   public static final TranslationBundle_en_US SINGLETON = new TranslationBundle_en_US();
 
 
    /**
@@ -18,7 +20,7 @@ public final class TranslationBundle_en_US extends TranslationBundle {
     * since no instances of this class should be created. Instead, the class
     * functions should be used.
     */
-   private TranslationBundle_() {
+   private TranslationBundle_en_US() {
       super("en_US");
    }
 
@@ -28,26 +30,18 @@ public final class TranslationBundle_en_US extends TranslationBundle {
       return buffer.toString();
    }
 
-   public String translation_101() {
+   public String translation_101(long duration) {
       StringBuffer buffer = new StringBuffer(255);
       buffer.append("Transaction system initialized in ");
-      if (duration == null) {
-         buffer.append("(null)");
-      } else {
-         buffer.append(duration);
-      }
+      buffer.append(duration);
       buffer.append(" ms.");
       return buffer.toString();
    }
 
-   public String translation_102() {
+   public String translation_102(int id, String description) {
       StringBuffer buffer = new StringBuffer(255);
       buffer.append("Starting transaction ");
-      if (id == null) {
-         buffer.append("(null)");
-      } else {
-         buffer.append(id);
-      }
+      buffer.append(id);
       buffer.append(" (description: ");
       if (description == null) {
          buffer.append("(null)");
@@ -60,14 +54,10 @@ public final class TranslationBundle_en_US extends TranslationBundle {
       return buffer.toString();
    }
 
-   public String translation_103() {
+   public String translation_103(int id) {
       StringBuffer buffer = new StringBuffer(255);
       buffer.append("Transaction ");
-      if (id == null) {
-         buffer.append("(null)");
-      } else {
-         buffer.append(id);
-      }
+      buffer.append(id);
       buffer.append(" fully started.");
       return buffer.toString();
    }
