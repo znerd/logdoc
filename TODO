@@ -54,3 +54,7 @@ Move all internal stuff below the org.znerd.logdoc.internal package, make sure
 that is all excluded from regular Javadoc API docs.
 
 ------------------------------------------------------------------------------
+
+Change the Level class to an enumeration.
+
+------------------------------------------------------------------------------
