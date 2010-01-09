@@ -58,3 +58,7 @@ that is all excluded from regular Javadoc API docs.
 Change the Level class to an enumeration.
 
 ------------------------------------------------------------------------------
+
+Have internal logging methods.
+
+------------------------------------------------------------------------------
