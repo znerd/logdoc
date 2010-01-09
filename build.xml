@@ -116,6 +116,8 @@
 		<taskdef resource="org/znerd/logdoc/ant/antlib.xml">
 			<classpath>
 				<pathelement location="${classes.outputdir}" />
+				<pathelement location="lib/commons-io.jar" />
+				<pathelement location="lib/commons-lang.jar" />
 			</classpath>
 		</taskdef>
 
