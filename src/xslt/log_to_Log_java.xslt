@@ -45,7 +45,7 @@
  */
 </xsl:text>
 		<xsl:value-of select="$accessmodifier" />
-		<xsl:text>class Log extends org.znerd.logdoc.AbstractLog {
+		<xsl:text>class Log extends org.znerd.logdoc.internal.log4j.AbstractLog {
 
    /**
     * The fully-qualified name for this class.

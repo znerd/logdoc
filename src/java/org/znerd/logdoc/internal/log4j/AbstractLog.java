@@ -1,7 +1,9 @@
 // See the COPYRIGHT file for copyright and license information
-package org.znerd.logdoc;
+package org.znerd.logdoc.internal.log4j;
 
 import org.apache.log4j.Level;
+import org.znerd.logdoc.LogCentral;
+import org.znerd.logdoc.UnsupportedLocaleException;
 
 /**
  * Abstract base class for <em>logdoc</em> <code>Log</code> classes.

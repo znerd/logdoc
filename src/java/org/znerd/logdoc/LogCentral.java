@@ -3,6 +3,7 @@ package org.znerd.logdoc;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.NDC;
+import org.znerd.logdoc.internal.log4j.AbstractLog;
 
 /**
  * Central class for <em>logdoc</em> logging.

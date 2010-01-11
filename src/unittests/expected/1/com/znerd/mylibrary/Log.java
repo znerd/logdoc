@@ -5,7 +5,7 @@ package com.znerd.mylibrary;
  *
  * @since MyLibrary 5.5.3
  */
-public class Log extends org.znerd.logdoc.AbstractLog {
+public class Log extends org.znerd.logdoc.internal.log4j.AbstractLog {
 
    /**
     * The fully-qualified name for this class.
