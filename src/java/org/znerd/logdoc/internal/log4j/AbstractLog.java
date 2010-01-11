@@ -165,7 +165,8 @@ public abstract class AbstractLog {
       //----------------------------------------------------------------------
       
       /**
-       * Constructs a new <code>CustomLevel</code> object.
+       * Constructs a new <code>CustomLevel</code> object, representing a
+       * Log4J level.
        *
        * @param value
        *    the <code>int</code> value for this level.

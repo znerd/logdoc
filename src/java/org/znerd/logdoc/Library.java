@@ -17,17 +17,6 @@ import org.znerd.logdoc.internal.InternalLogging;
 public final class Library {
    
    //-------------------------------------------------------------------------
-   // Class fields
-   //-------------------------------------------------------------------------
-
-   /**
-    * Flag that indicates if this library has been initialized.
-    * Initially <code>false</code>.
-    */
-   private static boolean INITIALIZED;
-   
-   
-   //-------------------------------------------------------------------------
    // Class functions
    //-------------------------------------------------------------------------
 
@@ -149,34 +138,6 @@ public final class Library {
       return version;
    }
    
-   /**
-    * Initializes this library, if that is not done yet.
-    * 
-    * @return
-    *    <code>true</code> if the library has been initialized on this
-    *    thread, just now, or <code>false</code> if it had been initialized
-    *    previously, possibly on a different thread. 
-    */
-   public synchronized static boolean init() {
-      if (! INITIALIZED) {
-         INITIALIZED = true;
-         return true;
-      } else {
-         return false;
-      }
-   }
-   
-   /**
-    * Checks if this library has been initialized yet.
-    * 
-    * @return
-    *    <code>true</code> if this library is already initialized,
-    *    <code>false</code> if it is not.
-    */
-   public synchronized static boolean isInitialized() {
-      return INITIALIZED;
-   }
-
    /**
     * Prints the name and version of this library.
     */
