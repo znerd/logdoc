@@ -57,17 +57,9 @@ class Resolver implements EntityResolver, URIResolver {
     * Class initializer that reads the DTDs into memory.
     */
    static {
-      // TODO: Move this to the Library class
-
-      LOG_DTD_URL = Library.getMetaResource("dtd/log_0_1.dtd");
-      if (LOG_DTD_URL == null) {
-         throw new Error("Failed to load log_0_1.dtd file.");
-      }
-
+      // TODO: Consider moving this to the Library class
+      LOG_DTD_URL                = Library.getMetaResource("dtd/log_0_1.dtd");
       TRANSLATION_BUNDLE_DTD_URL = Library.getMetaResource("dtd/translation-bundle_0_1.dtd");
-      if (TRANSLATION_BUNDLE_DTD_URL == null) {
-         throw new Error("Failed to load translation-bundle_0_1.dtd file.");
-      }
    }
 
 

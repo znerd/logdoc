@@ -28,10 +28,13 @@ public final class Library {
     *    the path to the meta resource, cannot be <code>null</code>.
     *    
     * @return
-    *    the resource as a {@link URL}.
+    *    the resource as a {@link URL}, never <code>null</code>.
     *
     * @throws IllegalArgumentException
     *    if <code>path == null</code>.
+    *    
+    * @throws NoSuchResourceException
+    *    if the resource could not be found.
     */
    static URL getMetaResource(String path)
    throws IllegalArgumentException, NoSuchResourceException {
