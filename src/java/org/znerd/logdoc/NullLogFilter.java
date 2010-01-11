@@ -3,7 +3,7 @@ package org.znerd.logdoc;
 
 /**
  * Log filter that always returns an empty string. This filter provides
- * maximum security.
+ * maximum security (and minimum information).
  *
  * <p>An empty string is returned instead of plain <code>null</code>, to avoid
  * any {@link NullPointerException} issues.
