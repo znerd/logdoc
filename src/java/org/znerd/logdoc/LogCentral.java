@@ -78,7 +78,7 @@ public final class LogCentral {
     * @throws UnsupportedLocaleException
     *    if {@link AbstractLog.LogController} does not support the current Locale.
     */
-   static void registerLog(AbstractLog.LogController controller)
+   public static void registerLog(AbstractLog.LogController controller)
    throws UnsupportedLocaleException {
 
       // When the first LogController registers, do one-time initialization

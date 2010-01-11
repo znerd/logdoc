@@ -93,7 +93,7 @@ public abstract class AbstractLog {
     *
     * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
     */
-   protected static abstract class LogController {
+   public static abstract class LogController {
       
       //----------------------------------------------------------------------
       // Constructors
@@ -128,7 +128,7 @@ public abstract class AbstractLog {
        *    <code>true</code> if the locale is supported, <code>false</code>
        *    if it is not.
        */
-      protected abstract boolean isLocaleSupported(String locale);
+      public abstract boolean isLocaleSupported(String locale);
 
       /**
        * Activates the specified locale.
@@ -140,7 +140,7 @@ public abstract class AbstractLog {
        * @param newLocale
        *    the new locale, not <code>null</code>.
        */
-      protected abstract void setLocale(String newLocale);
+      public abstract void setLocale(String newLocale);
    }
 
    /**
