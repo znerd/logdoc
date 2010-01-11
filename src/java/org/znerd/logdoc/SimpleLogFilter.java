@@ -3,7 +3,7 @@ package org.znerd.logdoc;
 
 /**
  * Log filter that always returns the original parameter value. This filter
- * provides no security at all.
+ * provides no security at all (but maximum information).
  *
  * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
  */
