@@ -70,11 +70,11 @@ class Resolver implements EntityResolver, URIResolver {
    /**
     * Constructs a new <code>Resolver</code> for the specified input
     * directory.
-    * 
+    *
     * @param dir
     *    the directory containing the input files,
     *    cannot be <code>null</code>.
-    * 
+    *
     * @throws IllegalArgumentException
     *    if <code>dir == null</code>.
     */
@@ -158,7 +158,7 @@ class Resolver implements EntityResolver, URIResolver {
       if (href == null) {
          throw new TransformerException("href == null");
 
-         // XSLT file
+      // XSLT file
       } else if (href.endsWith(".xslt")) {
          String resultURL = "xslt/" + href;
          try {
@@ -167,11 +167,11 @@ class Resolver implements EntityResolver, URIResolver {
             throw new TransformerException("Failed to open meta resource \"" + resultURL + "\".", cause);
          }
 
-         // Input file
+      // Input file
       } else if (href.endsWith(".xml")) {
          return new StreamSource(new File(_inputDir, href));
 
-         // Unknown file
+      // Unknown file
       } else {
          throw new TransformerException("File with href \"" + href + "\" is not recognized.");
       }
@@ -184,6 +184,10 @@ class Resolver implements EntityResolver, URIResolver {
 
    private static class ErrorHandler implements org.xml.sax.ErrorHandler {
 
+      public void warning(SAXParseException exception) throws SAXException {
+         log(LogLevel.WARNING, "Warning during XML parsing.", exception);
+      }
+
       public void error(SAXParseException exception) throws SAXException {
          log(LogLevel.ERROR, "Error during XML parsing.", exception);
          throw new SAXException(exception);
@@ -192,10 +196,6 @@ class Resolver implements EntityResolver, URIResolver {
       public void fatalError(SAXParseException exception) throws SAXException {
          log(LogLevel.ERROR, "Fatal error during XML parsing.", exception);
          throw new SAXException(exception);
-      }
-
-      public void warning(SAXParseException exception) throws SAXException {
-         log(LogLevel.WARNING, "Warning during XML parsing.", exception);
       }
    }
 }
