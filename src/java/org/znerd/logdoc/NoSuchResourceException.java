@@ -47,5 +47,4 @@ class NoSuchResourceException extends RuntimeException {
          initCause(cause);
       }
    }
-
 }
