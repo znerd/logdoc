@@ -17,7 +17,8 @@ public class InternalLogging {
    /**
     * The singleton instance. Never <code>null</code>.
     */
-   private static InternalLogging INSTANCE;
+   private static InternalLogging INSTANCE = new InternalLogging();
+   
    
    //-------------------------------------------------------------------------
    // Class functions

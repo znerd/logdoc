@@ -17,6 +17,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import static org.znerd.logdoc.internal.InternalLogging.log;
 
 /**
  * Log definition. Typically read from a <code>log.xml</code> file.
@@ -207,10 +208,7 @@ public final class LogDef {
          StreamResult result = new StreamResult(outFile);
 
          // Perform the transformation
-         //System.err.println("About to perform XSLT transformation. xsltPath=\"" + xsltPath + "\"; domainName=\"" + _domainName + "\"; domainPath=\"" + domainPath + "\".");
          xformer.transform(getSource(), result);
-         
-         //System.err.println("Generated file \"" + outFile.getPath() + "\".");
 
       // Transformer configuration error
       } catch (TransformerConfigurationException cause) {
@@ -259,10 +257,10 @@ public final class LogDef {
          StreamResult result = new StreamResult(outFile);
 
          // Perform the transformation
-         System.err.println("About to perform XSLT transformation. xsltPath=\"" + xsltPath + "\"; domainName=\"" + _domainName + "\"; domainPath=\"" + domainPath + "\".");
+         log(LogLevel.INFO, "About to perform XSLT transformation. xsltPath=\"" + xsltPath + "\"; domainName=\"" + _domainName + "\"; domainPath=\"" + domainPath + "\".");
          xformer.transform(getTranslationBundleSource(locale), result);
-         
-         System.err.println("Generated file \"" + outFile.getPath() + "\".");
+
+         log(LogLevel.INFO, "Generated file \"" + outFile.getPath() + "\".");
 
       // Transformer configuration error
       } catch (TransformerConfigurationException cause) {

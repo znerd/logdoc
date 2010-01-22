@@ -10,6 +10,8 @@ import static org.apache.tools.ant.Project.MSG_VERBOSE;
 import org.apache.tools.ant.taskdefs.MatchingTask;
 
 import org.znerd.logdoc.LogDef;
+import org.znerd.logdoc.internal.InternalLogging;
+import org.znerd.logdoc.internal.ant.AntInternalLogging;
 
 /**
  * Abstract base class for the Logdoc Ant task implementations.
@@ -270,6 +272,9 @@ public abstract class AbstractLogdocTask extends MatchingTask {
 
    @Override
    public void execute() throws BuildException {
+      
+      // Send internal log output via Ant
+      InternalLogging.setLogger(new AntInternalLogging(this));
 
       // Source directory defaults to current directory
       if (_sourceDir == null) {

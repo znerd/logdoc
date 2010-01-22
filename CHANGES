@@ -1,3 +1,8 @@
+--- CHANGES SINCE LOGDOC 0.2 -------------------------------------------------
+
+* Sending internal log messages through Ant when appropriate.
+
+
 --- CHANGES SINCE LOGDOC 0.1 (COMPARED TO XINS 2.X) --------------------------
 
 * Changed package names from org.xins.logdoc to org.znerd.logdoc.
