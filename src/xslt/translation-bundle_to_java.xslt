@@ -97,6 +97,7 @@
 
 		<xsl:text>
 
+   @Override
    public String translation_</xsl:text>
 		<xsl:value-of select="$entry" />
 		<xsl:text>(</xsl:text>
