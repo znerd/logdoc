@@ -156,20 +156,20 @@ public class Log extends org.znerd.logdoc.internal.log4j.AbstractLog {
          super();
       }
 
-	  @Override
+      @Override
       public String toString() {
          return getClass().getName();
       }
 
-	  @Override
-      protected boolean isLocaleSupported(String locale) {
+      @Override
+      public boolean isLocaleSupported(String locale) {
 
          // Return true if the bundle exists
          return TRANSLATION_BUNDLES_BY_NAME.containsKey(locale);
       }
 
-	  @Override
-      protected void setLocale(String newLocale) {
+      @Override
+      public void setLocale(String newLocale) {
          TRANSLATION_BUNDLE = TRANSLATION_BUNDLES_BY_NAME.get(newLocale);
       }
    }

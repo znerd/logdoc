@@ -24,12 +24,14 @@ public final class TranslationBundle_en_US extends TranslationBundle {
       super("en_US");
    }
 
+   @Override
    public String translation_100() {
       StringBuffer buffer = new StringBuffer(255);
       buffer.append("Initializing transaction system.");
       return buffer.toString();
    }
 
+   @Override
    public String translation_101(long duration) {
       StringBuffer buffer = new StringBuffer(255);
       buffer.append("Transaction system initialized in ");
@@ -38,6 +40,7 @@ public final class TranslationBundle_en_US extends TranslationBundle {
       return buffer.toString();
    }
 
+   @Override
    public String translation_102(int id, String description) {
       StringBuffer buffer = new StringBuffer(255);
       buffer.append("Starting transaction ");
@@ -54,6 +57,7 @@ public final class TranslationBundle_en_US extends TranslationBundle {
       return buffer.toString();
    }
 
+   @Override
    public String translation_103(int id) {
       StringBuffer buffer = new StringBuffer(255);
       buffer.append("Transaction ");
