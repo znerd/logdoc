@@ -131,6 +131,7 @@
 
 			<sequential>
 				<logdoc-code in="@{input}" out="@{actual}" />
+				<fixcrlf srcDir="@{actual}" includes="**/*.java" eol="unix" eof="remove" fixlast="true" />
 
 				<tempfile destdir="${java.io.tmpdir}" prefix="${project.name}-unittest." property="diff-file" suffix=".diff" />
 				<exec executable="diff" output="${diff-file}">
