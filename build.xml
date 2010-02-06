@@ -102,7 +102,8 @@
 		  deprecation="${javac.deprecation}"
 		     optimize="${javac.optimize}"
 		       source="${javac.sourceversion}"
-		       target="${javac.targetvm}">
+		       target="${javac.targetvm}"
+			   includeAntRuntime="true">
 			<compilerarg line="${javac.compilerargs}" />
 			<classpath>
 				<fileset dir="lib" includes="*.jar" />
@@ -203,7 +204,9 @@
 
 					<classpath>
 						<fileset dir="lib"             includes="*.jar" />
+						<!-- XXX
 						<fileset dir="${ant.home}/lib" includes="*.jar" />
+						-->
 					</classpath>
 
 					<link offline="true" packagelistloc="src/package-lists/javase/" href="http://java.sun.com/javase/6/docs/api"     />
