@@ -15,14 +15,36 @@ import org.znerd.logdoc.internal.InternalLogging;
  * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
  */
 public final class Library {
+
+   //-------------------------------------------------------------------------
+   // Class fields
+   //-------------------------------------------------------------------------
+
+   /**
+    * The version of this library, lazily initialized.
+    */
+   private static String VERSION;
+   
    
    //-------------------------------------------------------------------------
    // Class functions
    //-------------------------------------------------------------------------
 
    /**
+    * Initializes this class, loading the version number once.
+    */
+   static {
+      String filePath = "version.txt";
+      try {
+         InputStream stream = getMetaResourceAsStream(filePath);
+         VERSION = IOUtils.toString(stream, "UTF-8").trim();
+      } catch (IOException cause) {
+         System.err.println("I/O error while reading meta resource: " + filePath);
+      }
+   }
+   
+   /**
     * Retrieves a meta resource and returns it as a <code>URL</code>.
-    * Calling this function will not trigger initialization of the library.
     * 
     * @param path
     *    the path to the meta resource, cannot be <code>null</code>.
@@ -72,11 +94,14 @@ public final class Library {
     * @throws IllegalArgumentException
     *    if <code>path == null</code>.
     *    
+    * @throws NoSuchResourceException
+    *    if the resource could not be found.
+    *    
     * @throws IOException
     *    if the stream could not be opened.
     */
    static InputStream getMetaResourceAsStream(String path)
-   throws IllegalArgumentException, IOException {
+   throws IllegalArgumentException, NoSuchResourceException, IOException {
       return getMetaResource(path).openStream();
    }
    
@@ -121,24 +146,7 @@ public final class Library {
     *    or <code>null</code> if unknown.
     */
    public static final String getVersion() {
-      String filePath = "version.txt";
-      InputStream stream;
-      try {
-         stream = getMetaResourceAsStream(filePath);
-      } catch (IOException cause) {
-         System.err.println("Meta resource could not be opened: " + filePath);
-         return null;
-      }
-
-      String version;
-      try {
-         version = IOUtils.toString(stream, "UTF-8").trim();
-      } catch (IOException cause) {
-         System.err.println("I/O error while reading meta resource: " + filePath);
-         return null;
-      }
-
-      return version;
+      return VERSION;
    }
    
    /**
