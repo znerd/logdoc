@@ -146,7 +146,7 @@
 					<equals arg1="${diff-contents}" arg2="" />
 				</condition>
 				<fail unless="diff-contents-empty">Output directory "@{actual}" differs from what was expected: "@{expected}". See ${diff-file} for details.</fail>
-				<delete file="${diff-file}" />
+				<delete verbose="false" quiet="true" file="${diff-file}" deleteOnExit="true" />
 			</sequential>
 		</macrodef>
 
@@ -204,9 +204,7 @@
 
 					<classpath>
 						<fileset dir="lib"             includes="*.jar" />
-						<!-- XXX
 						<fileset dir="${ant.home}/lib" includes="*.jar" />
-						-->
 					</classpath>
 
 					<link offline="true" packagelistloc="src/package-lists/javase/" href="http://java.sun.com/javase/6/docs/api"     />
