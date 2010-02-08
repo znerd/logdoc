@@ -1,5 +1,4 @@
-<?xml version="1.0"?>
-<!DOCTYPE translation-bundle PUBLIC "-//znerd//DTD Logdoc Translation Bundle 0.1//EN" "http://www.znerd.org/logdoc/dtd/translation-bundle_0_1.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
 
 <translation-bundle>
 	<translation entry="100">Initializing transaction system.</translation>

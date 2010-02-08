@@ -30,39 +30,6 @@ import org.xml.sax.SAXParseException;
  */
 class Resolver implements EntityResolver, URIResolver {
 
-   // TODO: Cache the DTD information internally
-
-   //-------------------------------------------------------------------------
-   // Class fields
-   //-------------------------------------------------------------------------
-
-   /**
-    * The URL to the local <code>log_3_0</code> DTD.
-    * Initialized by the class initializer.
-    */
-   private static final URL LOG_DTD_URL;
-
-   /**
-    * The URL to the local <code>translation-bundle_3_0</code> DTD.
-    * Initialized by the class initializer.
-    */
-   private static final URL TRANSLATION_BUNDLE_DTD_URL;
-
-
-   //-------------------------------------------------------------------------
-   // Class functions
-   //-------------------------------------------------------------------------
-
-   /**
-    * Class initializer that reads the DTDs into memory.
-    */
-   static {
-      // TODO: Consider moving this to the Library class
-      LOG_DTD_URL                = Library.getMetaResource("dtd/log_0_1.dtd");
-      TRANSLATION_BUNDLE_DTD_URL = Library.getMetaResource("dtd/translation-bundle_0_1.dtd");
-   }
-
-
    //-------------------------------------------------------------------------
    // Constructors
    //-------------------------------------------------------------------------
@@ -118,9 +85,9 @@ class Resolver implements EntityResolver, URIResolver {
 
       try {
 
-         // Create a validating DOM/XML parser
+         // Create a non-validating DOM/XML parser
          DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-         factory.setValidating(true);
+         factory.setValidating(false);
 
          DocumentBuilder domBuilder = factory.newDocumentBuilder();
          domBuilder.setEntityResolver(this);
@@ -138,16 +105,7 @@ class Resolver implements EntityResolver, URIResolver {
 
    public InputSource resolveEntity(String publicId, String systemId)
    throws SAXException, IOException {
-
-      log(LogLevel.INFO, "Resolving location of DTD with public ID " + quote(publicId) + " and system ID " + quote(systemId));
-
-      if ("-//znerd//DTD Logdoc Log 0.1//EN".equals(publicId)) {
-         return new InputSource(LOG_DTD_URL.openStream());
-      } else if ("-//znerd//DTD Logdoc Translation Bundle 0.1//EN".equals(publicId)) {
-         return new InputSource(TRANSLATION_BUNDLE_DTD_URL.openStream());
-      } else {
-         throw new IOException("Unable to find DTD with public ID \"" + publicId + "\" and system ID \"" + systemId + "\".");
-      }
+      throw new SAXException("Non-resolving parser expected.");
    }
 
    public Source resolve(String href, String base) throws TransformerException {
@@ -182,6 +140,11 @@ class Resolver implements EntityResolver, URIResolver {
    // Inner classes
    //-------------------------------------------------------------------------
 
+   /**
+    * Error handler for the <code>Resolver</code>.
+    *
+    * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
+    */
    private static class ErrorHandler implements org.xml.sax.ErrorHandler {
 
       public void warning(SAXParseException exception) throws SAXException {

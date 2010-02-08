@@ -76,13 +76,15 @@
 	<target name="prepare-compile" depends="-init" description="Prepares for the compilation, by generating source files and/or other files to be placed with the compiled files">
 
 		<!-- Stick auxiliary files in location where compiled code will go --> 
-		<mkdir dir="${metainf.outputdir}" />
 		<copy todir="${classes.outputdir}">
 			<fileset dir="${project.sourcedir.java}">
 				<exclude name="**/*.java" />
 				<exclude name="**/package.html" />
 			</fileset>
 		</copy>
+
+		<!-- Meta files -->
+		<mkdir dir="${metainf.outputdir}" />
 		<copy todir="${metainf.outputdir}">
 			<fileset dir="${project.sourcedir}">
 				<include name="xslt/*.xslt" />

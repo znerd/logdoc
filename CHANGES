@@ -1,6 +1,8 @@
 --- CHANGES SINCE LOGDOC 0.3 -------------------------------------------------
 
 * Reading version information just once, at Library class initialization.
+* No longer requiring DTD declaration in XML file.
+* Using non-validating parser.
 
 
 --- CHANGES SINCE LOGDOC 0.2 -------------------------------------------------
