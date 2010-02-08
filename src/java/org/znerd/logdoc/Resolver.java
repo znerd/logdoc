@@ -17,18 +17,16 @@ import javax.xml.transform.URIResolver;
 import javax.xml.transform.stream.StreamSource;
 
 import org.w3c.dom.Document;
-import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 /**
- * Entity/URI resolver that can be used during XML parsing and during XSLT
- * transformation.
+ * URI resolver that can be used during XSLT transformations.
  *
  * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
  */
-class Resolver implements EntityResolver, URIResolver {
+class Resolver implements URIResolver {
 
    //-------------------------------------------------------------------------
    // Constructors
@@ -90,7 +88,6 @@ class Resolver implements EntityResolver, URIResolver {
          factory.setValidating(false);
 
          DocumentBuilder domBuilder = factory.newDocumentBuilder();
-         domBuilder.setEntityResolver(this);
          domBuilder.setErrorHandler(new ErrorHandler());
 
          // Parse the file to produce a DOM/XML object
@@ -101,11 +98,6 @@ class Resolver implements EntityResolver, URIResolver {
       } catch (SAXException cause) {
          throw ExceptionUtils.newIOException("Failed to parse \"" + fileName + "\" file.", cause);
       }
-   }
-
-   public InputSource resolveEntity(String publicId, String systemId)
-   throws SAXException, IOException {
-      throw new SAXException("Non-resolving parser expected.");
    }
 
    public Source resolve(String href, String base) throws TransformerException {
