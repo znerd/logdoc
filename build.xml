@@ -204,9 +204,7 @@
 
 					<classpath>
 						<fileset dir="lib"             includes="*.jar" />
-						<!-- XXX
 						<fileset dir="${ant.home}/lib" includes="*.jar" />
-						-->
 					</classpath>
 
 					<link offline="true" packagelistloc="src/package-lists/javase/" href="http://java.sun.com/javase/6/docs/api"     />
