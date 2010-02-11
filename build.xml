@@ -16,15 +16,6 @@
 			</and>
 		</condition>
 		<fail unless="version.isset">Missing properties 'version.major' and 'version.middle'.</fail>
-		<condition property="dot.version.minor" value="${version.minor}">
-			<or>
-				<equals arg1="${version.minor}" arg2="-alpha" />
-				<equals arg1="${version.minor}" arg2="-beta" />
-				<equals arg1="${version.minor}" arg2="-rc" />
-				<equals arg1="${version.minor}" arg2="" />
-			</or>
-		</condition>
-		<property name="dot.version.minor" value=".${version.minor}" />
 	</target>
 
 	<!-- Initialization settings -->
@@ -33,8 +24,8 @@
 		<!-- General project properties -->
 		<property name="project.title"     value="Logdoc" />
 		<property name="project.name"      value="${ant.project.name}" />
-		<property name="project.version"   value="${version.major}.${version.middle}${dot.version.minor}${version.build}${version.suffix}" />
-		<property name="project.vendor"    value="Online Breedband B.V." />
+		<property name="project.version"   value="${version.major}.${version.middle}${version.suffix}" />
+		<property name="project.vendor"    value="znerd.org" />
 		<property name="project.url"       value="http://github.com/znerd/logdoc" />
 
 		<!-- Java compiler-related settings -->
@@ -65,7 +56,7 @@
 	<target name="version" depends="-init">
 		<echo message="Java ${java.version}" />
 		<echo message="${ant.version}" />
-		<echo message="${title} ${project.version}" />
+		<echo message="${project.title} ${project.version}" />
 	</target>
 
 	<target name="clean" depends="-init" description="Removes all generated files">
@@ -76,13 +67,15 @@
 	<target name="prepare-compile" depends="-init" description="Prepares for the compilation, by generating source files and/or other files to be placed with the compiled files">
 
 		<!-- Stick auxiliary files in location where compiled code will go --> 
-		<mkdir dir="${metainf.outputdir}" />
 		<copy todir="${classes.outputdir}">
 			<fileset dir="${project.sourcedir.java}">
 				<exclude name="**/*.java" />
 				<exclude name="**/package.html" />
 			</fileset>
 		</copy>
+
+		<!-- Meta files -->
+		<mkdir dir="${metainf.outputdir}" />
 		<copy todir="${metainf.outputdir}">
 			<fileset dir="${project.sourcedir}">
 				<include name="xslt/*.xslt" />
@@ -146,7 +139,7 @@
 					<equals arg1="${diff-contents}" arg2="" />
 				</condition>
 				<fail unless="diff-contents-empty">Output directory "@{actual}" differs from what was expected: "@{expected}". See ${diff-file} for details.</fail>
-				<delete file="${diff-file}" />
+				<delete verbose="false" quiet="true" file="${diff-file}" deleteOnExit="true" />
 			</sequential>
 		</macrodef>
 
@@ -164,8 +157,8 @@
 
 		<jar destfile="build/${project.name}.jar" basedir="${classes.outputdir}/">
 			<manifest>
-				<attribute name="Library-Version" value="${project.version}" />
-				<section name="org/znerd/logdoc">
+				<attribute name="Main-Class" value="org.znerd.logdoc.Library" />
+				<section name="org/znerd/logdoc/">
 					<attribute name="Specification-Title"    value="${project.title}"   />
 					<attribute name="Specification-Version"  value="${project.version}" />
 					<attribute name="Specification-Vendor"   value="${project.vendor}"  />

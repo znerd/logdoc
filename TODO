@@ -1,5 +1,10 @@
 ------------------------------------------------------------------------------
 
+Use XML Schema definitions (XSDs) to validate the XML input files before
+processing them.
+
+------------------------------------------------------------------------------
+
 Support multiple types of code generation, e.g.:
 - Java Logging Framework (available since J2SE 1.4), see http://java.sun.com/javase/6/docs/technotes/guides/logging/
 - Apache Commons Logging, see http://commons.apache.org/logging/
@@ -20,11 +25,6 @@ available, then fall back to a default format that displays the parameters in
 a quoted form. E.g.:
 
    10202 transaction="FNC-5569"; label=null; grtID=null; grxID="1233890-22"
-
-------------------------------------------------------------------------------
-
-Use XML Schema definitions (XSDs) to validate the XML input files before
-processing them.
 
 ------------------------------------------------------------------------------
 

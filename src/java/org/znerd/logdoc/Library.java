@@ -5,8 +5,6 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.net.URL;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringEscapeUtils;
 import org.znerd.logdoc.internal.InternalLogging;
 
 /**
@@ -23,26 +21,13 @@ public final class Library {
    /**
     * The version of this library, lazily initialized.
     */
-   private static String VERSION;
+   private static final String VERSION = Library.class.getPackage().getImplementationVersion();
    
    
    //-------------------------------------------------------------------------
    // Class functions
    //-------------------------------------------------------------------------
 
-   /**
-    * Initializes this class, loading the version number once.
-    */
-   static {
-      String filePath = "version.txt";
-      try {
-         InputStream stream = getMetaResourceAsStream(filePath);
-         VERSION = IOUtils.toString(stream, "UTF-8").trim();
-      } catch (IOException cause) {
-         System.err.println("I/O error while reading meta resource: " + filePath);
-      }
-   }
-   
    /**
     * Retrieves a meta resource and returns it as a <code>URL</code>.
     * 
@@ -123,7 +108,7 @@ public final class Library {
       if (input == null) {
          return "(null)";
       } else {
-         return "\"" + StringEscapeUtils.escapeJava(input) + '"';
+         return "\"" + input + '"'; // TODO: Review, perhaps escape input?
       }
    }
    
