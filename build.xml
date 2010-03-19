@@ -40,7 +40,7 @@
 		<property name="project.sourcedir"      value="${basedir}/src" />
 		<property name="project.sourcedir.java" value="${project.sourcedir}/main/java" />
 		<property name="javase.sourcedir"       value="${java.home}/src" />
-		<property name="project.outputdir"      value="${basedir}/build" />
+		<property name="project.outputdir"      value="${basedir}/target" />
 		<property name="classes.outputdir"      value="${project.outputdir}/classes" />
 		<property name="metainf.outputdir"      value="${classes.outputdir}/META-INF" />
 
@@ -155,7 +155,7 @@
 			</fileset>
 		</copy>
 
-		<jar destfile="build/${project.name}.jar" basedir="${classes.outputdir}/">
+		<jar destfile="${project.outputdir}/${project.name}.jar" basedir="${classes.outputdir}/">
 			<manifest>
 				<attribute name="Main-Class" value="org.znerd.logdoc.Library" />
 				<section name="org/znerd/logdoc/">
@@ -195,7 +195,7 @@
 				</javadoc>
 			</sequential>
 		</macrodef>
-		<generate-javadoc private="no" destdir="build/javadoc" title="${project.title} ${project.version}" footer="See &lt;a target=&quot;_top&quot; href='${project.url}'&gt;${project.url}&lt;/a&gt;." />
+		<generate-javadoc private="no" destdir="${project.outputdir}/javadoc" title="${project.title} ${project.version}" footer="See &lt;a target=&quot;_top&quot; href='${project.url}'&gt;${project.url}&lt;/a&gt;." />
 	</target>
 
 	<!-- Prints the name and version of this library -->
