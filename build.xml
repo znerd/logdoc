@@ -172,18 +172,7 @@
 	</target>
 
 	<!-- Generate Javadoc -->
-	<target name="-jdksrc-avail" depends="-init">
-		<available file="${javase.sourcedir}" type="dir" property="jdksrc.available" />
-	</target>
-	<target name="-javadoc-sourcepath-nojdksrc" depends="-jdksrc-avail" unless="jdksrc.available">
-		<property name="javadoc.sourcepath" value="${project.sourcedir.java}" />
-		<echo level="verbose" message="JDK source code not available." />
-	</target>
-	<target name="-javadoc-sourcepath-jdksrc" depends="-jdksrc-avail" if="jdksrc.available">
-		<property name="javadoc.sourcepath" value="${project.sourcedir.java}:${javase.sourcedir}" />
-		<echo level="verbose" message="JDK source code available." />
-	</target>
-	<target name="javadoc" depends="-javadoc-sourcepath-nojdksrc,-javadoc-sourcepath-jdksrc" description="Generates the Javadoc API documentation" unless="nodocs">
+	<target name="javadoc" depends="-init" description="Generates the Javadoc API documentation" unless="nodocs">
 		<macrodef name="generate-javadoc">
 			<attribute name="title"   />
 			<attribute name="destdir" />
@@ -192,8 +181,8 @@
 
 			<sequential>
 				<mkdir dir="@{destdir}" />
-				<javadoc doctitle="@{title}" windowtitle="@{title}" destdir="@{destdir}" private="@{private}" bottom="@{footer}" sourcepath="${javadoc.sourcepath}" source="${javac.sourceversion}" version="yes" use="yes" author="yes">
-					<packageset dir="src/java" />
+				<javadoc doctitle="@{title}" windowtitle="@{title}" destdir="@{destdir}" private="@{private}" bottom="@{footer}" source="${javac.sourceversion}" version="yes" use="yes" author="yes">
+					<packageset dir="src/java" excludes="org/znerd/logdoc/internal/**" />
 
 					<classpath>
 						<fileset dir="lib"             includes="*.jar" />

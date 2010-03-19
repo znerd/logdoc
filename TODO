@@ -50,11 +50,6 @@ determine the current version number.
 
 ------------------------------------------------------------------------------
 
-Move all internal stuff below the org.znerd.logdoc.internal package, make sure
-that is all excluded from regular Javadoc API docs.
-
-------------------------------------------------------------------------------
-
 Disable all internal logging unless a specific system property is set.
 
 ------------------------------------------------------------------------------

@@ -3,6 +3,7 @@
 * Reading version information just once, at Library class initialization.
 * No longer requiring DTD declaration in XML file.
 * Using non-validating parser.
+* Internal packages not included in generated Javadoc API documentation.
 
 
 --- CHANGES SINCE LOGDOC 0.2 -------------------------------------------------
