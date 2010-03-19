@@ -38,7 +38,7 @@
 
 		<!-- Source and output directories -->
 		<property name="project.sourcedir"      value="${basedir}/src" />
-		<property name="project.sourcedir.java" value="${project.sourcedir}/java" />
+		<property name="project.sourcedir.java" value="${project.sourcedir}/main/java" />
 		<property name="javase.sourcedir"       value="${java.home}/src" />
 		<property name="project.outputdir"      value="${basedir}/build" />
 		<property name="classes.outputdir"      value="${project.outputdir}/classes" />
@@ -88,7 +88,7 @@
 
 	<!-- Compile all source files -->
 	<target name="compile" depends="prepare-compile" description="Compiles the source code">
-		<javac srcdir="src/java"
+		<javac srcdir="${project.sourcedir.java}"
 		     includes="**/*.java"
 		      destdir="${classes.outputdir}"
 		        debug="${javac.debug}"
@@ -149,7 +149,7 @@
 	<!-- Generate JAR file -->
 	<target name="jar" depends="compile" description="Generates the JAR file">
 		<copy todir="${classes.outputdir}/">
-			<fileset dir="src/java">
+			<fileset dir="${project.sourcedir.java}">
 				<exclude name="**/*.java"       />
 				<exclude name="**/package.html" />
 			</fileset>
@@ -182,7 +182,7 @@
 			<sequential>
 				<mkdir dir="@{destdir}" />
 				<javadoc doctitle="@{title}" windowtitle="@{title}" destdir="@{destdir}" private="@{private}" bottom="@{footer}" source="${javac.sourceversion}" version="yes" use="yes" author="yes">
-					<packageset dir="src/java" excludes="org/znerd/logdoc/internal/**" />
+					<packageset dir="${project.sourcedir.java}" excludes="org/znerd/logdoc/internal/**" />
 
 					<classpath>
 						<fileset dir="lib"             includes="*.jar" />
