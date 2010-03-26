@@ -1,5 +1,5 @@
-This is Logdoc, a tool for managing log messages for Java code,
-contract-first. 
+This is Logdoc, a tool for managing log messages for Java code, in a contract-
+first manner. 
 
 This software is available under the terms of a BSD-style license, see
 the accompanied COPYRIGHT file.
@@ -37,13 +37,26 @@ Then the tasks can be used as follows:
    <logdoc-html in="src/logdoc" out="build/logdoc-htdocs" />
 
 
+BUILDING LOGDOC
+
+To build Logdoc self, use Ant 1.7.1 (1.8.0 may also work) and execute:
+
+   ant
+
+Under the target/ directory files will be generated, including a JAR file and
+Javadoc API documentation.
+
+Note: The build process is currently being migrated from Ant to Maven, this is
+      work in progress.
+
+
 HISTORY
 
 Logdoc used to be part of XINS, see:
 
    http://xins.sourceforge.net/
 
-It has been factored out of XINS by Ernst de Haan.
+It has been factored out of XINS by me.
 
 
 BUG REPORTS AND FEATURE REQUESTS
