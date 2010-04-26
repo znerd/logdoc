@@ -38,15 +38,6 @@ Log4J-specific.
 
 ------------------------------------------------------------------------------
 
-Consider losing the Commons IO dependency, since it is only used once, to
-determine the current version number.
-
-------------------------------------------------------------------------------
-
 Disable all internal logging unless a specific system property is set.
-
-------------------------------------------------------------------------------
-
-Make sure no on-line DTDs are required to run the unit tests.
 
 ------------------------------------------------------------------------------
