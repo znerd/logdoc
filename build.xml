@@ -151,6 +151,7 @@
 		<copy todir="${classes.outputdir}/">
 			<fileset dir="${project.sourcedir.java}">
 				<exclude name="**/*.java"       />
+				<exclude name="**/*.swp"        />
 				<exclude name="**/package.html" />
 			</fileset>
 		</copy>
