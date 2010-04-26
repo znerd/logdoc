@@ -1,3 +1,8 @@
+--- CHANGES SINCE LOGDOC 0.4 -------------------------------------------------
+
+* Removed property name constants from LogCentral class.
+
+
 --- CHANGES SINCE LOGDOC 0.3 -------------------------------------------------
 
 * Reading version information just once, at Library class initialization.

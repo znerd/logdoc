@@ -17,24 +17,6 @@ public final class LogCentral {
    //-------------------------------------------------------------------------
    
    /**
-    * The name of the property that specifies which locale should be used.
-    */
-   public static final String LOG_LOCALE_PROPERTY = "org.znerd.logdoc.locale";
-
-   /**
-    * The name of the property that specifies if all stack traces should be
-    * displayed at the message level. By default, stack traces are displayed
-    * at the <em>DEBUG</em> level.
-    */
-   public static final String LOG_STACK_TRACE_AT_MESSAGE_LEVEL = "org.znerd.logdoc.stackTraceAtMessageLevel";
-
-   /**
-    * The name of the property that specifies the name of the
-    * <code>LogFilter</code> class to use.
-    */
-   public static final String LOG_FILTER_PROPERTY = "org.znerd.logdoc.filterClass";
-
-   /**
     * The default locale used at start-up, if no locale is specified in a
     * system property.
     */
