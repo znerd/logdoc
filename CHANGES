@@ -1,6 +1,11 @@
+--- CHANGES SINCE LOGDOC 0.6 -------------------------------------------------
+
+
+
+
 --- CHANGES SINCE LOGDOC 0.5 -------------------------------------------------
 
-* Validating log.xml files with XSD stored inside JAR file.
+* Validating XML definitions using XSDs stored inside JAR file.
 
 
 --- CHANGES SINCE LOGDOC 0.4 -------------------------------------------------
