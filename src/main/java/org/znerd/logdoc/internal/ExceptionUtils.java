@@ -1,5 +1,5 @@
 // See the COPYRIGHT file for copyright and license information
-package org.znerd.logdoc;
+package org.znerd.logdoc.internal;
 
 import java.io.IOException;
 
@@ -56,7 +56,7 @@ public final class ExceptionUtils {
     * @return
     *    the new {@link IOException}, never <code>null</code>.
     */
-   static IOException newIOException(String detail, Throwable cause) {
+   public static IOException newIOException(String detail, Throwable cause) {
       IOException e = new IOException(detail);
       if (cause != null) {
          e.initCause(cause);

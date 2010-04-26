@@ -17,9 +17,12 @@ import javax.xml.transform.URIResolver;
 import javax.xml.transform.stream.StreamSource;
 
 import org.w3c.dom.Document;
+
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+
+import static org.znerd.logdoc.internal.ExceptionUtils.newIOException;
 
 /**
  * URI resolver that can be used during XSLT transformations.
@@ -94,9 +97,9 @@ class Resolver implements URIResolver {
          return domBuilder.parse(file);
 
       } catch (ParserConfigurationException cause) {
-         throw ExceptionUtils.newIOException("Failed to parse \"" + fileName + "\" file.", cause);
+         throw newIOException("Failed to parse \"" + fileName + "\" file.", cause);
       } catch (SAXException cause) {
-         throw ExceptionUtils.newIOException("Failed to parse \"" + fileName + "\" file.", cause);
+         throw newIOException("Failed to parse \"" + fileName + "\" file.", cause);
       }
    }
 

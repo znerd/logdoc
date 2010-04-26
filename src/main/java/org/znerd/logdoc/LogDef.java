@@ -26,6 +26,7 @@ import org.w3c.dom.NodeList;
 
 import org.xml.sax.SAXException;
 
+import static org.znerd.logdoc.internal.ExceptionUtils.newIOException;
 import static org.znerd.logdoc.internal.InternalLogging.log;
 
 /**
@@ -309,11 +310,11 @@ public final class LogDef {
 
       // Transformer configuration error
       } catch (TransformerConfigurationException cause) {
-         throw ExceptionUtils.newIOException("Unable to perform XSLT transformation due to configuration problem.", cause);
+         throw newIOException("Unable to perform XSLT transformation due to configuration problem.", cause);
 
       // Transformer error
       } catch (TransformerException cause) {
-         throw ExceptionUtils.newIOException("Failed to perform XSLT transformation.", cause);
+         throw newIOException("Failed to perform XSLT transformation.", cause);
       }
    }
    
@@ -361,11 +362,11 @@ public final class LogDef {
 
       // Transformer configuration error
       } catch (TransformerConfigurationException cause) {
-         throw ExceptionUtils.newIOException("Unable to perform XSLT transformation due to configuration problem.", cause);
+         throw newIOException("Unable to perform XSLT transformation due to configuration problem.", cause);
 
       // Transformer error
       } catch (TransformerException cause) {
-         throw ExceptionUtils.newIOException("Failed to perform XSLT transformation.", cause);
+         throw newIOException("Failed to perform XSLT transformation.", cause);
       }
    }
 }
