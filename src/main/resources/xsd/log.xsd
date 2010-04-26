@@ -21,8 +21,8 @@
 	<!-- Type "EntryDef" -->
 	<xsd:complexType name="EntryDef">
 		<xsd:sequence>
-			<xsd:element name="description" type="xsd:string" />
-			<xsd:element name="param"       type="EntryParamDef" minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="description" type="EntryDescription" />
+			<xsd:element name="param"       type="ParamDef" minOccurs="0" maxOccurs="unbounded" />
 		</xsd:sequence>
 
 		<xsd:attribute name="id"        type="EntryID"  use="required" />
@@ -30,7 +30,12 @@
 		<xsd:attribute name="exception" type="Boolean"  use="optional" />
 	</xsd:complexType>
 
-	<!-- EntryID -->
+	<!-- Type "EntryDescription" -->
+	<xsd:simpleType name="EntryDescription">
+		<xsd:restriction base="xsd:string" />
+	</xsd:simpleType>
+
+	<!-- Type "EntryID" -->
 	<xsd:simpleType name="EntryID">
 		<xsd:restriction base="xsd:string">
 			<xsd:pattern value="[0-9]+" />
@@ -61,21 +66,21 @@
 
 	<!-- Type "EntryParamDef" -->
 	<xsd:complexType name="EntryParamDef">
-		<xsd:attribute name="name"     type="EntryParamName" use="required" />
-		<xsd:attribute name="type"     type="EntryParamType" use="optional" />
-		<xsd:attribute name="nullable" type="Boolean"        use="optional" />
-		<xsd:attribute name="filter"   type="Boolean"        use="optional" />
+		<xsd:attribute name="name"     type="ParamName" use="required" />
+		<xsd:attribute name="type"     type="ParamType" use="optional" />
+		<xsd:attribute name="nullable" type="Boolean"   use="optional" />
+		<xsd:attribute name="filter"   type="Boolean"   use="optional" />
 	</xsd:complexType>
 
-	<!-- EntryParamName -->
-	<xsd:simpleType name="EntryParamName">
+	<!-- Type "ParamName" -->
+	<xsd:simpleType name="ParamName">
 		<xsd:restriction base="xsd:string">
 			<xsd:pattern value="[a-z][a-zA-Z_0-9]*" />
 		</xsd:restriction>
 	</xsd:simpleType>
 
-	<!-- Type "EntryParamType" -->
-	<xsd:simpleType name="EntryParamType">
+	<!-- Type "ParamType" -->
+	<xsd:simpleType name="ParamType">
 		<xsd:restriction base="xsd:string">
 			<xsd:enumeration value="float32" />
 			<xsd:enumeration value="float64" />
