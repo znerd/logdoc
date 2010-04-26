@@ -11,11 +11,29 @@ import org.znerd.logdoc.internal.log4j.AbstractLog;
  * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
  */
 public final class LogCentral {
-   
+
    //-------------------------------------------------------------------------
    // Class fields
    //-------------------------------------------------------------------------
-   
+
+   /**
+    * The name of the property that specifies which locale should be used.
+    */
+   private static final String LOG_LOCALE_PROPERTY = "org.znerd.logdoc.locale";
+
+   /**
+    * The name of the property that specifies if all stack traces should be
+    * displayed at the message level. By default, stack traces are displayed
+    * at the <em>DEBUG</em> level.
+    */
+   private static final String LOG_STACK_TRACE_AT_MESSAGE_LEVEL = "org.znerd.logdoc.stackTraceAtMessageLevel";
+
+   /**
+    * The name of the property that specifies the name of the
+    * <code>LogFilter</code> class to use.
+    */
+   private static final String LOG_FILTER_PROPERTY = "org.znerd.logdoc.filterClass";
+
    /**
     * The default locale used at start-up, if no locale is specified in a
     * system property.
@@ -44,12 +62,12 @@ public final class LogCentral {
     * The active <code>LogFilter</code> instance.
     */
    private static LogFilter LOG_FILTER;
-   
-   
+
+
    //-------------------------------------------------------------------------
    // Class functions
    //-------------------------------------------------------------------------
-   
+
    /**
     * Registers the specified <code>LogController</code>, which represents a
     * <em>logdoc</em> <code>Log</code> class.
@@ -310,11 +328,11 @@ public final class LogCentral {
       return LOG_FILTER;
    }
 
-   
+
    //-------------------------------------------------------------------------
    // Constructors
    //-------------------------------------------------------------------------
-   
+
    /**
     * Constructs a new <code>LogCentral</code> instance. This constructor is
     * intentionally made <code>private</code>, since no instances should be

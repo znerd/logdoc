@@ -1,6 +1,6 @@
 --- CHANGES SINCE LOGDOC 0.4 -------------------------------------------------
 
-* Removed property name constants from LogCentral class.
+* Hid property name constants from LogCentral class.
 
 
 --- CHANGES SINCE LOGDOC 0.3 -------------------------------------------------
