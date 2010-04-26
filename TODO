@@ -2,6 +2,8 @@
 
 Use XML Schema definitions (XSDs) to validate the XML input files before
 processing them.
+- done: log.xml files
+- todo: translation-bundle*.xml files
 
 ------------------------------------------------------------------------------
 
