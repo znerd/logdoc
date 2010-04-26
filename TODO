@@ -1,12 +1,3 @@
-------------------------------------------------------------------------------
-
-Use XML Schema definitions (XSDs) to validate the XML input files before
-processing them.
-- done: log.xml files
-- todo: translation-bundle*.xml files
-
-------------------------------------------------------------------------------
-
 Support multiple types of code generation, e.g.:
 - Java Logging Framework (available since J2SE 1.4), see http://java.sun.com/javase/6/docs/technotes/guides/logging/
 - Apache Commons Logging, see http://commons.apache.org/logging/

@@ -1,6 +1,6 @@
 --- CHANGES SINCE LOGDOC 0.6 -------------------------------------------------
 
-
+* Removed unused commons-io and commons-lang dependencies from lib/ dir.
 
 
 --- CHANGES SINCE LOGDOC 0.5 -------------------------------------------------
