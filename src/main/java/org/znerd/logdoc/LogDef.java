@@ -44,6 +44,11 @@ public final class LogDef {
     */
    private static final Schema LOG_SCHEMA;
 
+   /**
+    * The <code>Schema</code> for validating translation bundle XML files.
+    */
+   private static final Schema TB_SCHEMA;
+
 
    //-------------------------------------------------------------------------
    // Class functions
@@ -57,6 +62,12 @@ public final class LogDef {
          LOG_SCHEMA = loadSchema("log");
       } catch (Throwable cause) {
          throw new Error("Failed to load LogDef class, because \"log\" schema could not be loaded.", cause);
+      }
+
+      try {
+         TB_SCHEMA = loadSchema("translation-bundle");
+      } catch (Throwable cause) {
+         throw new Error("Failed to load LogDef class, because \"translation-bundle\" schema could not be loaded.", cause);
       }
    }
 
@@ -94,15 +105,17 @@ public final class LogDef {
       return factory.newSchema(xsdSource);
    }
 
-   private static void validateLogXML(Document document)
+   private static void validate(Schema schema, Document document)
    throws IllegalArgumentException, IOException, SAXException {
 
       // Check preconditions
-      if (document == null) {
+      if (schema == null) {
+         throw new IllegalArgumentException("schema == null");
+      } else if (document == null) {
          throw new IllegalArgumentException("document == null");
       }
 
-      Validator validator = LOG_SCHEMA.newValidator();
+      Validator validator = schema.newValidator();
       validator.validate(new DOMSource(document));
    }
 
@@ -163,7 +176,7 @@ public final class LogDef {
       
       // Load the log.xml file and validate it
       _xml = _resolver.loadInputDocument("log.xml");
-      validateLogXML(_xml);
+      validate(LOG_SCHEMA, _xml);
       
       // Parse the domain name and determine access level
       Element docElem = _xml.getDocumentElement();
@@ -178,6 +191,7 @@ public final class LogDef {
          String locale = elem.getAttribute("locale");
  
          Document tbXML = _resolver.loadInputDocument("translation-bundle-" + locale + ".xml");
+         validate(TB_SCHEMA, tbXML);
          _translations.put(locale, tbXML);
       }
    }

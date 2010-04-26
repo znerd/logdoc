@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<xsd:element name="translation-bundle" type="TranslationBundle" />
+
+    <!-- Type "EntryID" -->
+	<xsd:simpleType name="EntryID">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9]+" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<!-- Type "ParamName" -->
+	<xsd:simpleType name="ParamName">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[a-z][a-zA-Z_0-9]*" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<!-- Type "ParamValueFormat" -->
+	<xsd:simpleType name="ParamValueFormat">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="quoted" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<!-- Type "ParamValueRef" -->
+	<xsd:complexType name="ParamValueRef">
+		<xsd:attribute name="name"   type="ParamName"        use="required" />
+		<xsd:attribute name="format" type="ParamValueFormat" use="optional" />
+	</xsd:complexType>
+
+	<!-- Type "TranslationBundle" -->
+	<xsd:complexType name="TranslationBundle">
+		<xsd:sequence>
+			<xsd:element name="translation" type="Translation" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- Type "Translation" -->
+	<xsd:complexType name="Translation" mixed="true">
+		<xsd:sequence>
+			<xsd:element name="value-of-param" type="ParamValueRef" minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+		<xsd:attribute name="entry" type="EntryID" use="required" />
+	</xsd:complexType>
+
+</xsd:schema>
