@@ -37,12 +37,13 @@
 		<property name="javac.compilerargs"    value="-Xlint -Xmaxwarns 9999 -Xmaxerrs 9999" />
 
 		<!-- Source and output directories -->
-		<property name="project.sourcedir"      value="${basedir}/src" />
-		<property name="project.sourcedir.java" value="${project.sourcedir}/main/java" />
-		<property name="javase.sourcedir"       value="${java.home}/src" />
-		<property name="project.outputdir"      value="${basedir}/target" />
-		<property name="classes.outputdir"      value="${project.outputdir}/classes" />
-		<property name="metainf.outputdir"      value="${classes.outputdir}/META-INF" />
+		<property name="project.sourcedir"           value="${basedir}/src" />
+		<property name="project.sourcedir.java"      value="${project.sourcedir}/main/java" />
+		<property name="project.sourcedir.resources" value="${project.sourcedir}/main/resources" />
+		<property name="javase.sourcedir"            value="${java.home}/src" />
+		<property name="project.outputdir"           value="${basedir}/target" />
+		<property name="classes.outputdir"           value="${project.outputdir}/classes" />
+		<property name="metainf.outputdir"           value="${classes.outputdir}/META-INF" />
 
 		<!-- Unit tests -->
 		<property name="unittests.inputdir"    value="${project.sourcedir}/unittests/input"    />
@@ -77,13 +78,12 @@
 		<!-- Meta files -->
 		<mkdir dir="${metainf.outputdir}" />
 		<copy todir="${metainf.outputdir}">
-			<fileset dir="${project.sourcedir}">
-				<include name="xslt/*.xslt" />
-				<include name="dtd/catalog.xml" />
-				<include name="dtd/*.dtd" />
+			<fileset dir="${project.sourcedir.resources}">
+				<include name="**/*.xslt" />
+				<include name="**/catalog.xml" />
+				<include name="**/*.dtd" />
 			</fileset>
 		</copy>
-		<concat destfile="${metainf.outputdir}/version.txt" eol="unix" outputencoding="UTF-8">${project.version}</concat>
 	</target>
 
 	<!-- Compile all source files -->

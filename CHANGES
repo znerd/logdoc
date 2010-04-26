@@ -1,6 +1,7 @@
 --- CHANGES SINCE LOGDOC 0.4 -------------------------------------------------
 
 * Hid property name constants from LogCentral class.
+* No longer including unused version.txt in JAR file.
 
 
 --- CHANGES SINCE LOGDOC 0.3 -------------------------------------------------
