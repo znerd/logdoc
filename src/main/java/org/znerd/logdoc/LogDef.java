@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.xml.XMLConstants;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
@@ -14,9 +16,16 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+
+import org.xml.sax.SAXException;
+
 import static org.znerd.logdoc.internal.InternalLogging.log;
 
 /**
@@ -27,8 +36,75 @@ import static org.znerd.logdoc.internal.InternalLogging.log;
 public final class LogDef {
 
    //-------------------------------------------------------------------------
+   // Class fields
+   //-------------------------------------------------------------------------
+
+   /**
+    * The <code>Schema</code> for validating log XML files.
+    */
+   private static final Schema LOG_SCHEMA;
+
+
+   //-------------------------------------------------------------------------
    // Class functions
    //-------------------------------------------------------------------------
+
+   /**
+    * Initializes this class.
+    */
+   static {
+      try {
+         LOG_SCHEMA = loadSchema("log");
+      } catch (Throwable cause) {
+         throw new Error("Failed to load LogDef class, because \"log\" schema could not be loaded.", cause);
+      }
+   }
+
+   /**
+    * Loads a <code>Schema</code>.
+    *
+    * @return
+    *    the loaded {@link Schema}, never <code>null</code>.
+    *
+    * @throws IllegalArgumentException
+    *    if <code>name == null</code>.
+    *
+    * @throws IOException
+    *    if the schema could not be loaded due to an I/O error.
+    *
+    * @throws SAXException
+    *    if the schema could not be loaded.
+    */
+   private static Schema loadSchema(String name)
+   throws IllegalArgumentException, IOException, SAXException {
+
+      // Check preconditions
+      if (name == null) {
+         throw new IllegalArgumentException("name == null");
+      }
+
+      // We need a factory first
+      SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+
+      // Create a Source for the XSD file
+      String         xsdPath = "xsd/" + name + ".xsd";
+      InputStream  xsdStream = Library.getMetaResourceAsStream(xsdPath);
+      Source       xsdSource = new StreamSource(xsdStream);
+
+      return factory.newSchema(xsdSource);
+   }
+
+   private static void validateLogXML(Document document)
+   throws IllegalArgumentException, IOException, SAXException {
+
+      // Check preconditions
+      if (document == null) {
+         throw new IllegalArgumentException("document == null");
+      }
+
+      Validator validator = LOG_SCHEMA.newValidator();
+      validator.validate(new DOMSource(document));
+   }
 
    /**
     * Loads a log definition from a specified directory.
@@ -42,9 +118,12 @@ public final class LogDef {
     *
     * @throws IOException
     *    if the definition could not be loaded.
+    *
+    * @throws SAXException
+    *    if definition(s) could not be validated successfully.
     */
    public static final LogDef loadFromDirectory(File dir)
-   throws IllegalArgumentException, IOException {
+   throws IllegalArgumentException, IOException, SAXException {
       return new LogDef(dir);
    }
 
@@ -65,9 +144,12 @@ public final class LogDef {
     *
     * @throws IOException
     *    if the definition(s) could not be loaded.
+    *
+    * @throws SAXException
+    *    if definition(s) could not be validated successfully.
     */
    private LogDef(File dir)
-   throws IllegalArgumentException, IOException {
+   throws IllegalArgumentException, IOException, SAXException {
 
       // Check preconditions
       if (dir == null) {
@@ -79,8 +161,9 @@ public final class LogDef {
       // Create a resolver for the specified input directory
       _resolver = new Resolver(dir);
       
-      // Load the log.xml file
+      // Load the log.xml file and validate it
       _xml = _resolver.loadInputDocument("log.xml");
+      validateLogXML(_xml);
       
       // Parse the domain name and determine access level
       Element docElem = _xml.getDocumentElement();

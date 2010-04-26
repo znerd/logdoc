@@ -1,3 +1,8 @@
+--- CHANGES SINCE LOGDOC 0.5 -------------------------------------------------
+
+* Validating log.xml files with XSD stored inside JAR file.
+
+
 --- CHANGES SINCE LOGDOC 0.4 -------------------------------------------------
 
 * Hid property name constants from LogCentral class.

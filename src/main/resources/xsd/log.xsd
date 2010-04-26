@@ -20,14 +20,14 @@
 
 	<!-- Type "EntryDef" -->
 	<xsd:complexType name="EntryDef">
+		<xsd:sequence>
+			<xsd:element name="description" type="xsd:string" />
+			<xsd:element name="param"       type="EntryParamDef" minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+
 		<xsd:attribute name="id"        type="EntryID"  use="required" />
 		<xsd:attribute name="level"     type="LogLevel" use="required" />
 		<xsd:attribute name="exception" type="Boolean"  use="optional" />
-
-		<xsd:sequence>
-			<xsd:element name="description" type="xsd:string" />
-			<xsd:element name="param"       type="EntryParamDef" maxOccurs="unbounded" />
-		</xsd:sequence>
 	</xsd:complexType>
 
 	<!-- EntryID -->
@@ -39,12 +39,12 @@
 
 	<!-- Type "EntryGroupDef" -->
 	<xsd:complexType name="EntryGroupDef">
-		<xsd:attribute name="id"   type="EntryGroupID"   use="required" />
-		<xsd:attribute name="name" type="EntryGroupName" use="required" />
-
 		<xsd:sequence>
 			<xsd:element name="entry" type="EntryDef" maxOccurs="unbounded" />
 		</xsd:sequence>
+
+		<xsd:attribute name="id"   type="EntryGroupID"   use="required" />
+		<xsd:attribute name="name" type="EntryGroupName" use="required" />
 	</xsd:complexType>
 
 	<!-- EntryGroupID -->
@@ -52,6 +52,11 @@
 		<xsd:restriction base="xsd:string">
 			<xsd:pattern value="[a-z_]+" />
 		</xsd:restriction>
+	</xsd:simpleType>
+
+	<!-- EntryGroupName -->
+	<xsd:simpleType name="EntryGroupName">
+		<xsd:restriction base="xsd:string" />
 	</xsd:simpleType>
 
 	<!-- Type "EntryParamDef" -->
@@ -62,6 +67,27 @@
 		<xsd:attribute name="filter"   type="Boolean"        use="optional" />
 	</xsd:complexType>
 
+	<!-- EntryParamName -->
+	<xsd:simpleType name="EntryParamName">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[a-z][a-zA-Z_0-9]*" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<!-- Type "EntryParamType" -->
+	<xsd:simpleType name="EntryParamType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="float32" />
+			<xsd:enumeration value="float64" />
+			<xsd:enumeration value="int8" />
+			<xsd:enumeration value="int16" />
+			<xsd:enumeration value="int32" />
+			<xsd:enumeration value="int64" />
+			<xsd:enumeration value="object" />
+			<xsd:enumeration value="text" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
 	<!-- LocaleName -->
 	<xsd:simpleType name="LocaleName">
 		<xsd:restriction base="xsd:string">
@@ -71,15 +97,27 @@
 
 	<!-- Type "LogDef" -->
 	<xsd:complexType name="LogDef">
-		<xsd:attribute name="since"  type="xsd:string" use="optional" />
-		<xsd:attribute name="domain" type="DomainName" use="required" />
-		<xsd:attribute name="public" type="Boolean"    use="required" />
-
 		<xsd:sequence>
 			<xsd:element name="translation-bundle" type="TranslationBundleRef" maxOccurs="unbounded" />
 			<xsd:element name="group"              type="EntryGroupDef"        maxOccurs="unbounded" />
 		</xsd:sequence>
+
+		<xsd:attribute name="since"  type="xsd:string" use="optional" />
+		<xsd:attribute name="domain" type="DomainName" use="required" />
+		<xsd:attribute name="public" type="Boolean"    use="required" />
 	</xsd:complexType>
+
+	<!-- Type "LogLevel" -->
+	<xsd:simpleType name="LogLevel">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="DEBUG" />
+			<xsd:enumeration value="INFO" />
+			<xsd:enumeration value="NOTICE" />
+			<xsd:enumeration value="WARNING" />
+			<xsd:enumeration value="ERROR" />
+			<xsd:enumeration value="FATAL" />
+		</xsd:restriction>
+	</xsd:simpleType>
 
 	<!-- Type "TranslationBundleRef" -->
 	<xsd:complexType name="TranslationBundleRef">
