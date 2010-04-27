@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="US-ASCII" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!--
  $Id: log_to_Log_java.xslt,v 1.74 2007/06/07 09:04:07 agoubard Exp $
 
  Copyright 2003-2007 Orange Nederland Breedband B.V.
+ Copyright 2009-2010 Ernst de Haan
  See the COPYRIGHT file for redistribution and use restrictions.
 -->
 

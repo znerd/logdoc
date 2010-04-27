@@ -1,6 +1,7 @@
 --- CHANGES SINCE LOGDOC 0.7 -------------------------------------------------
 
-
+* Updated copyright statement in XSLT files.
+* Changed encoding (in XML declaration) in XSLT files from US-ASCII to UTF-8.
 
 
 --- CHANGES SINCE LOGDOC 0.6 -------------------------------------------------
