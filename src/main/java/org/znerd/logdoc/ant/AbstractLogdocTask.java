@@ -320,5 +320,17 @@ public abstract class AbstractLogdocTask extends MatchingTask {
       log("Processed definitions in " + duration + " ms.");
    }
 
+   /**
+    * Executes this task after all common validations and preparations have 
+    * been done. This method must only be called from the
+    * {@link #execute()} method in the <code>AbstractLogdocTask</code> class.
+    *
+    * @param logDef
+    *    the {@link LogDef} to process, never <code>null</code>.
+    *
+    * @throws Exception
+    *    if anything goes wrong; this will be handled by the
+    *    <code>AbstractLogdocTask</code> class.
+    */
    protected abstract void executeImpl(LogDef logDef) throws Exception;
 }
