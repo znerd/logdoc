@@ -39,9 +39,10 @@
 
 	<!-- Type "Translation" -->
 	<xsd:complexType name="Translation" mixed="true">
-		<xsd:sequence>
-			<xsd:element name="value-of-param" type="ParamValueRef" minOccurs="0" maxOccurs="unbounded" />
-		</xsd:sequence>
+		<xsd:choice minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="value-of-param"     type="ParamValueRef" />
+			<xsd:element name="exception-property" type="ParamValueRef" />
+		</xsd:choice>
 		<xsd:attribute name="entry" type="EntryID" use="required" />
 	</xsd:complexType>
 

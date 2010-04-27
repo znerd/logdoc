@@ -45,7 +45,7 @@
 	<!-- Type "EntryGroupDef" -->
 	<xsd:complexType name="EntryGroupDef">
 		<xsd:sequence>
-			<xsd:element name="entry" type="EntryDef" maxOccurs="unbounded" />
+			<xsd:element name="entry" type="EntryDef" minOccurs="0" maxOccurs="unbounded" />
 		</xsd:sequence>
 
 		<xsd:attribute name="id"   type="EntryGroupID"   use="required" />
@@ -55,7 +55,7 @@
 	<!-- EntryGroupID -->
 	<xsd:simpleType name="EntryGroupID">
 		<xsd:restriction base="xsd:string">
-			<xsd:pattern value="[a-z_]+" />
+			<xsd:pattern value="[a-z][a-zA-Z_]*(\.[a-z][a-zA-Z_]+)*" />
 		</xsd:restriction>
 	</xsd:simpleType>
 
@@ -82,6 +82,7 @@
 	<!-- Type "ParamType" -->
 	<xsd:simpleType name="ParamType">
 		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="boolean" />
 			<xsd:enumeration value="float32" />
 			<xsd:enumeration value="float64" />
 			<xsd:enumeration value="int8" />
