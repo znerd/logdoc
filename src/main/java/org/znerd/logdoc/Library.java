@@ -11,8 +11,8 @@ import org.znerd.logdoc.internal.LogCentral;
 /**
  * Class that represents the Logdoc library.
  *
- * <p>As a side-function, this class can be executed. When it is, all it does
- * is display the name of this library and the version to standard out.
+ * <p>This class can be run as a program. When it is, all it does is display
+ * the name of this library and the version to standard out.
  *
  * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
  */
