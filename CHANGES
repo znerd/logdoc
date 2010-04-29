@@ -1,5 +1,8 @@
 --- CHANGES SINCE LOGDOC 0.7 -------------------------------------------------
 
+* Moved functionality from LogCentral to Library class.
+* Moved LogCentral class to org.znerd.logdoc.internal.log4j package.
+* Changed AbstractLog.LogController to a standalone class.
 * Moved Log4J-specific XSLT files to log4j/ subdirectory.
 * Updated copyright statement in XSLT files.
 * Changed encoding (in XML declaration) in XSLT files from US-ASCII to UTF-8.

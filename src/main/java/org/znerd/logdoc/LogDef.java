@@ -283,9 +283,9 @@ public final class LogDef {
 
       // Perform transformations
       transform(target, targetDir, "Log");
-      transform(target, targetDir, "TranslationBundle");
+      transform(null,   targetDir, "TranslationBundle");
       for (String locale : _translations.keySet()) {
-         transformForLocale(target, targetDir, locale);
+         transformForLocale(targetDir, locale);
       }
    }
 
@@ -300,10 +300,14 @@ public final class LogDef {
    private void transform(String target, File baseDir, String className)
    throws IOException {
 
+      String xsltDir = (target == null)
+                     ? "xslt/"
+                     : "xslt/" + target + '/';
+
       try {
 
          // Create an XSLT Transforer
-         String                   xsltPath = "xslt/" + target + "/log_to_" + className + "_java.xslt";
+         String                   xsltPath = xsltDir + "log_to_" + className + "_java.xslt";
          InputStream            xsltStream = Library.getMetaResourceAsStream(xsltPath);
          StreamSource     xsltStreamSource = new StreamSource(xsltStream);
          TransformerFactory xformerFactory = TransformerFactory.newInstance();
@@ -343,13 +347,13 @@ public final class LogDef {
       }
    }
    
-   private void transformForLocale(String target, File baseDir, String locale)
+   private void transformForLocale(File baseDir, String locale)
    throws IOException {
 
       try {
 
          // Create an XSLT Transforer
-         String                   xsltPath = "xslt/" + target + "/translation-bundle_to_java.xslt";
+         String                   xsltPath = "xslt/translation-bundle_to_java.xslt";
          InputStream            xsltStream = Library.getMetaResourceAsStream(xsltPath);
          StreamSource     xsltStreamSource = new StreamSource(xsltStream);
          TransformerFactory xformerFactory = TransformerFactory.newInstance();
