@@ -15,7 +15,7 @@ public class Log extends org.znerd.logdoc.internal.log4j.AbstractLog {
    /**
     * Controller for this <em>logdoc</em> <code>Log</code> class.
     */
-   private static final LogController CONTROLLER;
+   private static final Controller CONTROLLER;
 
    /**
     * Associations from name to translation bundle.
@@ -144,7 +144,7 @@ public class Log extends org.znerd.logdoc.internal.log4j.AbstractLog {
    /**
     * Controller for this <code>Log</code> class.
     */
-   private static final class Controller extends LogController {
+   private static final class Controller extends org.znerd.logdoc.internal.LogController {
 
       /**
        * Constructs a new <code>Controller</code> for this log.
