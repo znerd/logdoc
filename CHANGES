@@ -4,7 +4,7 @@
 * Moved LogCentral class to org.znerd.logdoc.internal.log4j package.
 * Changed AbstractLog.LogController to a standalone class.
 * Moved Log4J-specific XSLT files to log4j/ subdirectory.
-* Initial support for "slf4j" target (alternative for "log4j" target).
+* Preparations for SLF4J-support (alternative for Log4J).
 * Updated copyright statement in XSLT files.
 * Changed encoding (in XML declaration) in XSLT files from US-ASCII to UTF-8.
 

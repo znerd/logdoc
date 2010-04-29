@@ -1,6 +1,8 @@
 // See the COPYRIGHT file for copyright and license information
 package org.znerd.logdoc.ant;
 
+import org.apache.tools.ant.BuildException;
+
 import org.znerd.logdoc.LogDef;
 
 /**
@@ -9,6 +11,16 @@ import org.znerd.logdoc.LogDef;
  * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
  */
 public final class LogdocCodeTask extends AbstractLogdocTask {
+
+   //-------------------------------------------------------------------------
+   // Class fields
+   //-------------------------------------------------------------------------
+
+   /**
+    * The default target, <code>"log4j"</code>.
+    */
+   private static final String DEFAULT_TARGET = "log4j";
+
 
    //-------------------------------------------------------------------------
    // Constructors
@@ -29,7 +41,7 @@ public final class LogdocCodeTask extends AbstractLogdocTask {
    /**
     * The target. By default <code>"log4j"</code>.
     */
-   private String _target = "log4j";
+   private String _target;
 
 
    //-------------------------------------------------------------------------
@@ -49,6 +61,22 @@ public final class LogdocCodeTask extends AbstractLogdocTask {
 
    @Override
    protected void executeImpl(LogDef def) throws Exception {
-      def.generateCode(_target, _destDir);
+
+      String target;
+
+      // No target specified, use the default
+      if (_target == null || _target.trim().length() < 1) {
+         target = DEFAULT_TARGET;
+
+      // Target explicitly specified, check it
+      } else {
+         target = _target.trim().toLowerCase();
+         if (! target.equals("log4j")) {
+            throw new BuildException("Unsupported target \"" + _target + "\".");
+         }
+      }
+
+      // Generate code
+      def.generateCode(target, _destDir);
    }
 }
