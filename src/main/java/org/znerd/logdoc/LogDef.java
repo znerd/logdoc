@@ -106,6 +106,24 @@ public final class LogDef {
       return factory.newSchema(xsdSource);
    }
 
+   /**
+    * Validates the specified XML document against the specified schema.
+    *
+    * @param schema
+    *    the {@link Schema} to validate against, cannot be <code>null</code>.
+    *
+    * @param document
+    *    the XML {@link Document} to validate, cannot be <code>null</code>.
+    *
+    * @throws IllegalArgumentException
+    *    if <code>schema == null || document == null</code>.
+    *
+    * @throws IOException
+    *    in case of an I/O error.
+    *
+    * @throws SAXException
+    *    in case the validation encounters an issue.
+    */
    private static void validate(Schema schema, Document document)
    throws IllegalArgumentException, IOException, SAXException {
 
@@ -116,6 +134,7 @@ public final class LogDef {
          throw new IllegalArgumentException("document == null");
       }
 
+      // Validate
       Validator validator = schema.newValidator();
       validator.validate(new DOMSource(document));
    }
