@@ -124,7 +124,7 @@
 			<attribute name="actual"   default="${unittests.outputdir}/@{testnum}"   />
 
 			<sequential>
-				<logdoc-code in="@{input}" out="@{actual}" target="slf4j" />
+				<logdoc-code in="@{input}" out="@{actual}" target="log4j" />
 				<fixcrlf srcDir="@{actual}" includes="**/*.java" eol="unix" eof="remove" fixlast="true" />
 
 				<tempfile destdir="${java.io.tmpdir}" prefix="${project.name}-unittest." property="diff-file" suffix=".diff" />
