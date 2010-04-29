@@ -58,7 +58,7 @@
    /**
     * Controller for this <em>logdoc</em> <code>Log</code> class.
     */
-   private static final LogController CONTROLLER;
+   private static final Controller CONTROLLER;
 
    /**
     * Associations from name to translation bundle.
@@ -123,7 +123,7 @@
    /**
     * Controller for this <code>Log</code> class.
     */
-   private static final class Controller extends LogController {
+   private static final class Controller extends org.znerd.logdoc.internal.LogController {
 
       /**
        * Constructs a new <code>Controller</code> for this log.
@@ -210,7 +210,7 @@
 			<xsl:text>
       </xsl:text>
 			<xsl:value-of select="@name" />
-			<xsl:text> = org.znerd.logdoc.LogCentral.getLogFilter().filter("</xsl:text>
+			<xsl:text> = org.znerd.logdoc.Library.getLogFilter().filter("</xsl:text>
 			<xsl:value-of select="$category" />
 			<xsl:text>", "</xsl:text>
 			<xsl:value-of select="@name" />
@@ -247,8 +247,8 @@
 				<xsl:text>org.znerd.logdoc.internal.ExceptionUtils.getRootCause(_exception));</xsl:text>
 			</xsl:when>
 			<xsl:when test="$exception">
-				<xsl:text>org.znerd.logdoc.LogCentral.isStackTraceAtMessageLevel() ? org.znerd.logdoc.internal.ExceptionUtils.getRootCause(_exception) : null);
-         if (_exception != null &amp;&amp; !org.znerd.logdoc.LogCentral.isStackTraceAtMessageLevel() &amp;&amp; LOGGER_</xsl:text>
+				<xsl:text>org.znerd.logdoc.Library.isStackTraceAtMessageLevel() ? org.znerd.logdoc.internal.ExceptionUtils.getRootCause(_exception) : null);
+         if (_exception != null &amp;&amp; !org.znerd.logdoc.Library.isStackTraceAtMessageLevel() &amp;&amp; LOGGER_</xsl:text>
 				<xsl:value-of select="@id" />
 				<xsl:text>.isEnabledFor(DEBUG)) {
             LOGGER_</xsl:text>
