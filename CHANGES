@@ -1,5 +1,6 @@
 --- CHANGES SINCE LOGDOC 0.7 -------------------------------------------------
 
+* Moved Log4J-specific XSLT files to log4j/ subdirectory.
 * Updated copyright statement in XSLT files.
 * Changed encoding (in XML declaration) in XSLT files from US-ASCII to UTF-8.
 

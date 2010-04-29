@@ -256,6 +256,10 @@ public final class LogDef {
    /**
     * Generates the Java code for this log definition.
     *
+    * @param target
+    *    the target to generate code for, e.g. <code>"log4j"</code> or
+    *    <code>"slf4j"</code>, cannot be <code>null</code>.
+    *
     * @param targetDir
     *    the target directory to create the Java source files in,
     *    cannot be <code>null</code>, and must be an existent writable
@@ -267,19 +271,21 @@ public final class LogDef {
     * @throws IOException
     *    if the Java code could not be generated.
     */
-   public void generateCode(File targetDir)
+   public void generateCode(String target, File targetDir)
    throws IllegalArgumentException, IOException {
 
       // Check preconditions
-      if (targetDir == null) {
+      if (target == null) {
+         throw new IllegalArgumentException("target == null");
+      } else if (targetDir == null) {
          throw new IllegalArgumentException("targetDir == null");
       }
 
       // Perform transformations
-      transform(targetDir, "Log");
-      transform(targetDir, "TranslationBundle");
+      transform(target, targetDir, "Log");
+      transform(target, targetDir, "TranslationBundle");
       for (String locale : _translations.keySet()) {
-         transformForLocale(targetDir, locale);
+         transformForLocale(target, targetDir, locale);
       }
    }
 
@@ -291,13 +297,13 @@ public final class LogDef {
 	   return new DOMSource(_translations.get(locale));
    }
 
-   private void transform(File baseDir, String className)
+   private void transform(String target, File baseDir, String className)
    throws IOException {
 
       try {
 
          // Create an XSLT Transforer
-         String                   xsltPath = "xslt/log_to_" + className + "_java.xslt";
+         String                   xsltPath = "xslt/" + target + "/log_to_" + className + "_java.xslt";
          InputStream            xsltStream = Library.getMetaResourceAsStream(xsltPath);
          StreamSource     xsltStreamSource = new StreamSource(xsltStream);
          TransformerFactory xformerFactory = TransformerFactory.newInstance();
@@ -337,13 +343,13 @@ public final class LogDef {
       }
    }
    
-   private void transformForLocale(File baseDir, String locale)
+   private void transformForLocale(String target, File baseDir, String locale)
    throws IOException {
 
       try {
 
          // Create an XSLT Transforer
-         String                   xsltPath = "xslt/translation-bundle_to_java.xslt";
+         String                   xsltPath = "xslt/" + target + "/translation-bundle_to_java.xslt";
          InputStream            xsltStream = Library.getMetaResourceAsStream(xsltPath);
          StreamSource     xsltStreamSource = new StreamSource(xsltStream);
          TransformerFactory xformerFactory = TransformerFactory.newInstance();

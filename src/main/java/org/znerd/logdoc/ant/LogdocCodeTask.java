@@ -23,11 +23,32 @@ public final class LogdocCodeTask extends AbstractLogdocTask {
 
 
    //-------------------------------------------------------------------------
+   // Fields
+   //-------------------------------------------------------------------------
+
+   /**
+    * The target. By default <code>"log4j"</code>.
+    */
+   private String _target = "log4j";
+
+
+   //-------------------------------------------------------------------------
    // Methods
    //-------------------------------------------------------------------------
 
+   /**
+    * Sets the target for the code generation. The default is 
+    * <code>"log4j"</code>.
+    *
+    * @param newTarget
+    *    the new target.
+    */
+   public void setTarget(String newTarget) {
+      _target = newTarget;
+   }
+
    @Override
    protected void executeImpl(LogDef def) throws Exception {
-      def.generateCode(_destDir);
+      def.generateCode(_target, _destDir);
    }
 }
