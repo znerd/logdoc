@@ -1,5 +1,5 @@
 // See the COPYRIGHT file for copyright and license information
-package org.znerd.logdoc.ant;
+package org.znerd.logdoc.ant.tasks;
 
 import org.apache.tools.ant.BuildException;
 
