@@ -24,30 +24,47 @@ Example Logdoc log.xml file:
       </group>
    </log>
 
-For more examples, see src/unittests/input/.
+Input files can be used to generate Java source code and HTML documentation.
 
-Input files can be translated to Java and HTML code using Ant tasks. Define it
-in your Ant build.xml file as follows:
+
+USAGE WITH APACHE ANT
+
+To trigger Logdoc from your Ant build script, first define the tasks:
 
    <taskdef resource="org/znerd/logdoc/ant/antlib.xml" classpath="lib/logdoc.jar" />
 
-Then the tasks can be used as follows:
+Then the tasks can, for example, be used as follows:
 
    <logdoc-code in="src/logdoc" out="src/java" />
    <logdoc-html in="src/logdoc" out="build/logdoc-htdocs" />
 
 
+USAGE WITH APACHE MAVEN
+
+(TODO: Write this part)
+
+
+MODULES
+
+Logdoc consists of the following modules:
+
+   base          - Logdoc base classes, in the org.znerd.logdoc package.
+
+   ant-tasks     - Apache Ant tasks that make the Logdoc functionality
+                   available for Ant build scripts.
+
+   maven-plugins - Maven plugins that make the Logdoc functionality available
+                   for Maven projects.
+
+
 BUILDING LOGDOC
 
-To build Logdoc self, use Ant 1.7.1 (1.8.0 may also work) and execute:
+To build Logdoc self, use Maven and execute:
 
-   ant
+   mvn package
 
-Under the target/ directory files will be generated, including a JAR file and
-Javadoc API documentation.
-
-Note: The build process is currently being migrated from Ant to Maven, this is
-      work in progress.
+Under the target/ directories (of the respective modules) files will be
+generated.
 
 
 HISTORY
