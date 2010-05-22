@@ -1,5 +1,5 @@
 // See the COPYRIGHT file for copyright and license information
-package org.znerd.logdoc.internal.ant;
+package org.znerd.logdoc.ant.tasks.internal;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;

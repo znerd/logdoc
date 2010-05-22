@@ -11,7 +11,8 @@ import org.apache.tools.ant.taskdefs.MatchingTask;
 
 import org.znerd.logdoc.LogDef;
 import org.znerd.logdoc.internal.InternalLogging;
-import org.znerd.logdoc.internal.ant.AntInternalLogging;
+
+import org.znerd.logdoc.ant.tasks.internal.AntInternalLogging;
 
 /**
  * Abstract base class for the Logdoc Ant task implementations.

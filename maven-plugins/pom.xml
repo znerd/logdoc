@@ -73,10 +73,6 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.6.1</version>
 			</plugin>
-			<plugin>
-				<groupId>org.znerd.logdoc.maven.plugin</groupId>
-				<artifactId>logdoc-plugin</artifactId>
-			</plugin>
 		</plugins>
 	</build>
 	<properties>
