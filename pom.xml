@@ -6,7 +6,7 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>base</module>
-		<module>ant</module>
-		<module>mvn</module>
+		<module>ant-tasks</module>
+		<module>maven-plugins</module>
 	</modules>
 </project>

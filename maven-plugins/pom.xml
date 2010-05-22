@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.znerd.logdoc</groupId>
-	<artifactId>logdoc-base</artifactId>
+	<artifactId>logdoc-maven-plugins</artifactId>
 	<packaging>jar</packaging>
 	<version>0.8-SNAPSHOT</version>
-	<name>Logdoc</name>
+	<name>Logdoc Maven plugins</name>
 	<url>http://www.github.com/znerd/logdoc</url>
 	<dependencies>
 		<dependency>
@@ -29,6 +29,11 @@
 					<artifactId>jmxri</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-plugin-api</artifactId>
+			<version>2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.ant</groupId>
@@ -67,6 +72,10 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.6.1</version>
+			</plugin>
+			<plugin>
+				<groupId>org.znerd.logdoc.maven.plugin</groupId>
+				<artifactId>logdoc-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
