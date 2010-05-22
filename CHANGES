@@ -7,6 +7,7 @@
 * Preparations for SLF4J-support (alternative for Log4J).
 * Updated copyright statement in XSLT files.
 * Changed encoding (in XML declaration) in XSLT files from US-ASCII to UTF-8.
+* Split in three modules: 'base', 'ant-tasks' and 'maven-plugins'.
 
 
 --- CHANGES SINCE LOGDOC 0.6 -------------------------------------------------
