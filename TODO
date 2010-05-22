@@ -1,18 +1,3 @@
-
-------------------------------------------------------------------------------
-
-Review the LogCentral class. Consider moving all functionality to the Library
-class.
-
-------------------------------------------------------------------------------
-
-Review the LogCentral.registerLog method. It accepts an instance of class:
-
-   org.znerd.logdoc.internal.log4j.AbstractLog.LogController
-
-which looks like it should not be exposed at all, beside the fact that it is
-Log4J-specific.
-
 ------------------------------------------------------------------------------
 
 Consider moving all filter-related classes to a separate 'filter' package.
