@@ -178,7 +178,8 @@ public final class Library {
     * Get the locale set in this LogCentral.
     *
     * @return
-    *    the locale, e.g. <code>"en_US"</code>.
+    *    the locale, e.g. <code>"en_US"</code>;
+    *    never <code>null</code>.
     */
    public static String getLocale() {
       return LOCALE;
