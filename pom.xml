@@ -3,7 +3,7 @@
 	<groupId>org.znerd.logdoc</groupId>
 	<artifactId>logdoc</artifactId>
 	<packaging>jar</packaging>
-	<version>0.4-SNAPSHOT</version>
+	<version>0.8-SNAPSHOT</version>
 	<name>logdoc</name>
 	<url>http://www.github.com/znerd/logdoc</url>
 	<dependencies>
