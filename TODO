@@ -1,14 +1,9 @@
 ------------------------------------------------------------------------------
 
-Consider moving all filter-related classes to a separate 'filter' package.
-This may not be the best option, though.
-
-------------------------------------------------------------------------------
-
 Support multiple types of code generation, e.g.:
+- SLF4J, see http://slf4j.org/
 - Java Logging Framework (available since J2SE 1.4), see http://java.sun.com/javase/6/docs/technotes/guides/logging/
 - Apache Commons Logging, see http://commons.apache.org/logging/
-- SLF4J, see http://slf4j.org/
 - Log4c, see http://log4c.sourceforge.net/
 - Log4PHP, see http://logging.apache.org/log4php/
 - Log::Log4perl, see http://mschilli.github.com/log4perl/
@@ -16,7 +11,7 @@ Support multiple types of code generation, e.g.:
 ------------------------------------------------------------------------------
 
 Support custom code generation, letting the user specify how to generate code.
-Possibly requires the user to provide XSLT.
+Probably requires the user to provide XSLT.
 
 ------------------------------------------------------------------------------
 
@@ -28,11 +23,10 @@ a quoted form. E.g.:
 
 ------------------------------------------------------------------------------
 
-Use Maven to build Logdoc self and execute the unit tests.
-
-------------------------------------------------------------------------------
-
 Allow users to use Maven to invoke Logdoc functionality (build code/docs).
+
+Status: In progress, see the maven-plugins subdirectory, which is a Maven
+        module itself.
 
 ------------------------------------------------------------------------------
 
@@ -46,5 +40,10 @@ Log4J-specific.
 ------------------------------------------------------------------------------
 
 Disable all internal logging unless a specific system property is set.
+
+------------------------------------------------------------------------------
+
+Consider moving all filter-related classes to a separate 'filter' package.
+This may not be the best option, though.
 
 ------------------------------------------------------------------------------
