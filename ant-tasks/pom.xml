@@ -3,7 +3,6 @@
 	<groupId>org.znerd.logdoc</groupId>
 	<artifactId>ant-tasks</artifactId>
 	<packaging>jar</packaging>
-	<version>0.8-SNAPSHOT</version>
 	<name>Logdoc Ant tasks</name>
 	<url>http://www.github.com/znerd/logdoc</url>
 	<parent>
