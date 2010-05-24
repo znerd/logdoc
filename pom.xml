@@ -8,7 +8,9 @@
 	<modules>
 		<module>base</module>
 		<module>base-test</module>
+		<!-- TODO
 		<module>ant-tasks</module>
 		<module>maven-plugins</module>
+		-->
 	</modules>
 </project>
