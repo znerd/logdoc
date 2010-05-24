@@ -63,11 +63,6 @@
 				<configuration>
 					<archive>
 						<index>true</index>
-						<manifest>
-							<addClasspath>false</addClasspath>
-							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-						    <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-						</manifest>
 						<manifestSections>
 							<manifestSection>
 								<name>org/znerd/logdoc/</name>
