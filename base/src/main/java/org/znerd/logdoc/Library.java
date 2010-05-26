@@ -387,10 +387,14 @@ public final class Library {
    }
 
    /**
-    * Prints the name and version of this library.
+    * Prints the name and (if known) the version of this library.
     */
    public static final void main(String[] args) {
-      System.out.println(getName() + " " + getVersion());
+      if (VERSION == null) {
+         System.out.println(getName());
+      } else {
+         System.out.println(getName() + " " + getVersion());
+      }
    }
 
 
