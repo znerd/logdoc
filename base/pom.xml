@@ -73,6 +73,7 @@
 							<manifestSection>
 								<name>org/znerd/logdoc/</name>
 								<manifestEntries>
+									<!-- TODO -->
 									<Specification-Title>Logdoc</Specification-Title>
 									<Specification-Version>0.7</Specification-Version>
 									<Specification-Vendor>znerd.org</Specification-Vendor>
