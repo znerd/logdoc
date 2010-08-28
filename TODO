@@ -1,5 +1,13 @@
 ------------------------------------------------------------------------------
 
+Update the README to explain how to use the Maven plugin.
+
+------------------------------------------------------------------------------
+
+Make the unit test that tests the Logdoc version work.
+
+------------------------------------------------------------------------------
+
 Support multiple types of code generation, e.g.:
 - SLF4J, see http://slf4j.org/
 - Java Logging Framework (available since J2SE 1.4), see http://java.sun.com/javase/6/docs/technotes/guides/logging/
