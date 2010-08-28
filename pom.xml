@@ -5,12 +5,11 @@
 	<packaging>pom</packaging>
 	<version>0.8-SNAPSHOT</version>
 	<name>Logdoc (complete)</name>
+
 	<modules>
 		<module>base</module>
 		<module>ant-tasks</module>
-		<!-- TODO
 		<module>maven-plugins</module>
-		-->
 	</modules>
 
 	<dependencyManagement>
@@ -66,6 +65,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
