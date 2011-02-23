@@ -1,3 +1,12 @@
+--- CHANGES SINCE LOGDOC 0.8 -------------------------------------------------
+
+* Logdoc is now built with Maven; removed the build.xml file.
+* Removed the lib/ directory.
+* Removed the src/package-lists/ directory.
+* Split in three modules: 'base', 'ant-tasks' and 'maven-plugins'.
+* Added (no-op) LogdocMojo to 'maven-plugins' module.
+
+
 --- CHANGES SINCE LOGDOC 0.7 -------------------------------------------------
 
 * Moved functionality from LogCentral to Library class.
@@ -7,7 +16,6 @@
 * Preparations for SLF4J-support (alternative for Log4J).
 * Updated copyright statement in XSLT files.
 * Changed encoding (in XML declaration) in XSLT files from US-ASCII to UTF-8.
-* Split in three modules: 'base', 'ant-tasks' and 'maven-plugins'.
 
 
 --- CHANGES SINCE LOGDOC 0.6 -------------------------------------------------
