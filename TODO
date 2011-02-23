@@ -1,5 +1,11 @@
 ------------------------------------------------------------------------------
 
+Support documenting the following for log messages:
+- cause
+- (potential) resolution(s)
+
+------------------------------------------------------------------------------
+
 Update the README to explain how to use the Maven plugin.
 
 ------------------------------------------------------------------------------
