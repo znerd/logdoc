@@ -19,7 +19,7 @@ Support multiple types of code generation, e.g.:
 ------------------------------------------------------------------------------
 
 Support custom code generation, letting the user specify how to generate code.
-Probably requires the user to provide XSLT.
+This requires the user to provide XSLT.
 
 ------------------------------------------------------------------------------
 
