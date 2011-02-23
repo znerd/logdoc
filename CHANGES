@@ -1,5 +1,10 @@
 --- CHANGES SINCE LOGDOC 0.8 -------------------------------------------------
 
+* Upgraded from JUnit 4.8.1 to 4.8.2.
+
+
+--- CHANGES SINCE LOGDOC 0.8 -------------------------------------------------
+
 * Logdoc is now built with Maven; removed the build.xml file.
 * Removed the lib/ directory.
 * Removed the src/package-lists/ directory.
