@@ -356,12 +356,12 @@ public final class LogDef {
       String outFileName = className + ".java";
       Source      source = getSource();
 
-      doTransformAndHandleExceptions(xsltPath, outDir, outFileName);
+      doTransformAndHandleExceptions(source, xsltPath, outDir, outFileName);
    }
 
-   private void doTransformAndHandleExceptions(String xsltPath, File outDir, String outFileName) throws IOException {
+   private void doTransformAndHandleExceptions(Source source, String xsltPath, File outDir, String outFileName) throws IOException {
       try {
-         doTransform(xsltPath, outDir, outFileName);
+         doTransform(source, xsltPath, outDir, outFileName);
       } catch (TransformerConfigurationException cause) {
          throw newIOException("Unable to perform XSLT transformation due to configuration problem.", cause);
       } catch (TransformerException cause) {
@@ -369,7 +369,7 @@ public final class LogDef {
       }
    }
 
-   private void doTransform(String xsltPath, File outDir, String outFileName) throws TransformerConfigurationException, TransformerException, IOException {
+   private void doTransform(Source source, String xsltPath, File outDir, String outFileName) throws TransformerConfigurationException, TransformerException, IOException {
 
       // Create an XSLT Transforer
       InputStream            xsltStream = Library.getMetaResourceAsStream(xsltPath);
@@ -397,7 +397,7 @@ public final class LogDef {
       StreamResult result = new StreamResult(outFile);
 
       // Perform the transformation
-      xformer.transform(getSource(), result);
+      xformer.transform(source, result);
    }
 
    private void transformToJavaForLocale(File targetDir, String locale)
