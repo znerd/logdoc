@@ -262,6 +262,54 @@ public final class LogDef {
    // Methods
    //-------------------------------------------------------------------------
 
+   private final List<Group> parseGroups(Element element) {
+      List<Group> groups = new ArrayList<Group>();
+
+      NodeList children = element.getChildNodes();
+      int    childCount = (children == null) ? 0 : children.getLength();
+
+      for (int i = 0; i < childCount; i++) {
+         Node childNode = children.item(i);
+
+         if (childNode instanceof Element) {
+            Element childElement = (Element) childNode;
+            if ("group".equals(childElement.getTagName())) {
+               Group group    = new Group();
+               group._id      = childElement.getAttribute("id");
+               group._name    = childElement.getAttribute("name");
+               group._entries = parseEntries(childElement);
+
+               groups.add(group);
+            }
+         }
+      }
+
+      return groups;
+   }
+
+   private final List<Entry> parseEntries(Element element) {
+      List<Entry> entries = new ArrayList<Entry>();
+
+      NodeList children = element.getChildNodes();
+      int    childCount = (children == null) ? 0 : children.getLength();
+
+      for (int i = 0; i < childCount; i++) {
+         Node childNode = children.item(i);
+
+         if (childNode instanceof Element) {
+            Element childElement = (Element) childNode;
+            if ("entry".equals(childElement.getTagName())) {
+               Entry entry = new Entry();
+               entry._id   = childElement.getAttribute("id");
+
+               entries.add(entry);
+            }
+         }
+      }
+
+      return entries;
+   }
+
    /**
     * Generates the Java code for this log definition.
     *
@@ -301,53 +349,57 @@ public final class LogDef {
    private void transformToJava(String target, File targetDir, String className)
    throws IOException {
 
-      String xsltDir = (target == null)
-                     ? "xslt/"
-                     : "xslt/" + target + '/';
+      String     xsltDir = (target == null) ? "xslt/" : "xslt/" + target + '/';
+      String    xsltPath = xsltDir + "log_to_" + className + "_java" + ".xslt";
+      String  domainPath = _domainName.replace(".", "/");
+      File        outDir = new File(targetDir, domainPath);
+      String outFileName = className + ".java";
+      Source      source = getSource();
 
+      doTransformAndHandleExceptions(xsltPath, outDir, outFileName);
+   }
+
+   private void doTransformAndHandleExceptions(String xsltPath, File outDir, String outFileName) throws IOException {
       try {
-
-         // Create an XSLT Transforer
-         String                   xsltPath = xsltDir + "log_to_" + className + "_java" + ".xslt";
-         InputStream            xsltStream = Library.getMetaResourceAsStream(xsltPath);
-         StreamSource     xsltStreamSource = new StreamSource(xsltStream);
-         TransformerFactory xformerFactory = TransformerFactory.newInstance();
-         xformerFactory.setURIResolver(_resolver);
-         Transformer               xformer = xformerFactory.newTransformer(xsltStreamSource);
-
-         // Set the parameters for the template
-         xformer.setParameter("package_name", _domainName);
-         xformer.setParameter("accesslevel",  _public ? "public" : "protected");
-
-         // Make sure the output directory exists
-         String     domainPath = _domainName.replace(".", "/");
-         File           outDir = new File(targetDir, domainPath);
-         if (! outDir.exists()) {
-            boolean outDirCreated = outDir.mkdirs();
-            if (! outDirCreated) {
-               throw new IOException("Failed to create output directory \"" + outDir.getPath() + "\".");
-            }
-         } else if (! outDir.isDirectory()) {
-            throw new IOException("Path \"" + outDir.getPath() + "\" exists, but it is not a directory.");
-         }
-
-         // Declare where the XSLT output should go
-         File        outFile = new File(outDir, className + ".java");
-         StreamResult result = new StreamResult(outFile);
-
-         // Perform the transformation
-         xformer.transform(getSource(), result);
-
-      // Transformer configuration error
+         doTransform(xsltPath, outDir, outFileName);
       } catch (TransformerConfigurationException cause) {
          throw newIOException("Unable to perform XSLT transformation due to configuration problem.", cause);
-
-      // Transformer error
       } catch (TransformerException cause) {
          throw newIOException("Failed to perform XSLT transformation.", cause);
       }
    }
-   
+
+   private void doTransform(String xsltPath, File outDir, String outFileName) throws TransformerConfigurationException, TransformerException, IOException {
+
+      // Create an XSLT Transforer
+      InputStream            xsltStream = Library.getMetaResourceAsStream(xsltPath);
+      StreamSource     xsltStreamSource = new StreamSource(xsltStream);
+      TransformerFactory xformerFactory = TransformerFactory.newInstance();
+      xformerFactory.setURIResolver(_resolver);
+      Transformer               xformer = xformerFactory.newTransformer(xsltStreamSource);
+
+      // Set the parameters for the template
+      xformer.setParameter("package_name", _domainName);
+      xformer.setParameter("accesslevel",  _public ? "public" : "protected");
+
+      // Make sure the output directory exists
+      if (! outDir.exists()) {
+         boolean outDirCreated = outDir.mkdirs();
+         if (! outDirCreated) {
+            throw new IOException("Failed to create output directory \"" + outDir.getPath() + "\".");
+         }
+      } else if (! outDir.isDirectory()) {
+         throw new IOException("Path \"" + outDir.getPath() + "\" exists, but it is not a directory.");
+      }
+
+      // Declare where the XSLT output should go
+      File        outFile = new File(outDir, outFileName);
+      StreamResult result = new StreamResult(outFile);
+
+      // Perform the transformation
+      xformer.transform(getSource(), result);
+   }
+
    private void transformToJavaForLocale(File targetDir, String locale)
    throws IOException {
 
@@ -443,55 +495,13 @@ public final class LogDef {
 
    private final void transformToHtml(File targetDir, String stylesheetName, String outName, String[] params)
    throws IOException {
+      /* EXAMPLE:
+      transformToHtml(targetDir, "",     "index"     );
+      transformToHtml(targetDir, "list", "entry-list", new String[] { "entry", entryID } );
+      */
+
+
       throw new Error();
-   }
-
-   private final List<Group> parseGroups(Element element) {
-      List<Group> groups = new ArrayList<Group>();
-
-      NodeList children = element.getChildNodes();
-      int    childCount = (children == null) ? 0 : children.getLength();
-
-      for (int i = 0; i < childCount; i++) {
-         Node childNode = children.item(i);
-
-         if (childNode instanceof Element) {
-            Element childElement = (Element) childNode;
-            if ("group".equals(childElement.getTagName())) {
-               Group group    = new Group();
-               group._id      = childElement.getAttribute("id");
-               group._name    = childElement.getAttribute("name");
-               group._entries = parseEntries(childElement);
-
-               groups.add(group);
-            }
-         }
-      }
-
-      return groups;
-   }
-
-   private final List<Entry> parseEntries(Element element) {
-      List<Entry> entries = new ArrayList<Entry>();
-
-      NodeList children = element.getChildNodes();
-      int    childCount = (children == null) ? 0 : children.getLength();
-
-      for (int i = 0; i < childCount; i++) {
-         Node childNode = children.item(i);
-
-         if (childNode instanceof Element) {
-            Element childElement = (Element) childNode;
-            if ("entry".equals(childElement.getTagName())) {
-               Entry entry = new Entry();
-               entry._id   = childElement.getAttribute("id");
-
-               entries.add(entry);
-            }
-         }
-      }
-
-      return entries;
    }
 
    private Source getSource() {
