@@ -30,6 +30,16 @@
 	</dependencies>
 	<build>
 		<finalName>${project.parent.artifactId}-${project.artifactId}-${project.version}</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources/xsd</directory>
+				<targetPath>META-INF/xsd</targetPath>
+			</resource>
+			<resource>
+				<directory>src/main/resources/xslt</directory>
+				<targetPath>META-INF/xslt</targetPath>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
