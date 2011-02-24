@@ -2,6 +2,7 @@
 
 * Changed name of generated JARs to logdoc-base.jar etc.
 * Updated versions on various plugins.
+* Ignoring/skipping unit test of Library.getVersion().
 
 
 --- CHANGES SINCE LOGDOC 0.8 -------------------------------------------------
