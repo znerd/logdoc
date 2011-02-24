@@ -1,6 +1,7 @@
 --- CHANGES SINCE LOGDOC 0.10 ------------------------------------------------
 
 * JAR files no longer have the version number in the name.
+* Changed 'log_file' in translation-bundle_to_java.xslt to a constant.
 
 
 --- CHANGES SINCE LOGDOC 0.9 -------------------------------------------------

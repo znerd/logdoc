@@ -417,7 +417,6 @@ public final class LogDef {
          xformer.setParameter("locale",       locale);
          xformer.setParameter("package_name", _domainName);
          xformer.setParameter("accesslevel",  _public ? "public" : "protected");
-         xformer.setParameter("log_file",     "log.xml");
 
          // Make sure the output directory exists
          String domainPath = _domainName.replace(".", "/");

@@ -12,7 +12,6 @@
 	<!-- Define parameters -->
 	<xsl:param name="package_name" />
 	<xsl:param name="locale"       />
-	<xsl:param name="log_file"     />
 	<xsl:param name="accesslevel"  />
 
 	<!-- Perform includes -->
@@ -23,6 +22,7 @@
 	<xsl:output method="text" />
 
 	<!-- Global variable -->
+	<xsl:variable name="log_file" select="'log.xml'" />
 	<xsl:variable name="log_node" select="document($log_file)/log" />
 
 	<!-- Match the root element 'translation-bundle' -->
