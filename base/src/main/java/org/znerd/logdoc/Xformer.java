@@ -1,9 +1,31 @@
 // See the COPYRIGHT file for copyright and license information
 package org.znerd.logdoc;
 
+import java.io.File;
+import java.io.InputStream;
+import java.io.IOException;
+import java.util.Map;
+
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.transform.stream.StreamResult;
+
+import static org.znerd.logdoc.internal.ExceptionUtils.newIOException;
+import static org.znerd.logdoc.internal.InternalLogging.log;
+
 class Xformer {
 
-   public final void transformAndHandleExceptions(Source source, String xsltPath, Map<String,String> xsltParams, File outDir, String outFileName) throws IOException {
+   Xformer(Resolver resolver) {
+      _resolver = resolver;
+   }
+
+   final Resolver _resolver;
+
+   final void transformAndHandleExceptions(Source source, String xsltPath, Map<String,String> xsltParams, File outDir, String outFileName) throws IOException {
       try {
          transform(source, xsltPath, xsltParams, outDir, outFileName);
       } catch (TransformerConfigurationException cause) {
@@ -13,7 +35,7 @@ class Xformer {
       }
    }
 
-   public final void transform(Source source, String xsltPath, Map<String,String> xsltParams, File outDir, String outFileName) throws TransformerConfigurationException, TransformerException, IOException {
+   final void transform(Source source, String xsltPath, Map<String,String> xsltParams, File outDir, String outFileName) throws TransformerConfigurationException, TransformerException, IOException {
 
       Transformer xformer = createTransformer(xsltPath);
       setTransformerParameters(xformer, xsltParams);

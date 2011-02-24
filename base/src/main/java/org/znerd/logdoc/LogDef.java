@@ -11,13 +11,8 @@ import java.util.Map;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
-import javax.xml.transform.stream.StreamResult;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
@@ -28,9 +23,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import org.xml.sax.SAXException;
-
-import static org.znerd.logdoc.internal.ExceptionUtils.newIOException;
-import static org.znerd.logdoc.internal.InternalLogging.log;
 
 /**
  * Log definition. Typically read from a <code>log.xml</code> file.
@@ -359,7 +351,7 @@ public final class LogDef {
       xsltParams.put("package_name", _domainName);
       xsltParams.put("accesslevel",  _public ? "public" : "protected");
 
-      transformAndHandleExceptions(source, xsltPath, xsltParams, outDir, outFileName);
+      new Xformer(_resolver).transformAndHandleExceptions(source, xsltPath, xsltParams, outDir, outFileName);
    }
 
    private void transformToJavaForLocale(File targetDir, String locale)
@@ -374,7 +366,7 @@ public final class LogDef {
       xsltParams.put("accesslevel",  _public ? "public" : "protected");
       xsltParams.put("locale",       locale);
 
-      transformAndHandleExceptions(source, xsltPath, xsltParams, targetDir, outFileName);
+      new Xformer(_resolver).transformAndHandleExceptions(source, xsltPath, xsltParams, targetDir, outFileName);
    }
 
    /**
@@ -427,7 +419,7 @@ public final class LogDef {
       String    xsltPath = "log_to" + stylesheetName + "_html.xslt";
       String outFileName = outName + ".html";
 
-      transformAndHandleExceptions(source, xsltPath, xsltParams, targetDir, outFileName);
+      new Xformer(_resolver).transformAndHandleExceptions(source, xsltPath, xsltParams, targetDir, outFileName);
    }
    private Source getSource() {
       return new DOMSource(_xml);
