@@ -429,58 +429,6 @@ public final class LogDef {
 
       transformAndHandleExceptions(source, xsltPath, xsltParams, targetDir, outFileName);
    }
-
-   private void transformAndHandleExceptions(Source source, String xsltPath, Map<String,String> xsltParams, File outDir, String outFileName) throws IOException {
-      try {
-         transform(source, xsltPath, xsltParams, outDir, outFileName);
-      } catch (TransformerConfigurationException cause) {
-         throw newIOException("Unable to perform XSLT transformation due to configuration problem.", cause);
-      } catch (TransformerException cause) {
-         throw newIOException("Failed to perform XSLT transformation.", cause);
-      }
-   }
-
-   private void transform(Source source, String xsltPath, Map<String,String> xsltParams, File outDir, String outFileName) throws TransformerConfigurationException, TransformerException, IOException {
-
-      Transformer xformer = createTransformer(xsltPath);
-      setTransformerParameters(xformer, xsltParams);
-      assertOutputDirectory(outDir);
-
-      File        outFile = new File(outDir, outFileName);
-      StreamResult result = new StreamResult(outFile);
-
-      log(LogLevel.INFO, "Generating file \"" + outFile.getPath() + "\" using stylesheet \"" + xsltPath + "\".");
-      xformer.transform(source, result);
-      log(LogLevel.INFO, "Generated file \"" + outFile.getPath() + "\" using stylesheet \"" + xsltPath + "\".");
-   }
-
-   private Transformer createTransformer(String xsltPath) throws TransformerConfigurationException, IOException {
-      TransformerFactory xformerFactory = TransformerFactory.newInstance();
-      xformerFactory.setURIResolver(_resolver);
-
-      InputStream        xsltStream = Library.getMetaResourceAsStream("xslt/" + xsltPath);
-      StreamSource xsltStreamSource = new StreamSource(xsltStream);
-
-      return xformerFactory.newTransformer(xsltStreamSource);
-   }
-
-   private final void setTransformerParameters(Transformer xformer, Map<String,String> params) {
-      for (String key : params.keySet()) {
-         xformer.setParameter(key, params.get(key));
-      }
-   }
-
-   private final void assertOutputDirectory(File outDir) throws IOException {
-      if (! outDir.exists()) {
-         boolean outDirCreated = outDir.mkdirs();
-         if (! outDirCreated) {
-            throw new IOException("Failed to create output directory \"" + outDir.getPath() + "\".");
-         }
-      } else if (! outDir.isDirectory()) {
-         throw new IOException("Path \"" + outDir.getPath() + "\" exists, but it is not a directory.");
-      }
-   }
-
    private Source getSource() {
       return new DOMSource(_xml);
    }
