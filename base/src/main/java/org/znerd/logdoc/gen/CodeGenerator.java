@@ -34,12 +34,6 @@ import org.znerd.logdoc.Resolver;
  */
 public final class CodeGenerator {
 
-   public CodeGenerator(Resolver resolver) {
-      _resolver = resolver;
-   }
-
-   private final Resolver _resolver;
-
    /**
     * Generates the Java code for the specified log definition.
     *
@@ -94,7 +88,7 @@ public final class CodeGenerator {
       xsltParams.put("package_name", def.getDomainName());
       xsltParams.put("accesslevel",  def.isPublic() ? "public" : "protected");
 
-      new Xformer(_resolver).transformAndHandleExceptions(source, xsltPath, xsltParams, outDir, outFileName);
+      new Xformer(def).transformAndHandleExceptions(source, xsltPath, xsltParams, outDir, outFileName);
    }
 
    private void transformToJavaForLocale(LogDef def, File targetDir, String locale, Document translationXML)
@@ -109,6 +103,6 @@ public final class CodeGenerator {
       xsltParams.put("accesslevel",  def.isPublic() ? "public" : "protected");
       xsltParams.put("locale",       locale);
 
-      new Xformer(_resolver).transformAndHandleExceptions(source, xsltPath, xsltParams, targetDir, outFileName);
+      new Xformer(def).transformAndHandleExceptions(source, xsltPath, xsltParams, targetDir, outFileName);
    }
 }

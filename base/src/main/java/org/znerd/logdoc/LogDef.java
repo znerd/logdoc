@@ -270,6 +270,14 @@ public final class LogDef {
       return _xml;
    }
 
+   public final Resolver getResolver() {
+      return _resolver;
+   }
+
+   public List<Group> getGroups() {
+      return _groups;
+   }
+
    private final List<Group> parseGroups(Element element) {
       List<Group> groups = new ArrayList<Group>();
 
@@ -318,74 +326,29 @@ public final class LogDef {
       return entries;
    }
 
-   /**
-    * Generates the HTML documentation for this log definition.
-    *
-    * @param targetDir
-    *    the target directory to create the HTML documentation files in,
-    *    cannot be <code>null</code>, and must be an existent writable
-    *    directory.
-    *
-    * @throws IllegalArgumentException
-    *    if <code>targetDir == null</code>.
-    *
-    * @throws IOException
-    *    if the HTML documentation files could not be generated.
-    */
-   public void generateHtml(File targetDir)
-   throws IllegalArgumentException, IOException {
-
-      // Check preconditions
-      if (targetDir == null) {
-         throw new IllegalArgumentException("targetDir == null");
-      }
-
-      transformToHtml(targetDir, "",      "index"     , new HashMap<String,String>());
-      transformToHtml(targetDir, "_list", "entry-list", new HashMap<String,String>());
-
-      for (Group group : _groups) {
-         String groupID = group._id;
-         Map<String,String> xsltParams = new HashMap<String,String>();
-         xsltParams.put("group", groupID);
-         String stylesheetName = "_group";
-         String outName = "group-" + groupID;
-         transformToHtml(targetDir, stylesheetName, outName, xsltParams);
-
-         for (Entry entry : group._entries) {
-            String entryID = entry._id;
-            xsltParams = new HashMap<String,String>();
-            xsltParams.put("entry", entryID);
-            stylesheetName = "_entry";
-            outName = "entry-" + entryID;
-            transformToHtml(targetDir, stylesheetName, outName, xsltParams);
-         }
-      }
-   }
-
-   private final void transformToHtml(File targetDir, String stylesheetName, String outName, Map<String,String> xsltParams)
-   throws IOException {
-      Source      source = getSource();
-      String    xsltPath = "log_to" + stylesheetName + "_html.xslt";
-      String outFileName = outName + ".html";
-
-      new Xformer(_resolver).transformAndHandleExceptions(source, xsltPath, xsltParams, targetDir, outFileName);
-   }
-
-   private Source getSource() {
-      return new DOMSource(_xml);
-   }
-   
-   private Source getTranslationBundleSource(String locale) {
-	   return new DOMSource(_translations.get(locale));
-   }
-
-   private class Group {
+   public class Group {
       String _id;
       String _name;
       List<Entry> _entries;
+
+      public String getID() {
+         return _id;
+      }
+
+      public String getName() {
+         return _name;
+      }
+
+      public List<Entry> getEntries() {
+         return _entries;
+      }
    }
 
-   private class Entry {
+   public class Entry {
       String _id;
+
+      public String getID() {
+         return _id;
+      }
    }
 }

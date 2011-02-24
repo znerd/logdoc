@@ -15,6 +15,7 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.znerd.logdoc.Library;
+import org.znerd.logdoc.LogDef;
 import org.znerd.logdoc.LogLevel;
 import org.znerd.logdoc.Resolver;
 
@@ -23,8 +24,8 @@ import static org.znerd.logdoc.internal.InternalLogging.log;
 
 class Xformer {
 
-   Xformer(Resolver resolver) {
-      _resolver = resolver;
+   Xformer(LogDef logDef) {
+      _resolver = logDef.getResolver();
    }
 
    final Resolver _resolver;
