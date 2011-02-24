@@ -29,7 +29,7 @@ import static org.znerd.logdoc.internal.ExceptionUtils.newIOException;
  *
  * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
  */
-class Resolver implements URIResolver {
+public class Resolver implements URIResolver {
 
    //-------------------------------------------------------------------------
    // Constructors

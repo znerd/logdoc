@@ -92,9 +92,9 @@ public final class LogDef {
       SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
       // Create a Source for the XSD file
-      String         xsdPath = "xsd/" + name + ".xsd";
-      InputStream  xsdStream = Library.getMetaResourceAsStream(xsdPath);
-      Source       xsdSource = new StreamSource(xsdStream);
+      String        xsdPath = "xsd/" + name + ".xsd";
+      InputStream xsdStream = Library.getMetaResourceAsStream(xsdPath);
+      Source      xsdSource = new StreamSource(xsdStream);
 
       return factory.newSchema(xsdSource);
    }
@@ -254,6 +254,22 @@ public final class LogDef {
    // Methods
    //-------------------------------------------------------------------------
 
+   public final String getDomainName() {
+      return _domainName;
+   }
+
+   public final boolean isPublic() {
+      return _public;
+   }
+
+   public final Map<String,Document> getTranslations() {
+      return _translations;
+   }
+
+   public final Document getXML() {
+      return _xml;
+   }
+
    private final List<Group> parseGroups(Element element) {
       List<Group> groups = new ArrayList<Group>();
 
@@ -300,73 +316,6 @@ public final class LogDef {
       }
 
       return entries;
-   }
-
-   /**
-    * Generates the Java code for this log definition.
-    *
-    * @param target
-    *    the target to generate code for, e.g. <code>"log4j"</code> or
-    *    <code>"slf4j"</code>, cannot be <code>null</code>.
-    *
-    * @param targetDir
-    *    the target directory to create the Java source files in,
-    *    cannot be <code>null</code>, and must be an existent writable
-    *    directory.
-    *
-    * @throws IllegalArgumentException
-    *    if <code>target == null || targetDir == null</code>.
-    *
-    * @throws IOException
-    *    if the Java code could not be generated.
-    */
-   public void generateCode(String target, File targetDir)
-   throws IllegalArgumentException, IOException {
-
-      // Check preconditions
-      if (target == null) {
-         throw new IllegalArgumentException("target == null");
-      } else if (targetDir == null) {
-         throw new IllegalArgumentException("targetDir == null");
-      }
-
-      // Perform transformations
-      transformToJava(target + '/', targetDir, "Log");
-      transformToJava("",           targetDir, "TranslationBundle");
-      for (String locale : _translations.keySet()) {
-         transformToJavaForLocale(targetDir, locale);
-      }
-   }
-
-   private void transformToJava(String xsltSubDir, File targetDir, String className)
-   throws IOException {
-
-      Source      source = getSource();
-      String    xsltPath = xsltSubDir + "log_to_" + className + "_java" + ".xslt";
-      String  domainPath = _domainName.replace(".", "/");
-      File        outDir = new File(targetDir, domainPath);
-      String outFileName = className + ".java";
-
-      Map<String,String> xsltParams = new HashMap<String,String>();
-      xsltParams.put("package_name", _domainName);
-      xsltParams.put("accesslevel",  _public ? "public" : "protected");
-
-      new Xformer(_resolver).transformAndHandleExceptions(source, xsltPath, xsltParams, outDir, outFileName);
-   }
-
-   private void transformToJavaForLocale(File targetDir, String locale)
-   throws IOException {
-
-      Source      source = getTranslationBundleSource(locale);
-      String    xsltPath = "translation-bundle_to_java.xslt";
-      String outFileName = "TranslationBundle_" + locale + ".java";
-
-      Map<String,String> xsltParams = new HashMap<String,String>();
-      xsltParams.put("package_name", _domainName);
-      xsltParams.put("accesslevel",  _public ? "public" : "protected");
-      xsltParams.put("locale",       locale);
-
-      new Xformer(_resolver).transformAndHandleExceptions(source, xsltPath, xsltParams, targetDir, outFileName);
    }
 
    /**
@@ -421,6 +370,7 @@ public final class LogDef {
 
       new Xformer(_resolver).transformAndHandleExceptions(source, xsltPath, xsltParams, targetDir, outFileName);
    }
+
    private Source getSource() {
       return new DOMSource(_xml);
    }

@@ -337,7 +337,7 @@ public final class Library {
     * @throws IOException
     *    if the stream could not be opened.
     */
-   static InputStream getMetaResourceAsStream(String path)
+   public static InputStream getMetaResourceAsStream(String path)
    throws IllegalArgumentException, NoSuchResourceException, IOException {
       return getMetaResource(path).openStream();
    }
