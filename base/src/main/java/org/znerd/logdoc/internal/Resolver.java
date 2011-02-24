@@ -1,5 +1,5 @@
 // See the COPYRIGHT file for copyright and license information
-package org.znerd.logdoc;
+package org.znerd.logdoc.internal;
 
 import static org.znerd.logdoc.Library.quote;
 import static org.znerd.logdoc.internal.InternalLogging.log;

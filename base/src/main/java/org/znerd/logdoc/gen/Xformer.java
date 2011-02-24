@@ -17,7 +17,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.znerd.logdoc.Library;
 import org.znerd.logdoc.LogDef;
 import org.znerd.logdoc.LogLevel;
-import org.znerd.logdoc.Resolver;
+import org.znerd.logdoc.internal.Resolver;
 
 import static org.znerd.logdoc.internal.ExceptionUtils.newIOException;
 import static org.znerd.logdoc.internal.InternalLogging.log;

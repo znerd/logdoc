@@ -4,6 +4,7 @@
 * Introduced org.znerd.logdoc.gen packagel
 * Moved code generation functionality to new CodeGenerator class.
 * Moved XSLT transformation functionality to Xformer class.
+* Moved Resolver to 'internal' package.
 
 
 --- CHANGES SINCE LOGDOC 0.10 ------------------------------------------------

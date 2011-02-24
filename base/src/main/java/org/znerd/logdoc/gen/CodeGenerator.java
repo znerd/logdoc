@@ -25,7 +25,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import org.znerd.logdoc.LogDef;
-import org.znerd.logdoc.Resolver;
+import org.znerd.logdoc.internal.Resolver;
 
 /**
  * Code generator.

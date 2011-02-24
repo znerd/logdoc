@@ -24,6 +24,8 @@ import org.w3c.dom.NodeList;
 
 import org.xml.sax.SAXException;
 
+import org.znerd.logdoc.internal.Resolver;
+
 /**
  * Log definition. Typically read from a <code>log.xml</code> file.
  *

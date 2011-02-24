@@ -9,9 +9,6 @@ shrink considerably.
 
 ------------------------------------------------------------------------------
 
-Move Resolver to 'internal' package?
-
-------------------------------------------------------------------------------
 
 Fix bug in logdoc-html, probable solution is to pass correct parameters to
 XSLT.
