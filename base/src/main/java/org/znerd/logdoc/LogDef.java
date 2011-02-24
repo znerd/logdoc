@@ -4,7 +4,9 @@ package org.znerd.logdoc;
 import java.io.File;
 import java.io.InputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.XMLConstants;
@@ -22,6 +24,7 @@ import javax.xml.validation.Validator;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import org.xml.sax.SAXException;
@@ -171,7 +174,7 @@ public final class LogDef {
     *    cannot be <code>null</code>.
     *
     * @throws IllegalArgumentException
-    *    if <code>dir == null</code>, or if it is not a directory.
+    *    if <code>dir == null</code>.
     *
     * @throws IOException
     *    if the definition(s) could not be loaded.
@@ -186,7 +189,7 @@ public final class LogDef {
       if (dir == null) {
          throw new IllegalArgumentException("dir == null");
       } else if (! dir.isDirectory()) {
-         throw new IllegalArgumentException("Path (\"" + dir.getPath() + "\") is not a directory.");
+         throw new IOException("Path (\"" + dir.getPath() + "\") is not a directory.");
       }
       
       // Create a resolver for the specified input directory
@@ -212,6 +215,9 @@ public final class LogDef {
          validate(TB_SCHEMA, tbXML);
          _translations.put(locale, tbXML);
       }
+
+      // Parse the groups and entries
+      _groups = parseGroups(docElem);
    }
 
 
@@ -245,6 +251,11 @@ public final class LogDef {
     * The translation bundles, indexed by name. Never <code>null</code>.
     */
    private final Map<String,Document> _translations;
+
+   /**
+    * The groups in this log definition. Never <code>null</code>.
+    */
+   private final List<Group> _groups;
 
 
    //-------------------------------------------------------------------------
@@ -287,33 +298,7 @@ public final class LogDef {
       }
    }
 
-   /**
-    * Generates the HTML documentation for this log definition.
-    *
-    * @param targetDir
-    *    the target directory to create the HTML documentation files in,
-    *    cannot be <code>null</code>, and must be an existent writable
-    *    directory.
-    *
-    * @throws IllegalArgumentException
-    *    if <code>targetDir == null</code>.
-    *
-    * @throws IOException
-    *    if the HTML documentation files could not be generated.
-    */
-   public void generateHtml(File targetDir)
-   throws IllegalArgumentException, IOException {
-
-      // Check preconditions
-      if (targetDir == null) {
-         throw new IllegalArgumentException("targetDir == null");
-      }
-
-      // Perform transformations
-      // TODO transformToHtml(String target, File baseDir, String className)
-   }
-
-   private void transformToJava(String target, File baseDir, String className)
+   private void transformToJava(String target, File targetDir, String className)
    throws IOException {
 
       String xsltDir = (target == null)
@@ -336,7 +321,7 @@ public final class LogDef {
 
          // Make sure the output directory exists
          String     domainPath = _domainName.replace(".", "/");
-         File           outDir = new File(baseDir, domainPath);
+         File           outDir = new File(targetDir, domainPath);
          if (! outDir.exists()) {
             boolean outDirCreated = outDir.mkdirs();
             if (! outDirCreated) {
@@ -363,7 +348,7 @@ public final class LogDef {
       }
    }
    
-   private void transformToJavaForLocale(File baseDir, String locale)
+   private void transformToJavaForLocale(File targetDir, String locale)
    throws IOException {
 
       try {
@@ -384,7 +369,7 @@ public final class LogDef {
 
          // Make sure the output directory exists
          String domainPath = _domainName.replace(".", "/");
-         File       outDir = new File(baseDir, domainPath);
+         File       outDir = new File(targetDir, domainPath);
          if (! outDir.exists()) {
             boolean outDirCreated = outDir.mkdirs();
             if (! outDirCreated) {
@@ -415,6 +400,100 @@ public final class LogDef {
       }
    }
 
+   /**
+    * Generates the HTML documentation for this log definition.
+    *
+    * @param targetDir
+    *    the target directory to create the HTML documentation files in,
+    *    cannot be <code>null</code>, and must be an existent writable
+    *    directory.
+    *
+    * @throws IllegalArgumentException
+    *    if <code>targetDir == null</code>.
+    *
+    * @throws IOException
+    *    if the HTML documentation files could not be generated.
+    */
+   public void generateHtml(File targetDir)
+   throws IllegalArgumentException, IOException {
+
+      // Check preconditions
+      if (targetDir == null) {
+         throw new IllegalArgumentException("targetDir == null");
+      }
+
+      transformToHtml(targetDir, "",     "index"     );
+      transformToHtml(targetDir, "list", "entry-list");
+
+      for (Group group : _groups) {
+         String groupName = group._name;
+         transformToHtml(targetDir, "group", "group-" + groupName, new String[] { "group", groupName });
+
+         for (Entry entry : group._entries) {
+            String entryID = entry._id;
+            transformToHtml(targetDir, "entry", "entry-" + entryID, new String[] { "entry", entryID });
+         }
+      }
+   }
+
+   private final void transformToHtml(File targetDir, String stylesheetName, String outName)
+   throws IOException {
+      transformToHtml(targetDir, stylesheetName, outName, null);
+   }
+
+   private final void transformToHtml(File targetDir, String stylesheetName, String outName, String[] params)
+   throws IOException {
+      throw new Error();
+   }
+
+   private final List<Group> parseGroups(Element element) {
+      List<Group> groups = new ArrayList<Group>();
+
+      NodeList children = element.getChildNodes();
+      int    childCount = (children == null) ? 0 : children.getLength();
+
+      for (int i = 0; i < childCount; i++) {
+         Node childNode = children.item(i);
+
+         if (childNode instanceof Element) {
+            Element childElement = (Element) childNode;
+            if ("group".equals(childElement.getTagName())) {
+               Group group    = new Group();
+               group._id      = childElement.getAttribute("id");
+               group._name    = childElement.getAttribute("name");
+               group._entries = parseEntries(childElement);
+
+               groups.add(group);
+            }
+         }
+      }
+
+      return groups;
+   }
+
+   private final List<Entry> parseEntries(Element element) {
+      List<Entry> entries = new ArrayList<Entry>();
+
+      NodeList children = element.getChildNodes();
+      int    childCount = (children == null) ? 0 : children.getLength();
+
+      for (int i = 0; i < childCount; i++) {
+         Node childNode = children.item(i);
+
+         if (childNode instanceof Element) {
+            Element childElement = (Element) childNode;
+            if ("entry".equals(childElement.getTagName())) {
+               Entry entry = new Entry();
+               entry._id   = childElement.getAttribute("id");
+
+               entries.add(entry);
+            }
+         }
+      }
+
+      return entries;
+   }
+
    private Source getSource() {
       return new DOMSource(_xml);
    }
@@ -423,4 +502,13 @@ public final class LogDef {
 	   return new DOMSource(_translations.get(locale));
    }
 
+   private class Group {
+      String _id;
+      String _name;
+      List<Entry> _entries;
+   }
+
+   private class Entry {
+      String _id;
+   }
 }
