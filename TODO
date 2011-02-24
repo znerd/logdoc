@@ -1,3 +1,30 @@
+Make sure that the file
+
+   ant-tasks/src/main/java/org/znerd/logdoc/ant/tasks/antlib.xml
+
+is copied into the JAR, preferably at the location:
+
+   org/znerd/logdoc/ant/antlib.xml
+
+At the moment, XINS fails because of this omission:
+
+   -logdoc-task:
+     [taskdef] Could not load definitions from resource org/znerd/logdoc/ant/antlib.xml. It could not be found.
+
+   prepare-compile:
+
+   BUILD FAILED
+   /Users/ernst/xins/build.xml:104: Problem: failed to create task or type logdoc-code
+   Cause: The name is undefined.
+   Action: Check the spelling.
+   Action: Check that any custom tasks/types have been declared.
+   Action: Check that any <presetdef>/<macrodef> declarations have taken place.
+
+
+   Total time: 1 second
+
+------------------------------------------------------------------------------
+
 Try if the following will update the version number across all POM files:
 
    mvn -N versions:update-child-modules
