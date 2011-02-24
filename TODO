@@ -1,3 +1,7 @@
+Try if the following will update the version number across all POM files:
+
+   mvn -N versions:update-child-modules
+
 ------------------------------------------------------------------------------
 
 Support documenting the following for log messages:
