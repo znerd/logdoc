@@ -1,9 +1,6 @@
 // See the COPYRIGHT file for copyright and license information
 package org.znerd.logdoc.internal;
 
-import static org.znerd.logdoc.Library.quote;
-import static org.znerd.logdoc.internal.InternalLogging.log;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -22,7 +19,10 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+import org.znerd.logdoc.Library;
+import org.znerd.logdoc.LogLevel;
 import static org.znerd.logdoc.internal.ExceptionUtils.newIOException;
+import static org.znerd.logdoc.internal.InternalLogging.log;
 
 /**
  * URI resolver that can be used during XSLT transformations.
@@ -46,7 +46,7 @@ public class Resolver implements URIResolver {
     * @throws IllegalArgumentException
     *    if <code>dir == null</code>.
     */
-   Resolver(File dir) throws IllegalArgumentException {
+   public Resolver(File dir) throws IllegalArgumentException {
 
       // Check preconditions
       if (dir == null) {
@@ -55,7 +55,7 @@ public class Resolver implements URIResolver {
 
       // Initialize object
       _inputDir = dir;
-      log(LogLevel.DEBUG, "Created Resolver for input directory " + quote(dir.getAbsolutePath()) + '.');
+      log(LogLevel.DEBUG, "Created Resolver for input directory \"" + dir.getAbsolutePath() + "\".");
    }
 
 
@@ -80,7 +80,7 @@ public class Resolver implements URIResolver {
          throw new IllegalArgumentException("fileName == null");
       }
 
-      log(LogLevel.DEBUG, "Loading input document " + quote(fileName) + '.');
+      log(LogLevel.DEBUG, "Loading input document \"" + fileName + "\".");
 
       File file = new File(_inputDir, fileName);
 
@@ -105,7 +105,7 @@ public class Resolver implements URIResolver {
 
    public Source resolve(String href, String base) throws TransformerException {
 
-      log(LogLevel.INFO, "Resolving href " + quote(href) + " (with base " + quote(base) + ") during XSLT transformation.");
+      log(LogLevel.INFO, "Resolving href \"" + href + "\" (with base \"" + base + "\") during XSLT transformation.");
 
       // Check preconditions
       if (href == null) {
