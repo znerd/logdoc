@@ -2,6 +2,8 @@
 
 * JAR files no longer have the version number in the name.
 * Changed 'log_file' in translation-bundle_to_java.xslt to a constant.
+* Generating HTML documentation.
+* Refactored XSLT transformation functionality in LogDef class.
 
 
 --- CHANGES SINCE LOGDOC 0.9 -------------------------------------------------

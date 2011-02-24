@@ -350,7 +350,7 @@ public final class LogDef {
    throws IOException {
 
       Source      source = getSource();
-      String    xsltPath = "xslt/" + xsltSubDir + "log_to_" + className + "_java" + ".xslt";
+      String    xsltPath = xsltSubDir + "log_to_" + className + "_java" + ".xslt";
       String  domainPath = _domainName.replace(".", "/");
       File        outDir = new File(targetDir, domainPath);
       String outFileName = className + ".java";
@@ -366,7 +366,7 @@ public final class LogDef {
    throws IOException {
 
       Source      source = getTranslationBundleSource(locale);
-      String    xsltPath = "xslt/translation-bundle_to_java.xslt";
+      String    xsltPath = "translation-bundle_to_java.xslt";
       String outFileName = "TranslationBundle_" + locale + ".java";
 
       Map<String,String> xsltParams = new HashMap<String,String>();
@@ -375,57 +375,6 @@ public final class LogDef {
       xsltParams.put("locale",       locale);
 
       transformAndHandleExceptions(source, xsltPath, xsltParams, targetDir, outFileName);
-   }
-
-   private void transformAndHandleExceptions(Source source, String xsltPath, Map<String,String> xsltParams, File outDir, String outFileName) throws IOException {
-      try {
-         transform(source, xsltPath, xsltParams, outDir, outFileName);
-      } catch (TransformerConfigurationException cause) {
-         throw newIOException("Unable to perform XSLT transformation due to configuration problem.", cause);
-      } catch (TransformerException cause) {
-         throw newIOException("Failed to perform XSLT transformation.", cause);
-      }
-   }
-
-   private void transform(Source source, String xsltPath, Map<String,String> xsltParams, File outDir, String outFileName) throws TransformerConfigurationException, TransformerException, IOException {
-
-      Transformer xformer = createTransformer(xsltPath);
-      setTransformerParameters(xformer, xsltParams);
-      assertOutputDirectory(outDir);
-
-      File        outFile = new File(outDir, outFileName);
-      StreamResult result = new StreamResult(outFile);
-
-      log(LogLevel.INFO, "Generating file \"" + outFile.getPath() + "\".");
-      xformer.transform(source, result);
-      log(LogLevel.INFO, "Generated file \"" + outFile.getPath() + "\".");
-   }
-
-   private Transformer createTransformer(String xsltPath) throws TransformerConfigurationException, IOException {
-      TransformerFactory xformerFactory = TransformerFactory.newInstance();
-      xformerFactory.setURIResolver(_resolver);
-
-      InputStream        xsltStream = Library.getMetaResourceAsStream(xsltPath);
-      StreamSource xsltStreamSource = new StreamSource(xsltStream);
-
-      return xformerFactory.newTransformer(xsltStreamSource);
-   }
-
-   private final void setTransformerParameters(Transformer xformer, Map<String,String> params) {
-      for (String key : params.keySet()) {
-         xformer.setParameter(key, params.get(key));
-      }
-   }
-
-   private final void assertOutputDirectory(File outDir) throws IOException {
-      if (! outDir.exists()) {
-         boolean outDirCreated = outDir.mkdirs();
-         if (! outDirCreated) {
-            throw new IOException("Failed to create output directory \"" + outDir.getPath() + "\".");
-         }
-      } else if (! outDir.isDirectory()) {
-         throw new IOException("Path \"" + outDir.getPath() + "\" exists, but it is not a directory.");
-      }
    }
 
    /**
@@ -450,34 +399,86 @@ public final class LogDef {
          throw new IllegalArgumentException("targetDir == null");
       }
 
-      transformToHtml(targetDir, "",     "index"     );
-      transformToHtml(targetDir, "list", "entry-list");
+      transformToHtml(targetDir, "",      "index"     , new HashMap<String,String>());
+      transformToHtml(targetDir, "_list", "entry-list", new HashMap<String,String>());
 
       for (Group group : _groups) {
-         String groupName = group._name;
-         transformToHtml(targetDir, "group", "group-" + groupName, new String[] { "group", groupName });
+         String groupID = group._id;
+         Map<String,String> xsltParams = new HashMap<String,String>();
+         xsltParams.put("group", groupID);
+         String stylesheetName = "_group";
+         String outName = "group-" + groupID;
+         transformToHtml(targetDir, stylesheetName, outName, xsltParams);
 
          for (Entry entry : group._entries) {
             String entryID = entry._id;
-            transformToHtml(targetDir, "entry", "entry-" + entryID, new String[] { "entry", entryID });
+            xsltParams = new HashMap<String,String>();
+            xsltParams.put("entry", entryID);
+            stylesheetName = "_entry";
+            outName = "entry-" + entryID;
+            transformToHtml(targetDir, stylesheetName, outName, xsltParams);
          }
       }
    }
 
-   private final void transformToHtml(File targetDir, String stylesheetName, String outName)
+   private final void transformToHtml(File targetDir, String stylesheetName, String outName, Map<String,String> xsltParams)
    throws IOException {
-      transformToHtml(targetDir, stylesheetName, outName, null);
+      Source      source = getSource();
+      String    xsltPath = "log_to" + stylesheetName + "_html.xslt";
+      String outFileName = outName + ".html";
+
+      transformAndHandleExceptions(source, xsltPath, xsltParams, targetDir, outFileName);
    }
 
-   private final void transformToHtml(File targetDir, String stylesheetName, String outName, String[] params)
-   throws IOException {
-      /* EXAMPLE:
-      transformToHtml(targetDir, "",     "index"     );
-      transformToHtml(targetDir, "list", "entry-list", new String[] { "entry", entryID } );
-      */
+   private void transformAndHandleExceptions(Source source, String xsltPath, Map<String,String> xsltParams, File outDir, String outFileName) throws IOException {
+      try {
+         transform(source, xsltPath, xsltParams, outDir, outFileName);
+      } catch (TransformerConfigurationException cause) {
+         throw newIOException("Unable to perform XSLT transformation due to configuration problem.", cause);
+      } catch (TransformerException cause) {
+         throw newIOException("Failed to perform XSLT transformation.", cause);
+      }
+   }
 
+   private void transform(Source source, String xsltPath, Map<String,String> xsltParams, File outDir, String outFileName) throws TransformerConfigurationException, TransformerException, IOException {
 
-      throw new Error();
+      Transformer xformer = createTransformer(xsltPath);
+      setTransformerParameters(xformer, xsltParams);
+      assertOutputDirectory(outDir);
+
+      File        outFile = new File(outDir, outFileName);
+      StreamResult result = new StreamResult(outFile);
+
+      log(LogLevel.INFO, "Generating file \"" + outFile.getPath() + "\" using stylesheet \"" + xsltPath + "\".");
+      xformer.transform(source, result);
+      log(LogLevel.INFO, "Generated file \"" + outFile.getPath() + "\" using stylesheet \"" + xsltPath + "\".");
+   }
+
+   private Transformer createTransformer(String xsltPath) throws TransformerConfigurationException, IOException {
+      TransformerFactory xformerFactory = TransformerFactory.newInstance();
+      xformerFactory.setURIResolver(_resolver);
+
+      InputStream        xsltStream = Library.getMetaResourceAsStream("xslt/" + xsltPath);
+      StreamSource xsltStreamSource = new StreamSource(xsltStream);
+
+      return xformerFactory.newTransformer(xsltStreamSource);
+   }
+
+   private final void setTransformerParameters(Transformer xformer, Map<String,String> params) {
+      for (String key : params.keySet()) {
+         xformer.setParameter(key, params.get(key));
+      }
+   }
+
+   private final void assertOutputDirectory(File outDir) throws IOException {
+      if (! outDir.exists()) {
+         boolean outDirCreated = outDir.mkdirs();
+         if (! outDirCreated) {
+            throw new IOException("Failed to create output directory \"" + outDir.getPath() + "\".");
+         }
+      } else if (! outDir.isDirectory()) {
+         throw new IOException("Path \"" + outDir.getPath() + "\" exists, but it is not a directory.");
+      }
    }
 
    private Source getSource() {

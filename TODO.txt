@@ -4,6 +4,11 @@ Try if the following will update the version number across all POM files:
 
 ------------------------------------------------------------------------------
 
+Fix bug in logdoc-html, probable solution is to pass correct parameters to
+XSLT.
+
+------------------------------------------------------------------------------
+
 Refactor LogDef class, remove XSLT transformation functionality.
 
 ------------------------------------------------------------------------------
