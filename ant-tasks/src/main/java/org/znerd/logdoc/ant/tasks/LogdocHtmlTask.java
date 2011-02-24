@@ -29,7 +29,7 @@ public final class LogdocHtmlTask extends AbstractLogdocTask {
    //-------------------------------------------------------------------------
 
    @Override
-   protected void executeImpl(LogDef logDef) throws BuildException {
-      // TODO FIXME
+   protected void executeImpl(LogDef def) throws Exception {
+      def.generateHtml(_destDir);
    }
 }

@@ -59,16 +59,14 @@ public final class LogDef {
     * Initializes this class.
     */
    static {
+      String schemaName = "log";
       try {
-         LOG_SCHEMA = loadSchema("log");
-      } catch (Throwable cause) {
-         throw new Error("Failed to load LogDef class, because \"log\" schema could not be loaded.", cause);
-      }
+         LOG_SCHEMA = loadSchema(schemaName);
 
-      try {
-         TB_SCHEMA = loadSchema("translation-bundle");
+         schemaName = "translation-bundle";
+         TB_SCHEMA = loadSchema(schemaName);
       } catch (Throwable cause) {
-         throw new Error("Failed to load LogDef class, because \"translation-bundle\" schema could not be loaded.", cause);
+         throw new Error("Failed to load LogDef class, because \"" + schemaName + "\" schema could not be loaded.", cause);
       }
    }
 
@@ -266,7 +264,7 @@ public final class LogDef {
     *    directory.
     *
     * @throws IllegalArgumentException
-    *    if <code>targetDir == null</code>.
+    *    if <code>target == null || targetDir == null</code>.
     *
     * @throws IOException
     *    if the Java code could not be generated.
@@ -282,22 +280,40 @@ public final class LogDef {
       }
 
       // Perform transformations
-      transform(target, targetDir, "Log");
-      transform(null,   targetDir, "TranslationBundle");
+      transformToJava(target, targetDir, "Log");
+      transformToJava(null,   targetDir, "TranslationBundle");
       for (String locale : _translations.keySet()) {
-         transformForLocale(targetDir, locale);
+         transformToJavaForLocale(targetDir, locale);
       }
    }
 
-   private Source getSource() {
-      return new DOMSource(_xml);
-   }
-   
-   private Source getTranslationBundleSource(String locale) {
-	   return new DOMSource(_translations.get(locale));
+   /**
+    * Generates the HTML documentation for this log definition.
+    *
+    * @param targetDir
+    *    the target directory to create the HTML documentation files in,
+    *    cannot be <code>null</code>, and must be an existent writable
+    *    directory.
+    *
+    * @throws IllegalArgumentException
+    *    if <code>targetDir == null</code>.
+    *
+    * @throws IOException
+    *    if the HTML documentation files could not be generated.
+    */
+   public void generateHtml(File targetDir)
+   throws IllegalArgumentException, IOException {
+
+      // Check preconditions
+      if (targetDir == null) {
+         throw new IllegalArgumentException("targetDir == null");
+      }
+
+      // Perform transformations
+      // TODO transformToHtml(String target, File baseDir, String className)
    }
 
-   private void transform(String target, File baseDir, String className)
+   private void transformToJava(String target, File baseDir, String className)
    throws IOException {
 
       String xsltDir = (target == null)
@@ -307,7 +323,7 @@ public final class LogDef {
       try {
 
          // Create an XSLT Transforer
-         String                   xsltPath = xsltDir + "log_to_" + className + "_java.xslt";
+         String                   xsltPath = xsltDir + "log_to_" + className + "_java" + ".xslt";
          InputStream            xsltStream = Library.getMetaResourceAsStream(xsltPath);
          StreamSource     xsltStreamSource = new StreamSource(xsltStream);
          TransformerFactory xformerFactory = TransformerFactory.newInstance();
@@ -347,7 +363,7 @@ public final class LogDef {
       }
    }
    
-   private void transformForLocale(File baseDir, String locale)
+   private void transformToJavaForLocale(File baseDir, String locale)
    throws IOException {
 
       try {
@@ -398,4 +414,13 @@ public final class LogDef {
          throw newIOException("Failed to perform XSLT transformation.", cause);
       }
    }
+
+   private Source getSource() {
+      return new DOMSource(_xml);
+   }
+   
+   private Source getTranslationBundleSource(String locale) {
+	   return new DOMSource(_translations.get(locale));
+   }
+
 }
