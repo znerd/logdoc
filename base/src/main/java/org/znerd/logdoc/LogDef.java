@@ -339,29 +339,47 @@ public final class LogDef {
       }
 
       // Perform transformations
-      transformToJava(target, targetDir, "Log");
-      transformToJava(null,   targetDir, "TranslationBundle");
+      transformToJava(target + '/', targetDir, "Log");
+      transformToJava("",           targetDir, "TranslationBundle");
       for (String locale : _translations.keySet()) {
          transformToJavaForLocale(targetDir, locale);
       }
    }
 
-   private void transformToJava(String target, File targetDir, String className)
+   private void transformToJava(String xsltSubDir, File targetDir, String className)
    throws IOException {
 
-      String     xsltDir = (target == null) ? "xslt/" : "xslt/" + target + '/';
-      String    xsltPath = xsltDir + "log_to_" + className + "_java" + ".xslt";
+      Source      source = getSource();
+      String    xsltPath = "xslt/" + xsltSubDir + "log_to_" + className + "_java" + ".xslt";
       String  domainPath = _domainName.replace(".", "/");
       File        outDir = new File(targetDir, domainPath);
       String outFileName = className + ".java";
-      Source      source = getSource();
 
-      doTransformAndHandleExceptions(source, xsltPath, outDir, outFileName);
+      Map<String,String> xsltParams = new HashMap<String,String>();
+      xsltParams.put("package_name", _domainName);
+      xsltParams.put("accesslevel",  _public ? "public" : "protected");
+
+      transformAndHandleExceptions(source, xsltPath, xsltParams, outDir, outFileName);
    }
 
-   private void doTransformAndHandleExceptions(Source source, String xsltPath, File outDir, String outFileName) throws IOException {
+   private void transformToJavaForLocale(File targetDir, String locale)
+   throws IOException {
+
+      Source      source = getTranslationBundleSource(locale);
+      String    xsltPath = "xslt/translation-bundle_to_java.xslt";
+      String outFileName = "TranslationBundle_" + locale + ".java";
+
+      Map<String,String> xsltParams = new HashMap<String,String>();
+      xsltParams.put("package_name", _domainName);
+      xsltParams.put("accesslevel",  _public ? "public" : "protected");
+      xsltParams.put("locale",       locale);
+
+      transformAndHandleExceptions(source, xsltPath, xsltParams, targetDir, outFileName);
+   }
+
+   private void transformAndHandleExceptions(Source source, String xsltPath, Map<String,String> xsltParams, File outDir, String outFileName) throws IOException {
       try {
-         doTransform(source, xsltPath, outDir, outFileName);
+         transform(source, xsltPath, xsltParams, outDir, outFileName);
       } catch (TransformerConfigurationException cause) {
          throw newIOException("Unable to perform XSLT transformation due to configuration problem.", cause);
       } catch (TransformerException cause) {
@@ -369,20 +387,37 @@ public final class LogDef {
       }
    }
 
-   private void doTransform(Source source, String xsltPath, File outDir, String outFileName) throws TransformerConfigurationException, TransformerException, IOException {
+   private void transform(Source source, String xsltPath, Map<String,String> xsltParams, File outDir, String outFileName) throws TransformerConfigurationException, TransformerException, IOException {
 
-      // Create an XSLT Transforer
-      InputStream            xsltStream = Library.getMetaResourceAsStream(xsltPath);
-      StreamSource     xsltStreamSource = new StreamSource(xsltStream);
+      Transformer xformer = createTransformer(xsltPath);
+      setTransformerParameters(xformer, xsltParams);
+      assertOutputDirectory(outDir);
+
+      File        outFile = new File(outDir, outFileName);
+      StreamResult result = new StreamResult(outFile);
+
+      log(LogLevel.INFO, "Generating file \"" + outFile.getPath() + "\".");
+      xformer.transform(source, result);
+      log(LogLevel.INFO, "Generated file \"" + outFile.getPath() + "\".");
+   }
+
+   private Transformer createTransformer(String xsltPath) throws TransformerConfigurationException, IOException {
       TransformerFactory xformerFactory = TransformerFactory.newInstance();
       xformerFactory.setURIResolver(_resolver);
-      Transformer               xformer = xformerFactory.newTransformer(xsltStreamSource);
 
-      // Set the parameters for the template
-      xformer.setParameter("package_name", _domainName);
-      xformer.setParameter("accesslevel",  _public ? "public" : "protected");
+      InputStream        xsltStream = Library.getMetaResourceAsStream(xsltPath);
+      StreamSource xsltStreamSource = new StreamSource(xsltStream);
 
-      // Make sure the output directory exists
+      return xformerFactory.newTransformer(xsltStreamSource);
+   }
+
+   private final void setTransformerParameters(Transformer xformer, Map<String,String> params) {
+      for (String key : params.keySet()) {
+         xformer.setParameter(key, params.get(key));
+      }
+   }
+
+   private final void assertOutputDirectory(File outDir) throws IOException {
       if (! outDir.exists()) {
          boolean outDirCreated = outDir.mkdirs();
          if (! outDirCreated) {
@@ -390,64 +425,6 @@ public final class LogDef {
          }
       } else if (! outDir.isDirectory()) {
          throw new IOException("Path \"" + outDir.getPath() + "\" exists, but it is not a directory.");
-      }
-
-      // Declare where the XSLT output should go
-      File        outFile = new File(outDir, outFileName);
-      StreamResult result = new StreamResult(outFile);
-
-      // Perform the transformation
-      xformer.transform(source, result);
-   }
-
-   private void transformToJavaForLocale(File targetDir, String locale)
-   throws IOException {
-
-      try {
-
-         // Create an XSLT Transforer
-         String                   xsltPath = "xslt/translation-bundle_to_java.xslt";
-         InputStream            xsltStream = Library.getMetaResourceAsStream(xsltPath);
-         StreamSource     xsltStreamSource = new StreamSource(xsltStream);
-         TransformerFactory xformerFactory = TransformerFactory.newInstance();
-         xformerFactory.setURIResolver(_resolver);
-         Transformer               xformer = xformerFactory.newTransformer(xsltStreamSource);
-
-         // Set the parameters for the template
-         xformer.setParameter("locale",       locale);
-         xformer.setParameter("package_name", _domainName);
-         xformer.setParameter("accesslevel",  _public ? "public" : "protected");
-
-         // Make sure the output directory exists
-         String domainPath = _domainName.replace(".", "/");
-         File       outDir = new File(targetDir, domainPath);
-         if (! outDir.exists()) {
-            boolean outDirCreated = outDir.mkdirs();
-            if (! outDirCreated) {
-               throw new IOException("Failed to create output directory \"" + outDir.getPath() + "\".");
-            }
-         } else if (! outDir.isDirectory()) {
-            throw new IOException("Path \"" + outDir.getPath() + "\" exists, but it is not a directory.");
-         }
-
-         // Declare where the XSLT output should go
-         String    className = "TranslationBundle_" + locale;
-         File        outFile = new File(outDir, className + ".java");
-         StreamResult result = new StreamResult(outFile);
-
-         // Perform the transformation
-         log(LogLevel.INFO, "About to perform XSLT transformation. xsltPath=\"" + xsltPath + "\"; domainName=\"" + _domainName + "\"; domainPath=\"" + domainPath + "\".");
-         xformer.transform(getTranslationBundleSource(locale), result);
-
-         log(LogLevel.INFO, "Generated file \"" + outFile.getPath() + "\".");
-
-      // Transformer configuration error
-      } catch (TransformerConfigurationException cause) {
-         throw newIOException("Unable to perform XSLT transformation due to configuration problem.", cause);
-
-      // Transformer error
-      } catch (TransformerException cause) {
-         throw newIOException("Failed to perform XSLT transformation.", cause);
       }
    }
 
