@@ -56,12 +56,11 @@
 							<manifestSection>
 								<name>org/znerd/logdoc/</name>
 								<manifestEntries>
-									<!-- TODO -->
 									<Specification-Title>Logdoc</Specification-Title>
-									<Specification-Version>0.7</Specification-Version>
+									<Specification-Version>${project.version}</Specification-Version>
 									<Specification-Vendor>znerd.org</Specification-Vendor>
 									<Implementation-Title>Logdoc</Implementation-Title>
-									<Implementation-Version>0.7</Implementation-Version>
+									<Implementation-Version>${project.version}</Implementation-Version>
 									<Implementation-Vendor>znerd.org</Implementation-Vendor>
 								</manifestEntries>
 							</manifestSection>
