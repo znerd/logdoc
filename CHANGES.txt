@@ -1,3 +1,8 @@
+--- CHANGES SINCE LOGDOC 0.10 ------------------------------------------------
+
+* JAR files no longer have the version number in the name.
+
+
 --- CHANGES SINCE LOGDOC 0.9 -------------------------------------------------
 
 * Bugfix: Including antlib.xml file in logdoc-ant-tasks JAR.
