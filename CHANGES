@@ -1,3 +1,7 @@
+--- CHANGES SINCE LOGDOC 0.9 -------------------------------------------------
+
+* Changed name of generated JARs to logdoc-base.jar etc.
+
 --- CHANGES SINCE LOGDOC 0.8 -------------------------------------------------
 
 * Logdoc is now built with Maven; removed the build.xml file.
