@@ -35,7 +35,7 @@ class Xformer {
       }
    }
 
-   final void transform(Source source, String xsltPath, Map<String,String> xsltParams, File outDir, String outFileName) throws TransformerConfigurationException, TransformerException, IOException {
+   private final void transform(Source source, String xsltPath, Map<String,String> xsltParams, File outDir, String outFileName) throws TransformerConfigurationException, TransformerException, IOException {
 
       Transformer xformer = createTransformer(xsltPath);
       setTransformerParameters(xformer, xsltParams);
