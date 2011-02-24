@@ -1,5 +1,6 @@
 --- CHANGES SINCE LOGDOC 0.9 -------------------------------------------------
 
+* Bugfix: Including antlib.xml file in logdoc-ant-tasks JAR.
 * Changed name of generated JARs to logdoc-base.jar etc.
 * Updated versions on various plugins.
 * Ignoring/skipping unit test of Library.getVersion().
