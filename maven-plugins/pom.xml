@@ -12,7 +12,7 @@
 	</parent>
 	<dependencies>
 		<dependency>
-			<groupId>${pom.groupId}</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>base</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
