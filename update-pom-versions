@@ -1,0 +1,3 @@
+#!/bin/bash
+mvn -N versions:update-child-modules
+rm ant-tasks/pom.xml.versionsBackup base/pom.xml.versionsBackup maven-plugins/pom.xml.versionsBackup
