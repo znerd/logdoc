@@ -4,6 +4,7 @@
 * Fixed bug: entry list file now gets all parameters.
 * Minor refactorings applied to Xformer, CodeGenerator and DocGenerator.
 * Replaced header in all XSLT files.
+* Downgraded all XSLT files from XSLT 2.0 to XSLT 1.0.
 
 
 --- CHANGES SINCE LOGDOC 0.11 ------------------------------------------------

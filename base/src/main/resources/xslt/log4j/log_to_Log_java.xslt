@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--
- $Id: log_to_Log_java.xslt,v 1.74 2007/06/07 09:04:07 agoubard Exp $
+<!-- See the COPYRIGHT file for redistribution and use restrictions. -->
 
- Copyright 2003-2007 Orange Nederland Breedband B.V.
- Copyright 2009-2010 Ernst de Haan
- See the COPYRIGHT file for redistribution and use restrictions.
--->
-
-<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 	<!-- Define parameters -->
 	<xsl:param name="package_name" />
