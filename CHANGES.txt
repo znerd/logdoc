@@ -5,6 +5,8 @@
 * Moved code generation functionality to new CodeGenerator class.
 * Moved XSLT transformation functionality to Xformer class.
 * Moved Resolver to 'internal' package.
+* Renamed LogdocHtmlTask to LogdocDocTask.
+* Renamed Ant task 'logdoc-html' to 'logdoc-doc'.
 
 
 --- CHANGES SINCE LOGDOC 0.10 ------------------------------------------------
