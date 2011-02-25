@@ -4,8 +4,7 @@ Try if the following will update the version number across all POM files:
 
 ------------------------------------------------------------------------------
 
-Make CodeGenerator and DocGenerator stateful, so that method signatures
-shrink considerably.
+Make DocGenerator stateful, so that method signatures shrink considerably.
 
 ------------------------------------------------------------------------------
 

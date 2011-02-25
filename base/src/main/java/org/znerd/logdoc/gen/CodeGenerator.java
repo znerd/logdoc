@@ -35,7 +35,8 @@ import org.znerd.logdoc.internal.Resolver;
 public final class CodeGenerator {
 
    /**
-    * Generates the Java code for the specified log definition.
+    * Creates a new <code>CodeGenerator</code> for the specified log 
+    * definition.
     *
     * @param def
     *    the {@link LogDef} object, cannot be <code>null</code>.
@@ -51,47 +52,60 @@ public final class CodeGenerator {
     *
     * @throws IllegalArgumentException
     *    if <code>def == null || target == null || targetDir == null</code>.
-    *
-    * @throws IOException
-    *    if the Java code could not be generated.
     */
-   public void generateCode(LogDef def, String target, File targetDir)
-   throws IllegalArgumentException, IOException {
-
-      // Check preconditions
-      if (target == null) {
+   public CodeGenerator(LogDef def, String target, File targetDir)
+   throws IllegalArgumentException {
+      if (def == null) {
+         throw new IllegalArgumentException("def == null");
+      } else if (target == null) {
          throw new IllegalArgumentException("target == null");
       } else if (targetDir == null) {
          throw new IllegalArgumentException("targetDir == null");
       }
 
-      // Perform transformations
-      transformToJava(def, target + '/', targetDir, "Log");
-      transformToJava(def, "",           targetDir, "TranslationBundle");
-      for (Map.Entry<String,Document> entry : def.getTranslations().entrySet()) {
+      _def       = def;
+      _target    = target;
+      _targetDir = targetDir;
+   }
+
+   private final LogDef _def;
+   private final String _target;
+   private final File _targetDir;
+
+   /**
+    * Generates the Java code.
+    *
+    * @throws IOException
+    *    if the Java code could not be generated because of an I/O error.
+    */
+   public void generateCode() throws IOException {
+
+      transformToJava(_target + '/', "Log");
+      transformToJava("",            "TranslationBundle");
+      for (Map.Entry<String,Document> entry : _def.getTranslations().entrySet()) {
          String           locale = entry.getKey();
          Document translationXML = entry.getValue();
-         transformToJavaForLocale(def, targetDir, locale, translationXML);
+         transformToJavaForLocale(locale, translationXML);
       }
    }
 
-   private void transformToJava(LogDef def, String xsltSubDir, File targetDir, String className)
+   private void transformToJava(String xsltSubDir, String className)
    throws IOException {
 
-      Source      source = new DOMSource(def.getXML());
+      Source      source = new DOMSource(_def.getXML());
       String    xsltPath = xsltSubDir + "log_to_" + className + "_java" + ".xslt";
-      String  domainPath = def.getDomainName().replace(".", "/");
-      File        outDir = new File(targetDir, domainPath);
+      String  domainPath = _def.getDomainName().replace(".", "/");
+      File        outDir = new File(_targetDir, domainPath);
       String outFileName = className + ".java";
 
       Map<String,String> xsltParams = new HashMap<String,String>();
-      xsltParams.put("package_name", def.getDomainName());
-      xsltParams.put("accesslevel",  def.isPublic() ? "public" : "protected");
+      xsltParams.put("package_name", _def.getDomainName());
+      xsltParams.put("accesslevel",  _def.isPublic() ? "public" : "protected");
 
-      new Xformer(def).transformAndHandleExceptions(source, xsltPath, xsltParams, outDir, outFileName);
+      new Xformer(_def).transformAndHandleExceptions(source, xsltPath, xsltParams, outDir, outFileName);
    }
 
-   private void transformToJavaForLocale(LogDef def, File targetDir, String locale, Document translationXML)
+   private void transformToJavaForLocale(String locale, Document translationXML)
    throws IOException {
 
       Source      source = new DOMSource(translationXML);
@@ -99,10 +113,10 @@ public final class CodeGenerator {
       String outFileName = "TranslationBundle_" + locale + ".java";
 
       Map<String,String> xsltParams = new HashMap<String,String>();
-      xsltParams.put("package_name", def.getDomainName());
-      xsltParams.put("accesslevel",  def.isPublic() ? "public" : "protected");
+      xsltParams.put("package_name", _def.getDomainName());
+      xsltParams.put("accesslevel",  _def.isPublic() ? "public" : "protected");
       xsltParams.put("locale",       locale);
 
-      new Xformer(def).transformAndHandleExceptions(source, xsltPath, xsltParams, targetDir, outFileName);
+      new Xformer(_def).transformAndHandleExceptions(source, xsltPath, xsltParams, _targetDir, outFileName);
    }
 }
