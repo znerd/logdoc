@@ -47,8 +47,7 @@ public final class CodeGenerator {
     *
     * @param targetDir
     *    the target directory to create the Java source files in,
-    *    cannot be <code>null</code>, and must be an existent writable
-    *    directory.
+    *    cannot be <code>null</code>.
     *
     * @throws IllegalArgumentException
     *    if <code>def == null || target == null || targetDir == null</code>.
