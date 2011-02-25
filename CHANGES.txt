@@ -1,6 +1,7 @@
 --- CHANGES SINCE LOGDOC 0.12 ------------------------------------------------
 
 * Minor refactorings applied to Xformer, CodeGenerator and DocGenerator.
+* Replaced header in all XSLT files.
 
 
 --- CHANGES SINCE LOGDOC 0.11 ------------------------------------------------

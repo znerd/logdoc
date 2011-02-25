@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--
- $Id: log_to_TranslationBundle_java.xslt,v 1.33 2007/03/16 10:58:30 agoubard Exp $
-
- Copyright 2003-2007 Orange Nederland Breedband B.V.
- Copyright 2009-2010 Ernst de Haan
- See the COPYRIGHT file for redistribution and use restrictions.
--->
+<!-- See the COPYRIGHT file for redistribution and use restrictions. -->
 
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
