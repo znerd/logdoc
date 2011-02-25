@@ -54,16 +54,24 @@ public final class DocGenerator {
     * @throws IOException
     *    if the HTML documentation files could not be generated.
     */
-   public void generateDoc()
-   throws IllegalArgumentException, IOException {
-
-      transformToDoc("",      "index"     , new HashMap<String,String>());
-      transformToDoc("_list", "entry-list", new HashMap<String,String>());
-
-      transformGroupsAndEntries();
+   public void generateDocs() throws IllegalArgumentException, IOException {
+      generateOverviewDoc();
+      generateEntryListDoc();
+      generateGroupAndEntryDocs();
    }
 
-   private final void transformGroupsAndEntries() throws IOException {
+   private final void generateOverviewDoc() throws IOException {
+      Map<String,String> xsltParams = new HashMap<String,String>();
+      xsltParams.put("package_name", _def.getDomainName());
+      transformToDoc("", "index", xsltParams);
+   }
+
+   private final void generateEntryListDoc() throws IOException {
+      Map<String,String> xsltParams = new HashMap<String,String>();
+      transformToDoc("_list", "entry-list", new HashMap<String,String>());
+   }
+
+   private final void generateGroupAndEntryDocs() throws IOException {
       for (LogDef.Group group : _def.getGroups()) {
          String groupID = group.getID();
          Map<String,String> xsltParams = new HashMap<String,String>();
