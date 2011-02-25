@@ -1,6 +1,7 @@
 --- CHANGES SINCE LOGDOC 0.12 ------------------------------------------------
 
 * Fixed bug: documentation index file now shows correct package name.
+* Fixed bug: entry list file now gets all parameters.
 * Minor refactorings applied to Xformer, CodeGenerator and DocGenerator.
 * Replaced header in all XSLT files.
 

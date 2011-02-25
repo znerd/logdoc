@@ -88,6 +88,8 @@ public final class DocGenerator {
       for (LogDef.Entry entry : group.getEntries()) {
          String entryID = entry.getID();
          Map<String,String> xsltParams = new HashMap<String,String>();
+         xsltParams.put("package_name", _def.getDomainName());
+         xsltParams.put("sourcedir", _def.getSourceDir().getPath());
          xsltParams.put("entry", entryID);
          String stylesheetName = "_entry";
          String outName = "entry-" + entryID;

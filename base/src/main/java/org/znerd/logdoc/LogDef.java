@@ -187,6 +187,7 @@ public final class LogDef {
       }
       
       // Create a resolver for the specified input directory
+      _sourceDir = dir;
       _resolver = new Resolver(dir);
       
       // Load the log.xml file and validate it
@@ -214,67 +215,44 @@ public final class LogDef {
       _groups = parseGroups(docElem);
    }
 
+   private final File _sourceDir;
 
-   //-------------------------------------------------------------------------
-   // Fields
-   //-------------------------------------------------------------------------
+   public final File getSourceDir() {
+      return _sourceDir;
+   }
 
-   /**
-    * The resolver that can resolve input files and XSLT files.
-    * Never <code>null</code>.
-    */
    private final Resolver _resolver;
 
-   /**
-    * The source file as a DOM document. Never <code>null</code>.
-    */
+   public final Resolver getResolver() {
+      return _resolver;
+   }
+
    private final Document _xml;
    
-   /**
-    * The domain name. Never <code>null</code>.
-    */
+   public final Document getXML() {
+      return _xml;
+   }
+
    private final String _domainName;
    
-   /**
-    * Flag that indicates if the generated code should be considered
-    * accessible even outside its own domain/namespace.
-    */
-   private final boolean _public;
-   
-   /**
-    * The translation bundles, indexed by name. Never <code>null</code>.
-    */
-   private final Map<String,Document> _translations;
-
-   /**
-    * The groups in this log definition. Never <code>null</code>.
-    */
-   private final List<Group> _groups;
-
-
-   //-------------------------------------------------------------------------
-   // Methods
-   //-------------------------------------------------------------------------
-
    public final String getDomainName() {
       return _domainName;
    }
 
+   private final boolean _public;
+   
    public final boolean isPublic() {
       return _public;
    }
+
+   private final Map<String,Document> _translations;
+
 
    public final Map<String,Document> getTranslations() {
       return _translations;
    }
 
-   public final Document getXML() {
-      return _xml;
-   }
-
-   public final Resolver getResolver() {
-      return _resolver;
-   }
+   private final List<Group> _groups;
 
    public List<Group> getGroups() {
       return _groups;
