@@ -1,3 +1,8 @@
+--- CHANGES SINCE LOGDOC 0.12 ------------------------------------------------
+
+* Minor refactorings applied to Xformer, CodeGenerator and DocGenerator.
+
+
 --- CHANGES SINCE LOGDOC 0.11 ------------------------------------------------
 
 * Refactored LogDef class.

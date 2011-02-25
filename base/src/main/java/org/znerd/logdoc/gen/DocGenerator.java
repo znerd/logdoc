@@ -2,30 +2,16 @@
 package org.znerd.logdoc.gen;
 
 import java.io.File;
-import java.io.InputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import javax.xml.XMLConstants;
 import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import org.xml.sax.SAXException;
 
 import org.znerd.logdoc.LogDef;
-import org.znerd.logdoc.internal.Resolver;
 
 /**
  * Documentation generator.
@@ -107,6 +93,6 @@ public final class DocGenerator {
       String    xsltPath = "log_to" + stylesheetName + "_html.xslt";
       String outFileName = outName + ".html";
 
-      new Xformer(_def).transformAndHandleExceptions(source, xsltPath, xsltParams, _targetDir, outFileName);
+      new Xformer(_def).transform(source, xsltPath, xsltParams, _targetDir, outFileName);
    }
 }

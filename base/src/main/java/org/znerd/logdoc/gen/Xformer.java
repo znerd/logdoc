@@ -30,9 +30,9 @@ class Xformer {
 
    final Resolver _resolver;
 
-   final void transformAndHandleExceptions(Source source, String xsltPath, Map<String,String> xsltParams, File outDir, String outFileName) throws IOException {
+   final void transform(Source source, String xsltPath, Map<String,String> xsltParams, File outDir, String outFileName) throws IOException {
       try {
-         transform(source, xsltPath, xsltParams, outDir, outFileName);
+         transformWithoutHandlingExceptions(source, xsltPath, xsltParams, outDir, outFileName);
       } catch (TransformerConfigurationException cause) {
          throw newIOException("Unable to perform XSLT transformation due to configuration problem.", cause);
       } catch (TransformerException cause) {
@@ -40,7 +40,7 @@ class Xformer {
       }
    }
 
-   private final void transform(Source source, String xsltPath, Map<String,String> xsltParams, File outDir, String outFileName) throws TransformerConfigurationException, TransformerException, IOException {
+   private final void transformWithoutHandlingExceptions(Source source, String xsltPath, Map<String,String> xsltParams, File outDir, String outFileName) throws TransformerConfigurationException, TransformerException, IOException {
 
       Transformer xformer = createTransformer(xsltPath);
       setTransformerParameters(xformer, xsltParams);
