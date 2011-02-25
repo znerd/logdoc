@@ -9,6 +9,16 @@ XSLT.
 
 ------------------------------------------------------------------------------
 
+Change directory structure for XSLT files, to for example:
+
+   xslt/
+   xslt/code/
+   xslt/code/log4j/
+   docs/
+   docs/html/
+
+------------------------------------------------------------------------------
+
 Refactor LogDef class, remove XSLT transformation functionality.
 
 ------------------------------------------------------------------------------
