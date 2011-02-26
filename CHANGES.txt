@@ -1,3 +1,6 @@
+--- CHANGES SINCE LOGDOC 0.14 ------------------------------------------------
+
+
 --- CHANGES SINCE LOGDOC 0.13 ------------------------------------------------
 
 * Fixed bug: TranslationBundle .java files were placed in top directory.
