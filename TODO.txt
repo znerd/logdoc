@@ -1,8 +1,3 @@
-Fix problem that TranslationBundle_XXX.java files are placed in top directory,
-not taking package name into account.
-
-------------------------------------------------------------------------------
-
 Change directory structure for XSLT files, to for example:
 
    xslt/

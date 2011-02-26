@@ -65,22 +65,23 @@ public final class CodeGenerator {
     */
    public void generateCode() throws IOException {
 
-      transformToJava(_target + '/', "Log");
-      transformToJava("",            "TranslationBundle");
+      String  domainPath = _def.getDomainName().replace(".", "/");
+      File        outDir = new File(_targetDir, domainPath);
+
+      transformToJava(outDir, _target + '/', "Log");
+      transformToJava(outDir, "",            "TranslationBundle");
       for (Map.Entry<String,Document> entry : _def.getTranslations().entrySet()) {
          String           locale = entry.getKey();
          Document translationXML = entry.getValue();
-         transformToJavaForLocale(locale, translationXML);
+         transformToJavaForLocale(outDir, locale, translationXML);
       }
    }
 
-   private void transformToJava(String xsltSubDir, String className)
+   private void transformToJava(File outDir, String xsltSubDir, String className)
    throws IOException {
 
       Source      source = new DOMSource(_def.getXML());
       String    xsltPath = xsltSubDir + "log_to_" + className + "_java" + ".xslt";
-      String  domainPath = _def.getDomainName().replace(".", "/");
-      File        outDir = new File(_targetDir, domainPath);
       String outFileName = className + ".java";
 
       Map<String,String> xsltParams = new HashMap<String,String>();
@@ -90,7 +91,7 @@ public final class CodeGenerator {
       new Xformer(_def).transform(source, xsltPath, xsltParams, outDir, outFileName);
    }
 
-   private void transformToJavaForLocale(String locale, Document translationXML)
+   private void transformToJavaForLocale(File outDir, String locale, Document translationXML)
    throws IOException {
 
       Source      source = new DOMSource(translationXML);
@@ -102,6 +103,6 @@ public final class CodeGenerator {
       xsltParams.put("accesslevel",  _def.isPublic() ? "public" : "protected");
       xsltParams.put("locale",       locale);
 
-      new Xformer(_def).transform(source, xsltPath, xsltParams, _targetDir, outFileName);
+      new Xformer(_def).transform(source, xsltPath, xsltParams, outDir, outFileName);
    }
 }

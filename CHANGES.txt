@@ -1,3 +1,8 @@
+--- CHANGES SINCE LOGDOC 0.13 ------------------------------------------------
+
+* Fixed bug: TranslationBundle .java files were placed in top directory.
+
+
 --- CHANGES SINCE LOGDOC 0.12 ------------------------------------------------
 
 * Fixed bugs: XSLT files now get all parameters they need.
