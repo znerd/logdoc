@@ -3,7 +3,7 @@
 	<groupId>org.znerd</groupId>
 	<artifactId>logdoc</artifactId>
 	<packaging>pom</packaging>
-	<version>0.12</version>
+	<version>0.13-SNAPSHOT</version>
 	<name>Logdoc (complete)</name>
 
 	<modules>
