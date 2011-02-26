@@ -1,6 +1,5 @@
-Try if the following will update the version number across all POM files:
-
-   mvn -N versions:update-child-modules
+Fix problem that TranslationBundle_XXX.java files are placed in top directory,
+not taking package name into account.
 
 ------------------------------------------------------------------------------
 
