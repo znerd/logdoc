@@ -82,7 +82,7 @@ public class Resolver implements URIResolver {
 
       log(LogLevel.DEBUG, "Loading input document \"" + fileName + "\".");
 
-      File file = new File(_inputDir, fileName);
+      File file = createFileObject(fileName);
 
       try {
 
@@ -122,12 +122,20 @@ public class Resolver implements URIResolver {
 
       // Input file
       } else if (href.endsWith(".xml")) {
-         return new StreamSource(new File(_inputDir, href));
+         return new StreamSource(createFileObject(href));
 
       // Unknown file
       } else {
          throw new TransformerException("File with href \"" + href + "\" is not recognized.");
       }
+   }
+
+   private final File createFileObject(String fileName) {
+      File file = new File(fileName);
+      if (! file.isAbsolute()) {
+         file = new File(_inputDir, fileName);
+      }
+      return file;
    }
 
 
