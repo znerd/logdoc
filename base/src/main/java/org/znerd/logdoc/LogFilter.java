@@ -12,21 +12,12 @@ package org.znerd.logdoc;
  */
 public abstract class LogFilter {
    
-   //-------------------------------------------------------------------------
-   // Constructors
-   //-------------------------------------------------------------------------
-
    /**
     * Constructs a new <code>LogFilter</code>.
     */
    protected LogFilter() {
       // empty
    }
-
-   
-   //-------------------------------------------------------------------------
-   // Methods
-   //-------------------------------------------------------------------------
 
    /**
     * Filters the specified <code>String</code> value.

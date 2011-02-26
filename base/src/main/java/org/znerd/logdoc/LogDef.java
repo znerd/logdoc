@@ -33,10 +33,6 @@ import org.znerd.logdoc.internal.Resolver;
  */
 public final class LogDef {
 
-   //-------------------------------------------------------------------------
-   // Class fields
-   //-------------------------------------------------------------------------
-
    /**
     * The <code>Schema</code> for validating log XML files.
     */
@@ -46,11 +42,6 @@ public final class LogDef {
     * The <code>Schema</code> for validating translation bundle XML files.
     */
    private static final Schema TB_SCHEMA;
-
-
-   //-------------------------------------------------------------------------
-   // Class functions
-   //-------------------------------------------------------------------------
 
    /**
     * Initializes this class.
@@ -154,11 +145,6 @@ public final class LogDef {
    throws IllegalArgumentException, IOException, SAXException {
       return new LogDef(dir);
    }
-
-
-   //-------------------------------------------------------------------------
-   // Constructors
-   //-------------------------------------------------------------------------
 
    /**
     * Constructs a new <code>LogDef</code>.

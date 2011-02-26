@@ -12,20 +12,12 @@ package org.znerd.logdoc;
  */
 public final class NullLogFilter extends LogFilter {
 
-   //-------------------------------------------------------------------------
-   // Constructors
-   //-------------------------------------------------------------------------
-
    /**
     * Constructs a new <code>NullLogFilter</code>.
     */
    public NullLogFilter() {
       // empty
    }
-
-   //-------------------------------------------------------------------------
-   // Methods
-   //-------------------------------------------------------------------------
 
    @Override
    public String filter(String logger, String param, String value)

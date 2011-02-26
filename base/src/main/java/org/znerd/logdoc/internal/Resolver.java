@@ -31,10 +31,6 @@ import static org.znerd.logdoc.internal.InternalLogging.log;
  */
 public class Resolver implements URIResolver {
 
-   //-------------------------------------------------------------------------
-   // Constructors
-   //-------------------------------------------------------------------------
-
    /**
     * Constructs a new <code>Resolver</code> for the specified input
     * directory.
@@ -58,20 +54,10 @@ public class Resolver implements URIResolver {
       log(LogLevel.DEBUG, "Created Resolver for input directory \"" + dir.getAbsolutePath() + "\".");
    }
 
-
-   //-------------------------------------------------------------------------
-   // Fields
-   //-------------------------------------------------------------------------
-
    /**
     * The input directory. Never <code>null</code>.
     */
    private final File _inputDir;
-
-
-   //-------------------------------------------------------------------------
-   // Methods
-   //-------------------------------------------------------------------------
 
    public Document loadInputDocument(String fileName) throws IllegalArgumentException, IOException {
 
@@ -138,16 +124,6 @@ public class Resolver implements URIResolver {
       return file;
    }
 
-
-   //-------------------------------------------------------------------------
-   // Inner classes
-   //-------------------------------------------------------------------------
-
-   /**
-    * Error handler for the <code>Resolver</code>.
-    *
-    * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
-    */
    private static class ErrorHandler implements org.xml.sax.ErrorHandler {
 
       public void warning(SAXParseException exception) throws SAXException {

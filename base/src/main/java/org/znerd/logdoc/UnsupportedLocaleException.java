@@ -9,16 +9,7 @@ package org.znerd.logdoc;
  */
 public final class UnsupportedLocaleException extends RuntimeException {
 
-   //-------------------------------------------------------------------------
-   // Class fields
-   //-------------------------------------------------------------------------
-
    private static final long serialVersionUID = -991987123777189023L;
-
-   
-   //-------------------------------------------------------------------------
-   // Constructors
-   //-------------------------------------------------------------------------
 
    /**
     * Constructs a new <code>UnsupportedLocaleException</code>.
@@ -44,22 +35,7 @@ public final class UnsupportedLocaleException extends RuntimeException {
       _locale = locale;
    }
 
-
-
-   //-------------------------------------------------------------------------
-   // Fields
-   //-------------------------------------------------------------------------
-
-   /**
-    * The locale that is unsupported. The value of this field cannot be
-    * <code>null</code>.
-    */
    private final String _locale;
-
-   
-   //-------------------------------------------------------------------------
-   // Methods
-   //-------------------------------------------------------------------------
 
    /**
     * Retrieves the unsupported locale.

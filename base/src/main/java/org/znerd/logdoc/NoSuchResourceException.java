@@ -8,19 +8,10 @@ package org.znerd.logdoc;
  */
 class NoSuchResourceException extends RuntimeException {
 
-   //-------------------------------------------------------------------------
-   // Class fields
-   //-------------------------------------------------------------------------
-
    /**
     * Serialization ID.
     */
    private static final long serialVersionUID = 8394805671837180263L;
-
-   
-   //-------------------------------------------------------------------------
-   // Constructors
-   //-------------------------------------------------------------------------
 
    /**
     * Constructs a new <code>NoSuchResourceException</code>.

@@ -9,46 +9,41 @@ import org.znerd.logdoc.LogLevel;
  * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
  */
 public class InternalLogging {
-   
-   //-------------------------------------------------------------------------
-   // Class fields
-   //-------------------------------------------------------------------------
+
+   private static InternalLogging INSTANCE = new InternalLogging();
 
    /**
-    * The singleton instance. Never <code>null</code>.
+    * Constructs a new <code>InternalLogging</code> object.
     */
-   private static InternalLogging INSTANCE = new InternalLogging();
-   
-   
-   //-------------------------------------------------------------------------
-   // Class functions
-   //-------------------------------------------------------------------------
+   protected InternalLogging() {
+      // empty
+   }
 
    /**
     * Logs a message at a specified level.
-    * 
+    *
     * @param level
     *    the {@link LogLevel}, <code>null</code> is equivalent to passing
     *    {@link LogLevel#DEBUG}.
-    * 
+    *
     * @param message
     *    the message, or <code>null</code>.
     */
    public static void log(LogLevel level, String message) {
       log(level, message, (Throwable) null);
    }
-   
+
    /**
     * Logs a message at a specified level, with an optional exception.
-    * 
+    *
     * @param level
     *    the {@link LogLevel}, <code>null</code> is equivalent to passing
     *    {@link LogLevel#DEBUG}.
-    * 
+    *
     * @param message
     *    the message, or <code>null</code> if an empty message should be
     *    logged.
-    *    
+    *
     * @param exception
     *    the exception to log, or <code>null</code> if there is no exception
     *    to log.
@@ -63,13 +58,35 @@ public class InternalLogging {
 
       INSTANCE.logImpl(level, message, exception);
    }
-   
+
+   /**
+    * Logs a message at a specified level, with an optional exception.
+    *
+    * @param level
+    *    the {@link LogLevel}, <code>null</code> is equivalent to passing
+    *    {@link LogLevel#DEBUG}.
+    *
+    * @param message
+    *    the message, or <code>null</code> if an empty message should be
+    *    logged.
+    *
+    * @param exception
+    *    the exception to log, or <code>null</code> if there is no exception
+    *    to log.
+    */
+   public void logImpl(LogLevel level, String message, Throwable exception) {
+      System.err.println(level.name() + ' ' + message);
+      if (exception != null) {
+         exception.printStackTrace();
+      } 
+   }
+
    /**
     * Sets the <code>InternalLogging</code> instance to use.
-    * 
+    *
     * @param logger
     *    the instance to use, cannot be <code>null</code>.
-    *    
+    *
     * @throws IllegalArgumentException
     *    if <code>logger == null</code>.
     */
@@ -79,45 +96,5 @@ public class InternalLogging {
          throw new IllegalArgumentException("logger == null");
       }
       INSTANCE = logger;
-   }
-
-
-   
-   //-------------------------------------------------------------------------
-   // Constructors
-   //-------------------------------------------------------------------------
-
-   /**
-    * Constructs a new <code>InternalLogging</code> object.
-    */
-   protected InternalLogging() {
-      // empty
-   }
-   
-   
-   //-------------------------------------------------------------------------
-   // Methods
-   //-------------------------------------------------------------------------
-
-   /**
-    * Logs a message at a specified level, with an optional exception.
-    * 
-    * @param level
-    *    the {@link LogLevel}, <code>null</code> is equivalent to passing
-    *    {@link LogLevel#DEBUG}.
-    * 
-    * @param message
-    *    the message, or <code>null</code> if an empty message should be
-    *    logged.
-    *    
-    * @param exception
-    *    the exception to log, or <code>null</code> if there is no exception
-    *    to log.
-    */
-   public void logImpl(LogLevel level, String message, Throwable exception) {
-      System.err.println(level.name() + ' ' + message);
-      if (exception != null) {
-         exception.printStackTrace();
-      }      
    }
 }

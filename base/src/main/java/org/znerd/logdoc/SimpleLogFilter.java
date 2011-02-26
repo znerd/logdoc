@@ -9,21 +9,12 @@ package org.znerd.logdoc;
  */
 public final class SimpleLogFilter extends LogFilter {
 
-   //-------------------------------------------------------------------------
-   // Constructors
-   //-------------------------------------------------------------------------
-
    /**
     * Constructs a new <code>SimpleLogFilter</code>.
     */
    public SimpleLogFilter() {
       // empty
    }
-
-   
-   //-------------------------------------------------------------------------
-   // Methods
-   //-------------------------------------------------------------------------
 
    @Override
    public String filter(String logger, String param, String value)

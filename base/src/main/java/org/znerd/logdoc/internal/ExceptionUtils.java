@@ -10,10 +10,6 @@ import java.io.IOException;
  */
 public final class ExceptionUtils {
    
-   //-------------------------------------------------------------------------
-   // Class functions
-   //-------------------------------------------------------------------------
-
    /**
     * Determines the root cause for the specified exception.
     *
@@ -63,11 +59,6 @@ public final class ExceptionUtils {
       }
       return e;
    }
-
-
-   //-------------------------------------------------------------------------
-   // Constructors
-   //-------------------------------------------------------------------------
 
    /**
     * Constructs a new <code>ExceptionUtils</code> object.

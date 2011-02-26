@@ -12,9 +12,17 @@ import org.znerd.logdoc.UnsupportedLocaleException;
  */
 public abstract class AbstractLog {
 
-   //-------------------------------------------------------------------------
-   // Class fields
-   //-------------------------------------------------------------------------
+   static {
+
+      int noticeInt = (Level.INFO_INT + Level.WARN_INT) / 2;
+
+      DEBUG   = Level.DEBUG;
+      INFO    = Level.INFO;
+      NOTICE  = new CustomLevel(noticeInt, "NOTICE", 5);
+      WARNING = Level.WARN;
+      ERROR   = Level.ERROR;
+      FATAL   = Level.FATAL;
+   }
    
    /**
     * The <em>debug</em> log level.
@@ -46,33 +54,6 @@ public abstract class AbstractLog {
     */
    public static final Level FATAL;
    
-   
-   //-------------------------------------------------------------------------
-   // Class functions
-   //-------------------------------------------------------------------------
-
-   /**
-    * Initializes this class.
-    */
-   static {
-
-      // Determine the int value for the NOTICE level
-      int noticeInt = (Level.INFO_INT + Level.WARN_INT) / 2;
-
-      // Initialize all the log levels
-      DEBUG   = Level.DEBUG;
-      INFO    = Level.INFO;
-      NOTICE  = new CustomLevel(noticeInt, "NOTICE", 5);
-      WARNING = Level.WARN;
-      ERROR   = Level.ERROR;
-      FATAL   = Level.FATAL;
-   }
-   
-   
-   //-------------------------------------------------------------------------
-   // Constructors
-   //-------------------------------------------------------------------------
-   
    /**
     * Constructs a new <code>AbstractLog</code> instance.
     */
@@ -80,45 +61,10 @@ public abstract class AbstractLog {
       // empty
    }
 
-   
-   //-------------------------------------------------------------------------
-   // Inner classes   
-   //-------------------------------------------------------------------------
-   
-   /**
-    * Custom log level.
-    *
-    * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
-    */
    private static final class CustomLevel extends Level {
       
-      //----------------------------------------------------------------------
-      // Class fields
-      //----------------------------------------------------------------------
-      
-      /**
-       * Unique ID used to determine serialization compatibility.
-       */
       private static final long serialVersionUID = 1909887126346631322L;
-
       
-      //----------------------------------------------------------------------
-      // Constructors
-      //----------------------------------------------------------------------
-      
-      /**
-       * Constructs a new <code>CustomLevel</code> object, representing a
-       * Log4J level.
-       *
-       * @param value
-       *    the <code>int</code> value for this level.
-       *
-       * @param name
-       *    the name for this level, should not be <code>null</code>.
-       *
-       * @param syslogEquivalent
-       *    the syslog equivalent.
-       */
       private CustomLevel(int value, String name, int syslogEquivalent) {
          super(value, name, syslogEquivalent);
       }

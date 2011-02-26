@@ -18,31 +18,12 @@ import org.znerd.logdoc.internal.LogCentral;
  */
 public final class Library {
 
-   //-------------------------------------------------------------------------
-   // Class fields
-   //-------------------------------------------------------------------------
-
-   /**
-    * The version of this library, lazily initialized.
-    */
    private static final String VERSION = Library.class.getPackage().getImplementationVersion();
 
-   /**
-    * The name of the property that specifies which locale should be used.
-    */
    private static final String LOG_LOCALE_PROPERTY = "org.znerd.logdoc.locale";
 
-   /**
-    * The name of the property that specifies if all stack traces should be
-    * displayed at the message level. By default, stack traces are displayed
-    * at the <em>DEBUG</em> level.
-    */
    private static final String LOG_STACK_TRACE_AT_MESSAGE_LEVEL = "org.znerd.logdoc.stackTraceAtMessageLevel";
 
-   /**
-    * The name of the property that specifies the name of the
-    * <code>LogFilter</code> class to use.
-    */
    private static final String LOG_FILTER_PROPERTY = "org.znerd.logdoc.filterClass";
 
    /**
@@ -51,83 +32,30 @@ public final class Library {
     */
    public static final String DEFAULT_LOCALE = "en_US";
 
-   /**
-    * The locale for the logdoc.
-    */
    private static String LOCALE = null;
 
-   /**
-    * Flag indicating whether the stack trace should be displayed at the same
-    * level of the message or not. Default is <code>false</code>.
-    */
    private static boolean STACK_TRACE_AT_MESSAGE_LEVEL = false;
 
-   /**
-    * The active <code>LogFilter</code> instance.
-    */
    private static LogFilter LOG_FILTER;
 
-
-   //-------------------------------------------------------------------------
-   // Class functions
-   //-------------------------------------------------------------------------
-
-   /**
-    * Initializes this class by determining the startup locale and 
-    * initializing the log filter.
-    */
    static {
       LOCALE = determineStartupLocale();
       initLogFilter();
    }
 
-   /**
-    * Determines the start-up locale. If the system property
-    * {@link #LOG_LOCALE_PROPERTY} is set to a non-empty value, then this
-    * will be returned, otherwise {@link #DEFAULT_LOCALE} is returned.
-    *
-    * <p>This method is called from
-    * {@link #registerLog(AbstractLog.LogController)} as soon as the first
-    * {@link AbstractLog.LogController} is registered.
-    *
-    * @return
-    *    the locale to use initially, at start-up.
-    */
    private static String determineStartupLocale() {
-
-      // Use the value of the system property, if set...
       String locale = System.getProperty(LOG_LOCALE_PROPERTY);
       if (locale != null && locale.trim().length() > 0) {
          return locale;
-
-      // ...or otherwise fallback to the default locale
       } else {
          return DEFAULT_LOCALE;
       }
    }
 
-   /**
-    * Determines which <code>LogFilter</code> class to use, constructs an
-    * instance and stores it inside this class
-    *
-    * <p>If no filter is configured in the system properties (see
-    * {@link #LOG_FILTER_PROPERTY}), then a {@link SimpleLogFilter} is
-    * used.
-    *
-    * <p>If a filter is configured in the system properties, but could not be
-    * constructed, then a {@link NullLogFilter} is used, to avoid any
-    * security issues.
-    */
    private static void initLogFilter() {
-
-      // Get the system property
       String s = System.getProperty(LOG_FILTER_PROPERTY);
-
-      // Property is not set, use a SimpleLogFilter
       if (s == null || s.trim().length() < 1) {
          setLogFilter(new SimpleLogFilter());
-
-      // Property is set, use it
       } else {
          setLogFilterByClass(s);
       }

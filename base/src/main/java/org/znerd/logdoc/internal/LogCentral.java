@@ -11,21 +11,7 @@ import org.znerd.logdoc.UnsupportedLocaleException;
  */
 public final class LogCentral {
 
-   //-------------------------------------------------------------------------
-   // Class fields
-   //-------------------------------------------------------------------------
-
-   /**
-    * All registered <code>LogController</code> instances.
-    *
-    * @see #registerLog(LogController)
-    */
    private static LogController[] CONTROLLERS;
-
-
-   //-------------------------------------------------------------------------
-   // Class functions
-   //-------------------------------------------------------------------------
 
    /**
     * Forces that the specified class is initialized.
@@ -120,16 +106,6 @@ public final class LogCentral {
       }
    }
 
-
-   //-------------------------------------------------------------------------
-   // Constructors
-   //-------------------------------------------------------------------------
-
-   /**
-    * Constructs a new <code>LogCentral</code> instance. This constructor is
-    * intentionally made <code>private</code>, since no instances should be
-    * constructed of this class.
-    */
    private LogCentral() {
       // empty
    }

@@ -13,10 +13,6 @@ import org.znerd.logdoc.UnsupportedLocaleException;
  */
 public abstract class LogController {
    
-   //----------------------------------------------------------------------
-   // Constructors
-   //-------------------------------------------------------------------------
-
    /**
     * Constructs a new <code>LogController</code> object.
     *
@@ -30,11 +26,6 @@ public abstract class LogController {
       // instance
       LogCentral.registerLog(this);
    }
-   
-
-   //----------------------------------------------------------------------
-   // Methods
-   //----------------------------------------------------------------------
    
    /**
     * Checks if the specified locale is supported.
