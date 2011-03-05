@@ -9,6 +9,7 @@ EXAMPLE
 
 Example Logdoc log.xml file:
 
+   <?xml version="1.0"?>
    <log since="MyLibrary 5.5.3" domain="com.znerd.mylibrary" public="true">
       <translation-bundle locale="en_US" />
       <group id="transactions" name="Transactions">
@@ -17,14 +18,23 @@ Example Logdoc log.xml file:
             <param name="id"          type="int32" nullable="false"  />
             <param name="description" type="text"  nullable="true"  />
          </entry>
-         <entry id="103" level="INFO">
-            <description>Transaction fully started.</description>
+         <entry id="103" level="ERROR" exception="true">
+            <description>Transaction failed.</description>
             <param name="id" type="int32" nullable="false"  />
          </entry>
       </group>
    </log>
 
-Input files can be used to generate Java source code and HTML documentation.
+Example associated translation-bundle-en_US.xml file:
+
+   <?xml version="1.0"?>
+   <translation-bundle>
+      <translation entry="101">Starting transaction <value-of-param name="id" />. Description: <value-of-param name="description" format="quoted" />.</translation>
+      <translation entry="103">Transaction <value-of-param name="id" /> failed.</translation>
+   </log>
+
+Such input files can be used to generate Java source code and HTML
+documentation.
 
 
 USAGE WITH APACHE ANT
@@ -36,7 +46,7 @@ To trigger Logdoc from your Ant build script, first define the tasks:
 Then the tasks can, for example, be used as follows:
 
    <logdoc-code in="src/logdoc" out="src/java" />
-   <logdoc-html in="src/logdoc" out="build/logdoc-htdocs" />
+   <logdoc-doc in="src/logdoc" out="build/logdoc-htdocs" />
 
 
 USAGE WITH APACHE MAVEN
