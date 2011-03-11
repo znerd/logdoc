@@ -1,5 +1,10 @@
 --- CHANGES SINCE LOGDOC 0.13 ------------------------------------------------
 
+* Added base/src/main/resources/dtd/log.dtd.
+
+
+--- CHANGES SINCE LOGDOC 0.13 ------------------------------------------------
+
 * Fixed bug: TranslationBundle .java files were placed in top directory.
 * Cleaned code.
 
