@@ -1,3 +1,6 @@
+--- CHANGES SINCE LOGDOC 0.14 ------------------------------------------------
+
+
 --- CHANGES SINCE LOGDOC 0.13 ------------------------------------------------
 
 * Added base/src/main/resources/dtd/log.dtd.
