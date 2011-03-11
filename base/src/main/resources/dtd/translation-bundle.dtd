@@ -1,0 +1,15 @@
+<!ELEMENT translation-bundle (translation*)>
+<!ELEMENT translation (#PCDATA|value-of-param|exception-property)*>
+<!ATTLIST translation
+          entry       NMTOKEN #REQUIRED
+>
+<!ELEMENT value-of-param EMPTY>
+<!ATTLIST value-of-param
+          name        NMTOKEN #REQUIRED
+          format      NMTOKEN #IMPLIED
+>
+<!ELEMENT exception-property EMPTY>
+<!ATTLIST exception-property
+          name        (class|message) #REQUIRED
+          format      NMTOKEN #IMPLIED
+>
