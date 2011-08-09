@@ -3,6 +3,9 @@ package org.znerd.logdoc.internal;
 
 import java.io.File;
 import java.io.IOException;
+import static org.znerd.logdoc.internal.TextUtils.quote;
+
+import org.znerd.logdoc.LogLevel;
 
 public class IoUtils {
 
