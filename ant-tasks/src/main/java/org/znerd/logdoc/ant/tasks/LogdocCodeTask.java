@@ -1,8 +1,6 @@
 // See the COPYRIGHT file for copyright and license information
 package org.znerd.logdoc.ant.tasks;
 
-import org.apache.tools.ant.BuildException;
-
 import org.znerd.logdoc.LogDef;
 import org.znerd.logdoc.gen.CodeGenerator;
 

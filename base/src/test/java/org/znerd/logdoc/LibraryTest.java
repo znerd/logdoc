@@ -1,16 +1,9 @@
 // See the COPYRIGHT file for copyright and license information
 package org.znerd.logdoc;
 
-import java.io.InputStream;
-import java.io.IOException;
-import java.net.URL;
-
 import org.junit.Test;
 import org.junit.Ignore;
 import static org.junit.Assert.*;
-
-import org.znerd.logdoc.internal.InternalLogging;
-import org.znerd.logdoc.internal.LogCentral;
 
 /**
  * Unit tests for the <code>Library</code> class.

@@ -3,7 +3,6 @@ package org.znerd.logdoc.internal;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -15,7 +14,6 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.w3c.dom.Document;
 
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 

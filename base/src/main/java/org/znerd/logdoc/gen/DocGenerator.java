@@ -9,8 +9,6 @@ import java.util.Map;
 import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
 
-import org.w3c.dom.Document;
-
 import org.znerd.logdoc.LogDef;
 
 /**
@@ -68,7 +66,7 @@ public final class DocGenerator {
 
    private final void generateEntryListDoc() throws IOException {
       Map<String,String> xsltParams = new HashMap<String,String>();
-      transformToDoc("_list", "entry-list", new HashMap<String,String>());
+      transformToDoc("_list", "entry-list", xsltParams);
    }
 
    private final void generateGroupAndEntryDocs() throws IOException {

@@ -271,28 +271,6 @@ public final class Library {
    }
 
    /**
-    * Utility function that quotes the specified text. For example, when the
-    * string <code>Hello "there"</code> is passed as input, then the string
-    * <code>"Hello \"there\""</code> is returned as output. When
-    * <code>null</code> is passed as input, then the string
-    * <code>(null)</code> is returned as output.
-    *
-    * @param input
-    *    the input text, can be <code>null</code>.
-    *
-    * @return
-    *    the quoted output string, or <code>(null)</code> if the input string
-    *    is <code>null</code>.
-    */
-   static String quote(String input) {
-      if (input == null) {
-         return "(null)";
-      } else {
-         return "\"" + input + '"'; // TODO: Review, perhaps escape input?
-      }
-   }
-
-   /**
     * Returns the official human-readable name of this library.
     *
     * @return

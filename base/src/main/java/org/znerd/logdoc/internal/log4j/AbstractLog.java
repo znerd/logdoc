@@ -3,8 +3,6 @@ package org.znerd.logdoc.internal.log4j;
 
 import org.apache.log4j.Level;
 
-import org.znerd.logdoc.UnsupportedLocaleException;
-
 /**
  * Abstract base class for <em>logdoc</em> <code>Log</code> classes.
  *
