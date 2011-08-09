@@ -5,3 +5,4 @@ META-INF
 .externalToolBuilders
 .project
 .settings
+maven-eclipse.xml
