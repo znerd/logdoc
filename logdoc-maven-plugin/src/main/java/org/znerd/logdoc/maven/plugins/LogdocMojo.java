@@ -7,15 +7,15 @@ import org.apache.maven.plugin.MojoExecutionException;
 /**
  * Says "Hi" to the user.
  *
- * @goal generateLogdocSourceFiles
- *
- * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
+ * @goal generate-sources
+ * @phase generate-sources
  */
 public class LogdocMojo extends AbstractMojo {
 
-   @Override
-   public void execute() throws MojoExecutionException {
-      getLog().info("Hello, world.");
-   }
+    @Override
+    public void execute() throws MojoExecutionException {
+        getLog().info("Hello, world.");
+        System.err.println("******************* THIS is System.err !!!!!");
+    }
 }
 

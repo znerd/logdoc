@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.znerd.logdoc</groupId>
-	<artifactId>base</artifactId>
+	<groupId>org.znerd</groupId>
+	<artifactId>logdoc-base</artifactId>
 	<packaging>jar</packaging>
 	<name>Logdoc</name>
 	<url>http://www.github.com/znerd/logdoc</url>
@@ -29,7 +29,6 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>${project.parent.artifactId}-${project.artifactId}</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources/xsd</directory>

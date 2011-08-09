@@ -1,6 +1,7 @@
 --- CHANGES SINCE LOGDOC 0.14 ------------------------------------------------
 
 * Added base/src/main/resources/dtd/log.dtd.
+* Big refactoring, renamed all modules and changed Maven group/artifact IDs.
 
 
 --- CHANGES SINCE LOGDOC 0.13 ------------------------------------------------
