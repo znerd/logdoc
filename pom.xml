@@ -10,7 +10,6 @@
 		<module>base</module>
 		<module>ant-tasks</module>
 		<module>maven-plugins</module>
-		<module>maven-test-project</module>
 	</modules>
 
 	<dependencyManagement>
