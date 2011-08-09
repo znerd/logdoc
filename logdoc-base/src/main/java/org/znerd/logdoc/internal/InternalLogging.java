@@ -5,8 +5,6 @@ import org.znerd.logdoc.LogLevel;
 
 /**
  * Logdoc-internal logging.
- *
- * @author <a href="mailto:ernst@ernstdehaan.com">Ernst de Haan</a>
  */
 public class InternalLogging {
 

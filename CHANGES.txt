@@ -3,6 +3,7 @@
 * Added base/src/main/resources/dtd/log.dtd.
 * Big refactoring, renamed all modules and changed Maven group/artifact IDs.
 * Using Java 1.6 language, instead of 1.5.
+* Introduced utility classes IoUtils and TextUtils.
 
 
 --- CHANGES SINCE LOGDOC 0.13 ------------------------------------------------

@@ -2,6 +2,7 @@
 package org.znerd.logdoc.ant.tasks;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -11,6 +12,8 @@ import org.apache.tools.ant.taskdefs.MatchingTask;
 
 import org.znerd.logdoc.LogDef;
 import org.znerd.logdoc.internal.InternalLogging;
+import org.znerd.logdoc.internal.IoUtils;
+import static org.znerd.logdoc.internal.TextUtils.quote;
 
 import org.znerd.logdoc.ant.tasks.internal.AntInternalLogging;
 
@@ -41,38 +44,6 @@ public abstract class AbstractLogdocTask extends MatchingTask {
    //-------------------------------------------------------------------------
    // Class functions
    //-------------------------------------------------------------------------
-
-   /**
-    * Returns a quoted version of the specified string,
-    * or <code>"(null)"</code> if the argument is <code>null</code>.
-    *
-    * @param s
-    *    the character string, can be <code>null</code>,
-    *    e.g. <code>"foo bar"</code>.
-    *
-    * @return
-    *    the quoted string, e.g. <code>"\"foo bar\""</code>,
-    *    or <code>"(null)"</code> if the argument is <code>null</code>.
-    */
-   static final String quote(String s) {
-      return s == null ? "(null)" : "\"" + s + '"';
-   }
-
-   /**
-    * Returns a quoted version string representation,
-    * or <code>"(null)"</code> if the argument is <code>null</code>.
-    *
-    * @param o
-    *    the object, can be <code>null</code>.
-    *
-    * @return
-    *    the quoted string representation of the specified object,
-    *    e.g. <code>"\"foo bar\""</code>,
-    *    or <code>"(null)"</code> if the argument is <code>null</code>.
-    */
-   static final String quote(Object o) {
-      return o == null ? "(null)" : quote(o.toString());
-   }
 
    /**
     * Determines if the specified character string matches the regular
@@ -204,37 +175,11 @@ public abstract class AbstractLogdocTask extends MatchingTask {
                                boolean mustBeWritable,
                                boolean createIfNonexistent)
    throws IllegalArgumentException, BuildException {
-
-      // Check preconditions
-      if (isEmpty(description)) {
-         throw new IllegalArgumentException("description is empty (" + quote(description) + ')');
-      }
-
-      // Make sure the path is set
-      if (path == null) {
-         throw new BuildException(description + " is not set.");
-
-      // Create the directory if this is requested
-      } else if (createIfNonexistent && ! path.exists()) {
-         log("Creating directory " + quote(path) + '.', MSG_VERBOSE);
-         if (! path.mkdirs()) {
-            throw new BuildException(description + " (\"" + path + "\") could not be created.");
-         }
-
-      // Make sure the path refers to an existing directory
-      } else if (! path.exists()) {
-         throw new BuildException(description + " (\"" + path + "\") does not exist.");
-      } else if (! path.isDirectory()) {
-         throw new BuildException(description + " (\"" + path + "\") is not a directory.");
-
-      // Make sure the directory is readable, if that is required
-      } else if (mustBeReadable && (! path.canRead())) {
-         throw new BuildException(description + " (\"" + path + "\") is not readable.");
-
-      // Make sure the directory is writable, if that is required
-      } else if (mustBeWritable && (! path.canWrite())) {
-         throw new BuildException(description + " (\"" + path + "\") is not writable.");
-      }
+       try {
+           IoUtils.checkDir(description, path, mustBeReadable, mustBeWritable, createIfNonexistent);
+       } catch (IOException cause) {
+           throw new BuildException(cause.getMessage(), cause);
+       }
    }
 
    /**
