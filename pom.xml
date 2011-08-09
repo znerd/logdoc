@@ -8,7 +8,7 @@
 
 	<modules>
 		<module>logdoc-base</module>
-		<!-- <module>logdoc-ant-tasks</module> -->
+		<module>logdoc-ant-tasks</module>
 		<module>logdoc-maven-plugin</module>
 	</modules>
 
