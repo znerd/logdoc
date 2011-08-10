@@ -53,19 +53,7 @@ a quoted form. E.g.:
 
 ------------------------------------------------------------------------------
 
-Allow users to use Maven to invoke Logdoc functionality (build code/docs).
-
-Status: In progress, see the logdoc-maven-plugin subdirectory, which is a
-        Maven module itself.
-
-------------------------------------------------------------------------------
-
 Consider applying as an Apache project.
-
-------------------------------------------------------------------------------
-
-Move CustomLevel out of the AbstractLog class to a package/library that is
-Log4J-specific.
 
 ------------------------------------------------------------------------------
 
