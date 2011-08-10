@@ -1,6 +1,7 @@
 --- CHANGES SINCE LOGDOC 0.15 ------------------------------------------------
 
 * Moved MavenInternalLogging down to .internal package.
+* Improved style, based on the Clean Code principles.
 
 
 --- CHANGES SINCE LOGDOC 0.14 ------------------------------------------------

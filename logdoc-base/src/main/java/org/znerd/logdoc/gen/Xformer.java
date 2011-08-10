@@ -19,7 +19,6 @@ import org.znerd.logdoc.LogDef;
 import org.znerd.logdoc.LogLevel;
 import org.znerd.logdoc.internal.Resolver;
 
-import static org.znerd.logdoc.internal.ExceptionUtils.newIOException;
 import static org.znerd.logdoc.internal.InternalLogging.log;
 
 class Xformer {
@@ -34,9 +33,9 @@ class Xformer {
         try {
             transformWithoutHandlingExceptions(source, xsltPath, xsltParams, outDir, outFileName);
         } catch (TransformerConfigurationException cause) {
-            throw newIOException("Unable to perform XSLT transformation due to configuration problem.", cause);
+            throw new IOException("Unable to perform XSLT transformation due to configuration problem.", cause);
         } catch (TransformerException cause) {
-            throw newIOException("Failed to perform XSLT transformation.", cause);
+            throw new IOException("Failed to perform XSLT transformation.", cause);
         }
     }
 

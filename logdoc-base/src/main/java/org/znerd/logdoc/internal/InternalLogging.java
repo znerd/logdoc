@@ -7,6 +7,7 @@ import org.znerd.logdoc.LogLevel;
  * Logdoc-internal logging.
  * <p>
  * When <code>null</code> is passed as a {@link LogLevel}, then {@link LogLevel#DEBUG} is assumed.
+ * <p>
  * When <code>null</code> is passed as a message, then an empty string is assumed.
  */
 public class InternalLogging {
