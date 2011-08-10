@@ -22,51 +22,67 @@ public final class CodeGenerator extends Generator {
         super(sourceDir, destDir, overwrite);
     }
 
-    private final String _target = "log4j";
-
     @Override
-    protected void generateImpl(LogDef logDef, File destDir, boolean overwrite) throws IOException {
+    protected void generateImpl(LogDef logDef, File destDir) throws IOException {
 
         String domainPath = logDef.getDomainName().replace(".", "/");
         File outDir = new File(destDir, domainPath);
 
-        transformToCode(logDef, outDir, _target + '/', "Log");
-        transformToCode(logDef, outDir, "", "TranslationBundle");
-        for (Map.Entry<String, Document> entry : logDef.getTranslations().entrySet()) {
-            String locale = entry.getKey();
-            Document translationXML = entry.getValue();
-            transformToCodeForLocale(logDef, outDir, locale, translationXML);
+        Processor processor = new Processor(logDef, outDir, "log4j");
+        processor.process();
+    }
+
+    static class Processor {
+
+        Processor(LogDef logDef, File outDir, String target) {
+            _def = logDef;
+            _outDir = outDir;
+            _target = target;
         }
-    }
 
-    private void transformToCode(LogDef logDef, File outDir, String xsltSubDir, String className) throws IOException {
+        private final LogDef _def;
+        private final File _outDir;
+        private final String _target;
 
-        final Source source = new DOMSource(logDef.getXML());
-        final String xsltPath = xsltSubDir + "log_to_" + className + "_java" + ".xslt";
-        final String outFileName = className + ".java";
-        final String domainName = logDef.getDomainName();
-        final String accessLevel = logDef.isPublic() ? "public" : "protected";
+        void process() throws IOException {
+            transformToCode(_target + '/', "Log");
+            transformToCode("", "TranslationBundle");
+            for (Map.Entry<String, Document> entry : _def.getTranslations().entrySet()) {
+                String locale = entry.getKey();
+                Document translationXML = entry.getValue();
+                transformToCodeForLocale(locale, translationXML);
+            }
+        }
 
-        final Map<String, String> xsltParams = new HashMap<String, String>();
-        xsltParams.put("package_name", domainName);
-        xsltParams.put("accesslevel", accessLevel);
+        private void transformToCode(String xsltSubDir, String className) throws IOException {
 
-        new Xformer(logDef).transform(source, xsltPath, xsltParams, outDir, outFileName);
-    }
+            final Source source = new DOMSource(_def.getXML());
+            final String xsltPath = xsltSubDir + "log_to_" + className + "_java" + ".xslt";
+            final String outFileName = className + ".java";
+            final String domainName = _def.getDomainName();
+            final String accessLevel = _def.isPublic() ? "public" : "protected";
 
-    private void transformToCodeForLocale(LogDef logDef, File outDir, String locale, Document translationXML) throws IOException {
+            final Map<String, String> xsltParams = new HashMap<String, String>();
+            xsltParams.put("package_name", domainName);
+            xsltParams.put("accesslevel", accessLevel);
 
-        final Source source = new DOMSource(translationXML);
-        final String xsltPath = "translation-bundle_to_java.xslt";
-        final String outFileName = "TranslationBundle_" + locale + ".java";
-        final String domainName = logDef.getDomainName();
-        final String accesslevel = logDef.isPublic() ? "public" : "protected";
+            new Xformer(_def).transform(source, xsltPath, xsltParams, _outDir, outFileName);
+        }
 
-        final Map<String, String> xsltParams = new HashMap<String, String>();
-        xsltParams.put("package_name", domainName);
-        xsltParams.put("accesslevel", accesslevel);
-        xsltParams.put("locale", locale);
+        private void transformToCodeForLocale(String locale, Document translationXML) throws IOException {
 
-        new Xformer(logDef).transform(source, xsltPath, xsltParams, outDir, outFileName);
+            final Source source = new DOMSource(translationXML);
+            final String xsltPath = "translation-bundle_to_java.xslt";
+            final String outFileName = "TranslationBundle_" + locale + ".java";
+            final String domainName = _def.getDomainName();
+            final String accesslevel = _def.isPublic() ? "public" : "protected";
+
+            final Map<String, String> xsltParams = new HashMap<String, String>();
+            xsltParams.put("package_name", domainName);
+            xsltParams.put("accesslevel", accesslevel);
+            xsltParams.put("locale", locale);
+
+            new Xformer(_def).transform(source, xsltPath, xsltParams, _outDir, outFileName);
+        }
     }
 }

@@ -21,16 +21,14 @@ public abstract class Generator {
         }
         _sourceDir = sourceDir;
         _destDir = destDir;
-        _overwrite = overwrite;
     }
-    
+
     private final File _sourceDir, _destDir;
-    private final boolean _overwrite;
 
     public void generate() throws IOException {
         File actualDestDir = determineDestDir(_sourceDir, _destDir);
         checkDirs(_sourceDir, actualDestDir);
-        processFiles(_sourceDir, actualDestDir, _overwrite);
+        processFiles(_sourceDir, actualDestDir);
     }
 
     private File determineDestDir(File sourceDir, File specifiedDestDir) {
@@ -43,11 +41,11 @@ public abstract class Generator {
         IoUtils.checkDir("Destination directory", destDir, false, true, true);
     }
 
-    private void processFiles(File sourceDir, File destDir, boolean overwrite) throws IOException {
+    private void processFiles(File sourceDir, File destDir) throws IOException {
         long start = System.currentTimeMillis();
         logProcessingStart(sourceDir, destDir);
         LogDef logDef = loadAndValidateDefinitions(sourceDir);
-        generateImpl(logDef, destDir, overwrite);
+        generateImpl(logDef, destDir);
         logProcessingFinish(start);
     }
 
@@ -70,5 +68,5 @@ public abstract class Generator {
         }
     }
 
-    protected abstract void generateImpl(LogDef logDef, File destDir, boolean overwrite) throws IOException;
+    protected abstract void generateImpl(LogDef logDef, File destDir) throws IOException;
 }

@@ -11,7 +11,7 @@ import org.znerd.logdoc.internal.LogCentral;
 /**
  * Class that represents the Logdoc library.
  * <p>
- * This class can be run as a program. When it is, all it does is display the name of this library and the version to standard out.
+ * This class can be run as a program. When it is, all it does is print the name of this library and, if known, the version to standard out.
  */
 public final class Library {
 
@@ -236,9 +236,6 @@ public final class Library {
         return VERSION;
     }
 
-    /**
-     * Prints the name and (if known) the version of this library.
-     */
     public static final void main(String[] args) {
         if (VERSION == null) {
             System.out.println(getName());
@@ -247,9 +244,6 @@ public final class Library {
         }
     }
 
-    /**
-     * Constructs a new <code>Library</code> object.
-     */
     private Library() {
         // empty
     }

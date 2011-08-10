@@ -21,22 +21,20 @@ public final class DocGenerator extends Generator {
     }
 
     @Override
-    protected void generateImpl(LogDef logDef, File destDir, boolean overwrite) throws IOException {
-        Processor proc = new Processor(logDef, destDir, overwrite);
+    protected void generateImpl(LogDef logDef, File destDir) throws IOException {
+        Processor proc = new Processor(logDef, destDir);
         proc.process();
     }
 
     private static class Processor {
 
-        Processor(LogDef logDef, File destDir, boolean overwrite) {
+        Processor(LogDef logDef, File destDir) {
             _def = logDef;
             _destDir = destDir;
-            _overwrite = overwrite;
         }
-        
+
         private final LogDef _def;
         private final File _destDir;
-        private final boolean _overwrite;
 
         void process() throws IOException {
             generateOverviewDoc();
