@@ -35,9 +35,7 @@ public abstract class AbstractLogdocTask extends MatchingTask {
     public void execute() throws BuildException {
         sendInternalLoggingThroughAnt();
         File sourceDir = determineSourceDir();
-        File destDir = determineDestDir(sourceDir);
-        checkDirs(sourceDir, destDir);
-        processFiles(sourceDir, destDir);
+        generate(sourceDir);
     }
 
     private void sendInternalLoggingThroughAnt() {
@@ -47,6 +45,12 @@ public abstract class AbstractLogdocTask extends MatchingTask {
     private File determineSourceDir() {
         File sourceDir = (_sourceDir != null) ? _sourceDir : getProject().getBaseDir();
         return sourceDir;
+    }
+
+    private void generate(File sourceDir) {
+        File destDir = determineDestDir(sourceDir);
+        checkDirs(sourceDir, destDir);
+        processFiles(sourceDir, destDir);
     }
 
     private File determineDestDir(File sourceDir) {
@@ -63,7 +67,7 @@ public abstract class AbstractLogdocTask extends MatchingTask {
         }
     }
 
-    private void processFiles(File sourceDir, File destDir) {
+    private void processFiles(File sourceDir, File destDir) throws BuildException {
         long start = System.currentTimeMillis();
         logProcessingStart(sourceDir, destDir);
         LogDef logDef = loadAndValidateDefinitions(sourceDir);
