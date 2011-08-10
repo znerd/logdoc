@@ -11,7 +11,7 @@ import org.znerd.logdoc.gen.Generator;
  */
 public final class LogdocDocTask extends AbstractLogdocTask {
     @Override
-    protected Generator createGenerator(File sourceDir, File destDir, boolean overwrite) {
-        return new DocGenerator(sourceDir, destDir, overwrite);
+    protected Generator createGenerator(File sourceDir, File destDir) {
+        return new DocGenerator(sourceDir, destDir);
     }
 }

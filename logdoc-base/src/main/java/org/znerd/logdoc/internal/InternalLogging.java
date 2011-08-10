@@ -35,7 +35,7 @@ public class InternalLogging {
         INSTANCE = logger;
     }
 
-    public void logImpl(LogLevel level, String message, Throwable exception) {
+    protected void logImpl(LogLevel level, String message, Throwable exception) {
         fallbackLogImpl(level, message, exception);
     }
 
@@ -47,6 +47,5 @@ public class InternalLogging {
     }
 
     protected InternalLogging() {
-        // empty
     }
 }

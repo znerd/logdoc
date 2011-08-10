@@ -6,6 +6,8 @@
 * Introduced utility classes IoUtils and TextUtils.
 * Improved style, based on the Clean Code principles.
 * Introduced Generator as superclass for CodeGenerator and DocGenerator.
+* Removed the 'overwrite' setting.
+* Maven plugin now works, it generates Java code only.
 
 
 --- CHANGES SINCE LOGDOC 0.13 ------------------------------------------------

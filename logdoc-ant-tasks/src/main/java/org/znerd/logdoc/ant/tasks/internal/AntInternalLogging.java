@@ -21,7 +21,7 @@ public class AntInternalLogging extends InternalLogging {
     private final Task _task;
 
     @Override
-    public void logImpl(LogLevel level, String message, Throwable exception) {
+    protected void logImpl(LogLevel level, String message, Throwable exception) {
         final int antLevel = convertToAntLevel(level);
         logViaAnt(message, exception, antLevel);
     }

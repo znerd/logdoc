@@ -18,8 +18,8 @@ import org.znerd.logdoc.LogDef;
  */
 public final class CodeGenerator extends Generator {
 
-    public CodeGenerator(File sourceDir, File destDir, boolean overwrite) throws IllegalArgumentException {
-        super(sourceDir, destDir, overwrite);
+    public CodeGenerator(File sourceDir, File destDir) throws IllegalArgumentException {
+        super(sourceDir, destDir);
     }
 
     @Override

@@ -16,8 +16,8 @@ import org.znerd.logdoc.LogDef;
  */
 public final class DocGenerator extends Generator {
 
-    public DocGenerator(File sourceDir, File destDir, boolean overwrite) throws IllegalArgumentException {
-        super(sourceDir, destDir, overwrite);
+    public DocGenerator(File sourceDir, File destDir) throws IllegalArgumentException {
+        super(sourceDir, destDir);
     }
 
     @Override

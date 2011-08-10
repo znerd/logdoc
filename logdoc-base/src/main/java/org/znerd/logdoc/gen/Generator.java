@@ -15,7 +15,7 @@ import org.znerd.logdoc.internal.IoUtils;
  */
 public abstract class Generator {
 
-    protected Generator(File sourceDir, File destDir, boolean overwrite) throws IllegalArgumentException {
+    protected Generator(File sourceDir, File destDir) throws IllegalArgumentException {
         if (sourceDir == null) {
             throw new IllegalArgumentException("sourceDir == null");
         }
