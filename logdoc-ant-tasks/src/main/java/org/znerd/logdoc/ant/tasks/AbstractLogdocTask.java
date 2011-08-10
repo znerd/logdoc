@@ -57,28 +57,32 @@ public abstract class AbstractLogdocTask extends MatchingTask {
     @Override
     public void execute() throws BuildException {
         sendInternalLoggingThroughAnt();
-        File sourceDir = determineSourceDir();
-        generate(sourceDir);
+        File actualSourceDir = determineSourceDir(_sourceDir);
+        generate(actualSourceDir, _destDir);
     }
 
     private void sendInternalLoggingThroughAnt() {
         InternalLogging.setLogger(new AntInternalLogging(this));
     }
 
-    private File determineSourceDir() {
-        File sourceDir = (_sourceDir != null) ? _sourceDir : getProject().getBaseDir();
+    private File determineSourceDir(File specifiedSourceDir) {
+        File sourceDir = (specifiedSourceDir != null) ? specifiedSourceDir : getDefaultSourceDir();
         return sourceDir;
     }
 
-    private void generate(File sourceDir) {
-        File destDir = determineDestDir(sourceDir);
-        checkDirs(sourceDir, destDir);
-        processFiles(sourceDir, destDir);
+    private File getDefaultSourceDir() {
+        return getProject().getBaseDir();
     }
 
-    private File determineDestDir(File sourceDir) {
-        File destDir = (_destDir != null) ? _destDir : sourceDir;
-        return destDir;
+    private void generate(File sourceDir, File specifiedDestDir) {
+        File actualDestDir = determineDestDir(sourceDir, specifiedDestDir);
+        checkDirs(sourceDir, actualDestDir);
+        processFiles(sourceDir, actualDestDir);
+    }
+
+    private File determineDestDir(File sourceDir, File specifiedDestDir) {
+        File actualDestDir = (specifiedDestDir != null) ? specifiedDestDir : sourceDir;
+        return actualDestDir;
     }
 
     private void checkDirs(File sourceDir, File destDir) throws BuildException {
