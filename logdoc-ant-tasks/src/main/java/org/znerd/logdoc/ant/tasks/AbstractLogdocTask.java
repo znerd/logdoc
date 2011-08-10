@@ -8,6 +8,7 @@ import org.apache.tools.ant.BuildException;
 import static org.apache.tools.ant.Project.MSG_VERBOSE;
 import org.apache.tools.ant.taskdefs.MatchingTask;
 
+import org.xml.sax.SAXException;
 import org.znerd.logdoc.LogDef;
 import org.znerd.logdoc.LogLevel;
 import org.znerd.logdoc.internal.InternalLogging;
@@ -112,13 +113,13 @@ public abstract class AbstractLogdocTask extends MatchingTask {
     }
 
     private LogDef loadAndValidateDefinitions(File sourceDir) throws IOException {
-        LogDef logDef;
         try {
-            logDef = LogDef.loadFromDirectory(sourceDir);
-        } catch (Exception cause) {
-            throw new IOException("Failed to load log definition.", cause);
+            return LogDef.loadFromDirectory(sourceDir);
+        } catch (IOException cause) {
+            throw new IOException("Failed to load log definitions due to an I/O error.", cause);
+        } catch (SAXException cause) {
+            throw new IOException("Failed to load log definitions due to an XML parsing error.", cause);
         }
-        return logDef;
     }
 
     /**
