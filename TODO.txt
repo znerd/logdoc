@@ -3,8 +3,13 @@ Change directory structure for XSLT files, to for example:
    xslt/
    xslt/code/
    xslt/code/log4j/
-   docs/
-   docs/html/
+   xslt/docs/
+   xslt/docs/html/
+
+------------------------------------------------------------------------------
+
+Move MavenInternalLogging to a .internal package or move the
+AntInternalLogging class out of it.
 
 ------------------------------------------------------------------------------
 
@@ -55,8 +60,8 @@ a quoted form. E.g.:
 
 Allow users to use Maven to invoke Logdoc functionality (build code/docs).
 
-Status: In progress, see the maven-plugins subdirectory, which is a Maven
-        module itself.
+Status: In progress, see the logdoc-maven-plugin subdirectory, which is a
+        Maven module itself.
 
 ------------------------------------------------------------------------------
 
@@ -66,10 +71,6 @@ Consider applying as an Apache project.
 
 Move CustomLevel out of the AbstractLog class to a package/library that is
 Log4J-specific.
-
-------------------------------------------------------------------------------
-
-Disable all internal logging unless a specific system property is set.
 
 ------------------------------------------------------------------------------
 
