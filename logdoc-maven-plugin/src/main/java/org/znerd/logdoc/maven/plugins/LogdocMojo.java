@@ -9,6 +9,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.znerd.logdoc.gen.CodeGenerator;
 import org.znerd.logdoc.internal.InternalLogging;
+import org.znerd.logdoc.maven.plugins.internal.MavenInternalLogging;
 
 /**
  * An Maven plugin for generating source files and/or documentation from Logdoc definitions.

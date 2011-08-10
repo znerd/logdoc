@@ -8,11 +8,6 @@ Change directory structure for XSLT files, to for example:
 
 ------------------------------------------------------------------------------
 
-Move MavenInternalLogging to a .internal package or move the
-AntInternalLogging class out of it.
-
-------------------------------------------------------------------------------
-
 Refactor LogDef class, remove XSLT transformation functionality.
 
 ------------------------------------------------------------------------------
