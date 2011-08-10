@@ -58,13 +58,13 @@ MODULES
 
 Logdoc consists of the following modules:
 
-   base          - Logdoc base classes, in the org.znerd.logdoc package.
+   logdoc-base         - Logdoc base classes, in the org.znerd.logdoc package.
 
-   ant-tasks     - Apache Ant tasks that make the Logdoc functionality
-                   available for Ant build scripts.
+   logdoc-ant-tasks    - Apache Ant tasks that make the Logdoc functionality
+                         available for Ant build scripts.
 
-   maven-plugins - Maven plugins that make the Logdoc functionality available
-                   for Maven projects.
+   logdoc-maven-plugin - Maven plugins that make the Logdoc functionality
+                         available for Maven projects.
 
 
 BUILDING LOGDOC
