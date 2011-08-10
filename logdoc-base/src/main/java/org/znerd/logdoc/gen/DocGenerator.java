@@ -16,76 +16,77 @@ import org.znerd.logdoc.LogDef;
  */
 public final class DocGenerator extends Generator {
 
-    /**
-     * Creates a new <code>DocGenerator</code> for the specified log definition.
-     * 
-     * @param def the {@link LogDef} object, cannot be <code>null</code>.
-     * @param targetDir the target directory to create the HTML documentation files in, cannot be <code>null</code>.
-     * @throws IllegalArgumentException if <code>def == null || targetDir == null</code>.
-     */
-    public DocGenerator(LogDef def, File targetDir) throws IllegalArgumentException {
-        if (def == null) {
-            throw new IllegalArgumentException("def == null");
-        } else if (targetDir == null) {
-            throw new IllegalArgumentException("targetDir == null");
-        }
-
-        _def = def;
-        _targetDir = targetDir;
+    public DocGenerator(File sourceDir, File destDir, boolean overwrite) throws IllegalArgumentException {
+        super(sourceDir, destDir, overwrite);
     }
-
-    private final LogDef _def;
-    private final File _targetDir;
 
     @Override
-    public void generateImpl() throws IllegalArgumentException, IOException {
-        generateOverviewDoc();
-        generateEntryListDoc();
-        generateGroupAndEntryDocs();
+    protected void generateImpl(LogDef logDef, File destDir, boolean overwrite) throws IOException {
+        Processor proc = new Processor(logDef, destDir, overwrite);
+        proc.process();
     }
 
-    private final void generateOverviewDoc() throws IOException {
-        Map<String, String> xsltParams = new HashMap<String, String>();
-        xsltParams.put("package_name", _def.getDomainName());
-        transformToDoc("", "index", xsltParams);
-    }
+    private static class Processor {
 
-    private final void generateEntryListDoc() throws IOException {
-        Map<String, String> xsltParams = new HashMap<String, String>();
-        transformToDoc("_list", "entry-list", xsltParams);
-    }
-
-    private final void generateGroupAndEntryDocs() throws IOException {
-        for (LogDef.Group group : _def.getGroups()) {
-            String groupID = group.getID();
-            Map<String, String> xsltParams = new HashMap<String, String>();
-            xsltParams.put("group", groupID);
-            String stylesheetName = "_group";
-            String outName = "group-" + groupID;
-            transformToDoc(stylesheetName, outName, xsltParams);
-
-            transformEntries(group);
+        Processor(LogDef logDef, File destDir, boolean overwrite) {
+            _def = logDef;
+            _destDir = destDir;
+            _overwrite = overwrite;
         }
-    }
+        
+        private final LogDef _def;
+        private final File _destDir;
+        private final boolean _overwrite;
 
-    private final void transformEntries(LogDef.Group group) throws IOException {
-        for (LogDef.Entry entry : group.getEntries()) {
-            String entryID = entry.getID();
+        void process() throws IOException {
+            generateOverviewDoc();
+            generateEntryListDoc();
+            generateGroupAndEntryDocs();
+        }
+
+        private final void generateOverviewDoc() throws IOException {
             Map<String, String> xsltParams = new HashMap<String, String>();
             xsltParams.put("package_name", _def.getDomainName());
-            xsltParams.put("sourcedir", _def.getSourceDir().getPath());
-            xsltParams.put("entry", entryID);
-            String stylesheetName = "_entry";
-            String outName = "entry-" + entryID;
-            transformToDoc(stylesheetName, outName, xsltParams);
+            transformToDoc("", "index", xsltParams);
         }
-    }
 
-    private final void transformToDoc(String stylesheetName, String outName, Map<String, String> xsltParams) throws IOException {
-        Source source = new DOMSource(_def.getXML());
-        String xsltPath = "log_to" + stylesheetName + "_html.xslt";
-        String outFileName = outName + ".html";
+        private final void generateEntryListDoc() throws IOException {
+            Map<String, String> xsltParams = new HashMap<String, String>();
+            transformToDoc("_list", "entry-list", xsltParams);
+        }
 
-        new Xformer(_def).transform(source, xsltPath, xsltParams, _targetDir, outFileName);
+        private final void generateGroupAndEntryDocs() throws IOException {
+            for (LogDef.Group group : _def.getGroups()) {
+                String groupID = group.getID();
+                Map<String, String> xsltParams = new HashMap<String, String>();
+                xsltParams.put("group", groupID);
+                String stylesheetName = "_group";
+                String outName = "group-" + groupID;
+                transformToDoc(stylesheetName, outName, xsltParams);
+
+                transformEntries(group);
+            }
+        }
+
+        private final void transformEntries(LogDef.Group group) throws IOException {
+            for (LogDef.Entry entry : group.getEntries()) {
+                String entryID = entry.getID();
+                Map<String, String> xsltParams = new HashMap<String, String>();
+                xsltParams.put("package_name", _def.getDomainName());
+                xsltParams.put("sourcedir", _def.getSourceDir().getPath());
+                xsltParams.put("entry", entryID);
+                String stylesheetName = "_entry";
+                String outName = "entry-" + entryID;
+                transformToDoc(stylesheetName, outName, xsltParams);
+            }
+        }
+
+        private final void transformToDoc(String stylesheetName, String outName, Map<String, String> xsltParams) throws IOException {
+            Source source = new DOMSource(_def.getXML());
+            String xsltPath = "log_to" + stylesheetName + "_html.xslt";
+            String outFileName = outName + ".html";
+
+            new Xformer(_def).transform(source, xsltPath, xsltParams, _destDir, outFileName);
+        }
     }
 }
