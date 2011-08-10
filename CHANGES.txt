@@ -4,6 +4,7 @@
 * Big refactoring, renamed all modules and changed Maven group/artifact IDs.
 * Using Java 1.6 language, instead of 1.5.
 * Introduced utility classes IoUtils and TextUtils.
+* Improved style, based on the Clean Code principles.
 
 
 --- CHANGES SINCE LOGDOC 0.13 ------------------------------------------------
