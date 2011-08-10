@@ -9,6 +9,7 @@ import static org.apache.tools.ant.Project.MSG_VERBOSE;
 import org.apache.tools.ant.taskdefs.MatchingTask;
 
 import org.znerd.logdoc.LogDef;
+import org.znerd.logdoc.LogLevel;
 import org.znerd.logdoc.internal.InternalLogging;
 import org.znerd.logdoc.internal.IoUtils;
 import static org.znerd.logdoc.internal.TextUtils.quote;
@@ -21,9 +22,9 @@ import org.znerd.logdoc.ant.tasks.internal.AntInternalLogging;
  * The most notable parameters supported by task implementations derived from this class are:
  * <dl>
  * <dt>in
- * <dd>The input directory, to read the Logdoc definitions from. Optional, defaults to project base directory.
+ * <dd>The input directory, to read the input files (the Logdoc definitions) from. Optional, defaults to project base directory.
  * <dt>out
- * <dd>The output directory, to write the web pages to. Optional, defaults to source directory.
+ * <dd>The output directory, to write the output files to. Optional, defaults to source directory.
  * </dl>
  * <p>
  * This task supports more parameters and contained elements, inherited from {@link MatchingTask}, see <a href="http://ant.apache.org/manual/dirtasks.html">the Ant site</a>.
@@ -32,37 +33,45 @@ public abstract class AbstractLogdocTask extends MatchingTask {
 
     @Override
     public void execute() throws BuildException {
+        sendInternalLoggingThroughAnt();
+        File sourceDir = determineSourceDir();
+        File destDir = determineDestDir(sourceDir);
+        checkDirs(sourceDir, destDir);
+        processFiles(sourceDir, destDir);
+    }
 
-        // Send internal log output via Ant
+    private void sendInternalLoggingThroughAnt() {
         InternalLogging.setLogger(new AntInternalLogging(this));
+    }
 
-        // Source directory defaults to current directory
-        if (_sourceDir == null) {
-            _sourceDir = getProject().getBaseDir();
-        }
+    private File determineSourceDir() {
+        File sourceDir = (_sourceDir != null) ? _sourceDir : getProject().getBaseDir();
+        return sourceDir;
+    }
 
-        // Destination directory defaults to source directory
-        if (_destDir == null) {
-            _destDir = _sourceDir;
-        }
+    private File determineDestDir(File sourceDir) {
+        File destDir = (_destDir != null) ? _destDir : sourceDir;
+        return destDir;
+    }
 
-        // Check the directories
-        checkDir("Source directory", _sourceDir, true, false, false);
-        checkDir("Destination directory", _destDir, false, true, true);
+    private void checkDirs(File sourceDir, File destDir) {
+        checkDir("Source directory", sourceDir, true, false, false);
+        checkDir("Destination directory", destDir, false, true, true);
+    }
 
-        // Process the files
-        log("Processing from " + _sourceDir.getPath() + " to " + _destDir.getPath() + '.', MSG_VERBOSE);
+    private void processFiles(File sourceDir, File destDir) {
         long start = System.currentTimeMillis();
+        logProcessingStart(sourceDir, destDir);
+        LogDef logDef = loadAndValidateDefinitions(sourceDir);
+        processFilesImpl(logDef);
+        logProcessingFinish(start);
+    }
 
-        // Load and validate the definitions
-        LogDef logDef;
-        try {
-            logDef = LogDef.loadFromDirectory(_sourceDir);
-        } catch (Exception cause) {
-            throw new BuildException("Failed to load log definition.", cause);
-        }
+    private void logProcessingStart(File sourceDir, File destDir) {
+        InternalLogging.log(LogLevel.INFO, "Processing from " + sourceDir.getPath() + " to " + destDir.getPath() + '.');
+    }
 
-        // Do the actual work
+    private void processFilesImpl(LogDef logDef) {
         try {
             executeImpl(logDef);
         } catch (Exception cause) {
@@ -74,10 +83,21 @@ public abstract class AbstractLogdocTask extends MatchingTask {
                 throw new BuildException(cause);
             }
         }
+    }
 
-        // Log the total result
+    private void logProcessingFinish(long start) {
         long duration = System.currentTimeMillis() - start;
-        log("Processed definitions in " + duration + " ms.");
+        InternalLogging.log(LogLevel.NOTICE, "Processed definitions in " + duration + " ms.");
+    }
+
+    private LogDef loadAndValidateDefinitions(File sourceDir) {
+        LogDef logDef;
+        try {
+            logDef = LogDef.loadFromDirectory(sourceDir);
+        } catch (Exception cause) {
+            throw new BuildException("Failed to load log definition.", cause);
+        }
+        return logDef;
     }
 
     /**
