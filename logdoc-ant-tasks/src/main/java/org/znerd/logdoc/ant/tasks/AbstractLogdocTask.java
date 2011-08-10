@@ -3,8 +3,6 @@ package org.znerd.logdoc.ant.tasks;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
 import org.apache.tools.ant.BuildException;
 import static org.apache.tools.ant.Project.MSG_VERBOSE;

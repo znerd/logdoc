@@ -5,6 +5,7 @@
 * Using Java 1.6 language, instead of 1.5.
 * Introduced utility classes IoUtils and TextUtils.
 * Improved style, based on the Clean Code principles.
+* Introduced Generator as superclass for CodeGenerator and DocGenerator.
 
 
 --- CHANGES SINCE LOGDOC 0.13 ------------------------------------------------

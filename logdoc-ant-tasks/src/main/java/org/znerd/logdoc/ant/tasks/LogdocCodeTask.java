@@ -64,6 +64,6 @@ public final class LogdocCodeTask extends AbstractLogdocTask {
       String target = (_target == null || _target.trim().length() < 1) ? DEFAULT_TARGET : _target;
 
       CodeGenerator generator = new CodeGenerator(def, target, _destDir);
-      generator.generateCode();
+      generator.generate();
    }
 }

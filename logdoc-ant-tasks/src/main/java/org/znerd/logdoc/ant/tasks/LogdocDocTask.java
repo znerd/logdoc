@@ -30,6 +30,6 @@ public final class LogdocDocTask extends AbstractLogdocTask {
    @Override
    protected void executeImpl(LogDef def) throws Exception {
       DocGenerator generator = new DocGenerator(def, _destDir);
-      generator.generateDocs();
+      generator.generate();
    }
 }

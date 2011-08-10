@@ -16,100 +16,93 @@ import org.znerd.logdoc.LogDef;
 /**
  * Code generator. Transforms Logdoc input files to programming code.
  */
-public final class CodeGenerator {
+public final class CodeGenerator extends Generator {
 
     /**
      * Creates a new <code>CodeGenerator</code> for the specified log definition.
-     *
+     * 
      * @param def the {@link LogDef} object, cannot be <code>null</code>.
      * @param target the target to generate code for, e.g. <code>"log4j"</code> or <code>"slf4j"</code>, cannot be <code>null</code>.
      * @param targetDir the target directory to create the Java source files in, cannot be <code>null</code>.
      * @throws IllegalArgumentException if <code>def == null || target == null || targetDir == null</code>.
      */
-    public CodeGenerator(LogDef def, String target, File targetDir, boolean overwrite)
-    throws IllegalArgumentException {
-       if (def == null) {
-          throw new IllegalArgumentException("def == null");
-       } else if (target == null) {
-          throw new IllegalArgumentException("target == null");
-       } else if (targetDir == null) {
-          throw new IllegalArgumentException("targetDir == null");
-       }
+    public CodeGenerator(LogDef def, String target, File targetDir, boolean overwrite) throws IllegalArgumentException {
+        if (def == null) {
+            throw new IllegalArgumentException("def == null");
+        } else if (target == null) {
+            throw new IllegalArgumentException("target == null");
+        } else if (targetDir == null) {
+            throw new IllegalArgumentException("targetDir == null");
+        }
 
-       _def       = def;
-       _target    = target;
-       _targetDir = targetDir;
-       _overwrite = overwrite;
+        _def = def;
+        _target = target;
+        _targetDir = targetDir;
+        _overwrite = overwrite;
     }
 
     private final LogDef _def;
     private final String _target;
     private final File _targetDir;
     private final boolean _overwrite;
-   
-   /**
-    * Creates a new <code>CodeGenerator</code> for the specified log definition without overwriting the target files.
-    *
-    * @param def the {@link LogDef} object, cannot be <code>null</code>.
-    * @param target the target to generate code for, e.g. <code>"log4j"</code> or <code>"slf4j"</code>, cannot be <code>null</code>.
-    * @param targetDir the target directory to create the Java source files in, cannot be <code>null</code>.
-    * @throws IllegalArgumentException if <code>def == null || target == null || targetDir == null</code>.
-    * @deprecated Use {@link CodeGenerator(LogDef,String,File,boolean)} instead.
-    */
-   @Deprecated
-   public CodeGenerator(LogDef def, String target, File targetDir) throws IllegalArgumentException {
-       this(def, target, targetDir, false);
-   }
 
-   /**
-    * Generates the programming code.
-    *
-    * @throws IOException if the programming code could not be generated because of an I/O error.
-    */
-   public void generateCode() throws IOException {
+    /**
+     * Creates a new <code>CodeGenerator</code> for the specified log definition without overwriting the target files.
+     * 
+     * @param def the {@link LogDef} object, cannot be <code>null</code>.
+     * @param target the target to generate code for, e.g. <code>"log4j"</code> or <code>"slf4j"</code>, cannot be <code>null</code>.
+     * @param targetDir the target directory to create the Java source files in, cannot be <code>null</code>.
+     * @throws IllegalArgumentException if <code>def == null || target == null || targetDir == null</code>.
+     * @deprecated Use {@link CodeGenerator(LogDef,String,File,boolean)} instead.
+     */
+    @Deprecated
+    public CodeGenerator(LogDef def, String target, File targetDir) throws IllegalArgumentException {
+        this(def, target, targetDir, false);
+    }
 
-      String  domainPath = _def.getDomainName().replace(".", "/");
-      File outDir = new File(_targetDir, domainPath);
+    @Override
+    public void generateImpl() throws IOException {
 
-      transformToCode(outDir, _target + '/', "Log");
-      transformToCode(outDir, "",            "TranslationBundle");
-      for (Map.Entry<String,Document> entry : _def.getTranslations().entrySet()) {
-         String           locale = entry.getKey();
-         Document translationXML = entry.getValue();
-         transformToCodeForLocale(outDir, locale, translationXML);
-      }
-   }
+        String domainPath = _def.getDomainName().replace(".", "/");
+        File outDir = new File(_targetDir, domainPath);
 
-   private void transformToCode(File outDir, String xsltSubDir, String className)
-   throws IOException {
+        transformToCode(outDir, _target + '/', "Log");
+        transformToCode(outDir, "", "TranslationBundle");
+        for (Map.Entry<String, Document> entry : _def.getTranslations().entrySet()) {
+            String locale = entry.getKey();
+            Document translationXML = entry.getValue();
+            transformToCodeForLocale(outDir, locale, translationXML);
+        }
+    }
 
-      final Source source = new DOMSource(_def.getXML());
-      final String xsltPath = xsltSubDir + "log_to_" + className + "_java" + ".xslt";
-      final String outFileName = className + ".java";
-      final String domainName = _def.getDomainName();
-      final String accessLevel = _def.isPublic() ? "public" : "protected";
+    private void transformToCode(File outDir, String xsltSubDir, String className) throws IOException {
 
-      final Map<String,String> xsltParams = new HashMap<String,String>();
-      xsltParams.put("package_name", domainName);
-      xsltParams.put("accesslevel", accessLevel);
+        final Source source = new DOMSource(_def.getXML());
+        final String xsltPath = xsltSubDir + "log_to_" + className + "_java" + ".xslt";
+        final String outFileName = className + ".java";
+        final String domainName = _def.getDomainName();
+        final String accessLevel = _def.isPublic() ? "public" : "protected";
 
-      new Xformer(_def).transform(source, xsltPath, xsltParams, outDir, outFileName);
-   }
+        final Map<String, String> xsltParams = new HashMap<String, String>();
+        xsltParams.put("package_name", domainName);
+        xsltParams.put("accesslevel", accessLevel);
 
-   private void transformToCodeForLocale(File outDir, String locale, Document translationXML)
-   throws IOException {
+        new Xformer(_def).transform(source, xsltPath, xsltParams, outDir, outFileName);
+    }
 
-      final Source source = new DOMSource(translationXML);
-      final String xsltPath = "translation-bundle_to_java.xslt";
-      final String outFileName = "TranslationBundle_" + locale + ".java";
-      final String domainName = _def.getDomainName();
-      final String accesslevel = _def.isPublic() ? "public" : "protected";
-      
-      final Map<String,String> xsltParams = new HashMap<String,String>();
-      xsltParams.put("package_name", domainName);  
-      xsltParams.put("accesslevel", accesslevel);
-      xsltParams.put("locale", locale);
+    private void transformToCodeForLocale(File outDir, String locale, Document translationXML) throws IOException {
 
-      new Xformer(_def).transform(source, xsltPath, xsltParams, outDir, outFileName);
-   }
+        final Source source = new DOMSource(translationXML);
+        final String xsltPath = "translation-bundle_to_java.xslt";
+        final String outFileName = "TranslationBundle_" + locale + ".java";
+        final String domainName = _def.getDomainName();
+        final String accesslevel = _def.isPublic() ? "public" : "protected";
+
+        final Map<String, String> xsltParams = new HashMap<String, String>();
+        xsltParams.put("package_name", domainName);
+        xsltParams.put("accesslevel", accesslevel);
+        xsltParams.put("locale", locale);
+
+        new Xformer(_def).transform(source, xsltPath, xsltParams, outDir, outFileName);
+    }
 }
