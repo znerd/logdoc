@@ -25,11 +25,34 @@ import org.znerd.logdoc.ant.tasks.internal.AntInternalLogging;
  * <dd>The input directory, to read the input files (the Logdoc definitions) from. Optional, defaults to project base directory.
  * <dt>out
  * <dd>The output directory, to write the output files to. Optional, defaults to source directory.
+ * <dt>overwrite
+ * <dd>Flag that indicates if each existing file should always be overwritten, even if it is newer than the source file. Default is <code>false</code>.
  * </dl>
  * <p>
  * This task supports more parameters and contained elements, inherited from {@link MatchingTask}, see <a href="http://ant.apache.org/manual/dirtasks.html">the Ant site</a>.
  */
 public abstract class AbstractLogdocTask extends MatchingTask {
+
+    public void setIn(File dir) {
+        log("Setting \"in\" to: " + quote(dir) + '.', MSG_VERBOSE);
+        _sourceDir = dir;
+    }
+
+    protected File _sourceDir;
+
+    public void setOut(File dir) {
+        log("Setting \"out\" to: " + quote(dir) + '.', MSG_VERBOSE);
+        _destDir = dir;
+    }
+
+    protected File _destDir;
+
+    public void setOverwrite(boolean flag) {
+        log("Setting \"overwrite\" to: \"" + flag + "\".", MSG_VERBOSE);
+        _overwrite = flag;
+    }
+
+    protected boolean _overwrite;
 
     @Override
     public void execute() throws BuildException {
@@ -61,7 +84,7 @@ public abstract class AbstractLogdocTask extends MatchingTask {
     private void checkDirs(File sourceDir, File destDir) throws BuildException {
         try {
             IoUtils.checkDir("Source directory", sourceDir, true, false, false);
-            IoUtils.checkDir("Destination directory", destDir, false, true, true);            
+            IoUtils.checkDir("Destination directory", destDir, false, true, true);
         } catch (IOException cause) {
             throw new BuildException(cause.getMessage(), cause);
         }
@@ -115,30 +138,6 @@ public abstract class AbstractLogdocTask extends MatchingTask {
      * @throws Exception if anything goes wrong; this will be handled by the <code>AbstractLogdocTask</code> class.
      */
     protected abstract void executeImpl(LogDef logDef) throws Exception;
-
-    public void setIn(File dir) {
-        log("Setting \"in\" to: " + quote(dir) + '.', MSG_VERBOSE);
-        _sourceDir = dir;
-    }
-
-    protected File _sourceDir;
-
-    public void setOut(File dir) {
-        log("Setting \"out\" to: " + quote(dir) + '.', MSG_VERBOSE);
-        _destDir = dir;
-    }
-
-    protected File _destDir;
-
-    public void setOverwrite(boolean flag) {
-        log("Setting \"overwrite\" to: \"" + flag + "\".", MSG_VERBOSE);
-        _overwrite = flag;
-    }
-
-    /**
-     * Flag that indicates if each existing file should always be overwritten, even if it is newer than the source file. Default is <code>false</code>.
-     */
-    protected boolean _overwrite;
 
     protected AbstractLogdocTask() {
         // empty
