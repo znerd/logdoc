@@ -75,9 +75,13 @@ public abstract class AbstractLogdocTask extends MatchingTask {
     }
 
     private void generate(File sourceDir, File specifiedDestDir) {
-        File actualDestDir = determineDestDir(sourceDir, specifiedDestDir);
-        checkDirs(sourceDir, actualDestDir);
-        processFiles(sourceDir, actualDestDir);
+        try {
+            File actualDestDir = determineDestDir(sourceDir, specifiedDestDir);
+            checkDirs(sourceDir, actualDestDir);
+            processFiles(sourceDir, actualDestDir);
+        } catch (IOException cause) {
+            throw new BuildException(cause.getMessage(), cause);
+        }
     }
 
     private File determineDestDir(File sourceDir, File specifiedDestDir) {
@@ -85,20 +89,16 @@ public abstract class AbstractLogdocTask extends MatchingTask {
         return actualDestDir;
     }
 
-    private void checkDirs(File sourceDir, File destDir) throws BuildException {
-        try {
-            IoUtils.checkDir("Source directory", sourceDir, true, false, false);
-            IoUtils.checkDir("Destination directory", destDir, false, true, true);
-        } catch (IOException cause) {
-            throw new BuildException(cause.getMessage(), cause);
-        }
+    private void checkDirs(File sourceDir, File destDir) throws IOException {
+        IoUtils.checkDir("Source directory", sourceDir, true, false, false);
+        IoUtils.checkDir("Destination directory", destDir, false, true, true);
     }
 
-    private void processFiles(File sourceDir, File destDir) throws BuildException {
+    private void processFiles(File sourceDir, File destDir) throws IOException {
         long start = System.currentTimeMillis();
         logProcessingStart(sourceDir, destDir);
         LogDef logDef = loadAndValidateDefinitions(sourceDir);
-        processFilesImpl(logDef);
+        executeImpl(logDef);
         logProcessingFinish(start);
     }
 
@@ -106,31 +106,17 @@ public abstract class AbstractLogdocTask extends MatchingTask {
         InternalLogging.log(LogLevel.INFO, "Processing from " + sourceDir.getPath() + " to " + destDir.getPath() + '.');
     }
 
-    private void processFilesImpl(LogDef logDef) {
-        try {
-            executeImpl(logDef);
-        } catch (Exception cause) {
-            if (cause instanceof RuntimeException) {
-                throw (RuntimeException) cause;
-            } else if (cause instanceof BuildException) {
-                throw (BuildException) cause;
-            } else {
-                throw new BuildException(cause);
-            }
-        }
-    }
-
     private void logProcessingFinish(long start) {
         long duration = System.currentTimeMillis() - start;
         InternalLogging.log(LogLevel.NOTICE, "Processed definitions in " + duration + " ms.");
     }
 
-    private LogDef loadAndValidateDefinitions(File sourceDir) {
+    private LogDef loadAndValidateDefinitions(File sourceDir) throws IOException {
         LogDef logDef;
         try {
             logDef = LogDef.loadFromDirectory(sourceDir);
         } catch (Exception cause) {
-            throw new BuildException("Failed to load log definition.", cause);
+            throw new IOException("Failed to load log definition.", cause);
         }
         return logDef;
     }
@@ -141,7 +127,7 @@ public abstract class AbstractLogdocTask extends MatchingTask {
      * @param logDef the {@link LogDef} to process, never <code>null</code>.
      * @throws Exception if anything goes wrong; this will be handled by the <code>AbstractLogdocTask</code> class.
      */
-    protected abstract void executeImpl(LogDef logDef) throws Exception;
+    protected abstract void executeImpl(LogDef logDef) throws IOException;
 
     protected AbstractLogdocTask() {
         // empty
