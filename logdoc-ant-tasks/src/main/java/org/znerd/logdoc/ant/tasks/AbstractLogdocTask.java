@@ -54,9 +54,13 @@ public abstract class AbstractLogdocTask extends MatchingTask {
         return destDir;
     }
 
-    private void checkDirs(File sourceDir, File destDir) {
-        checkDir("Source directory", sourceDir, true, false, false);
-        checkDir("Destination directory", destDir, false, true, true);
+    private void checkDirs(File sourceDir, File destDir) throws BuildException {
+        try {
+            IoUtils.checkDir("Source directory", sourceDir, true, false, false);
+            IoUtils.checkDir("Destination directory", destDir, false, true, true);            
+        } catch (IOException cause) {
+            throw new BuildException(cause.getMessage(), cause);
+        }
     }
 
     private void processFiles(File sourceDir, File destDir) {
@@ -108,16 +112,6 @@ public abstract class AbstractLogdocTask extends MatchingTask {
      */
     protected abstract void executeImpl(LogDef logDef) throws Exception;
 
-    /**
-     * Checks if the specified string is either null or empty (after trimming the whitespace off).
-     * 
-     * @param s the string to check.
-     * @return <code>true</code> if <code>s == null || s.trim().length() &lt; 1</code>; <code>false</code> otherwise.
-     */
-    static final boolean isEmpty(String s) {
-        return s == null || s.trim().length() < 1;
-    }
-
     public void setIn(File dir) {
         log("Setting \"in\" to: " + quote(dir) + '.', MSG_VERBOSE);
         _sourceDir = dir;
@@ -141,24 +135,6 @@ public abstract class AbstractLogdocTask extends MatchingTask {
      * Flag that indicates if each existing file should always be overwritten, even if it is newer than the source file. Default is <code>false</code>.
      */
     protected boolean _overwrite;
-
-    /**
-     * Checks if the specified abstract path name refers to an existing directory.
-     * 
-     * @param description the description of the directory, cannot be <code>null</code>.
-     * @param path the abstract path name as a {@link File} object.
-     * @param mustBeReadable <code>true</code> if the directory must be readable.
-     * @param mustBeWritable <code>true</code> if the directory must be writable.
-     * @throws IllegalArgumentException if <code>description == null || description.equals("") || path == null</code>.
-     * @throws BuildException if <code>! path.exists() || ! path.isDirectory() || (mustBeReadable &amp;&amp; !path.canRead()) || (mustBeWritable &amp;&amp; !path.canWrite())</code>.
-     */
-    private static final void checkDir(String description, File path, boolean mustBeReadable, boolean mustBeWritable, boolean createIfNonexistent) throws IllegalArgumentException, BuildException {
-        try {
-            IoUtils.checkDir(description, path, mustBeReadable, mustBeWritable, createIfNonexistent);
-        } catch (IOException cause) {
-            throw new BuildException(cause.getMessage(), cause);
-        }
-    }
 
     protected AbstractLogdocTask() {
         // empty
