@@ -9,7 +9,6 @@ import org.apache.log4j.Level;
 public abstract class AbstractLog {
 
     static {
-
         int noticeInt = (Level.INFO_INT + Level.WARN_INT) / 2;
 
         DEBUG = Level.DEBUG;
@@ -20,41 +19,9 @@ public abstract class AbstractLog {
         FATAL = Level.FATAL;
     }
 
-    /**
-     * The <em>debug</em> log level.
-     */
-    public static final Level DEBUG;
+    public static final Level DEBUG, INFO, NOTICE, WARNING, ERROR, FATAL;
 
-    /**
-     * The <em>info</em> log level.
-     */
-    public static final Level INFO;
-
-    /**
-     * The <em>notice</em> log level.
-     */
-    public static final Level NOTICE;
-
-    /**
-     * The <em>warning</em> log level.
-     */
-    public static final Level WARNING;
-
-    /**
-     * The <em>error</em> log level.
-     */
-    public static final Level ERROR;
-
-    /**
-     * The <em>fatal</em> log level.
-     */
-    public static final Level FATAL;
-
-    /**
-     * Constructs a new <code>AbstractLog</code> instance.
-     */
     protected AbstractLog() {
-        // empty
     }
 
     private static final class CustomLevel extends Level {
