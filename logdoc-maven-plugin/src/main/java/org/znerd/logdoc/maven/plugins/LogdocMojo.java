@@ -8,6 +8,8 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.znerd.logdoc.gen.CodeGenerator;
+import org.znerd.logdoc.gen.DocGenerator;
+import org.znerd.logdoc.gen.Generator;
 import org.znerd.logdoc.internal.InternalLogging;
 import org.znerd.logdoc.maven.plugins.internal.MavenInternalLogging;
 
@@ -31,8 +33,12 @@ public class LogdocMojo extends AbstractMojo {
     }
 
     private void generate() throws MojoExecutionException {
+        generate(new CodeGenerator(_sourceDir, _destDir));
+        generate(new DocGenerator(_sourceDir, _docsDestDir));
+    }
+    
+    private void generate(Generator generator) throws MojoExecutionException {
         try {
-            CodeGenerator generator = new CodeGenerator(_sourceDir, _destDir);
             generator.generate();
         } catch (IOException cause) {
             throw new MojoExecutionException("Failed to perform transformation", cause);
@@ -61,4 +67,10 @@ public class LogdocMojo extends AbstractMojo {
      * @required
      */
     private File _destDir;
+    
+    /**
+     * @parameter name="docsOut" expression="${basedir}/target/logdoc-html"
+     * @required
+     */
+     private File _docsDestDir;
 }

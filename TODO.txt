@@ -1,4 +1,14 @@
-Also generate docs via Maven plugin.
+Also add CSS to generated documentation. 
+
+------------------------------------------------------------------------------
+
+Separate Maven plugins:
+- one for generating code
+- one for generating documentation
+
+------------------------------------------------------------------------------
+
+Let the Maven plugin put the generated documentation in the correct location.
 
 ------------------------------------------------------------------------------
 

@@ -6,6 +6,7 @@
 * Allowing 'exceptionClass' attribute on <entry>.
 * Improved error reporting from Maven plugin.
 * Now 'cause' and 'resolution' are optional within an 'entry' element.
+* LogdocMojo now also generates docs under target/logdoc-html/.
 
 
 --- CHANGES SINCE LOGDOC 0.14 ------------------------------------------------
