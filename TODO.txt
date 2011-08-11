@@ -4,6 +4,13 @@ Document the cause and resolution in the generated documentation.
 
 ------------------------------------------------------------------------------
 
+Print the Logdoc version when logging at INFO level. So for example when
+using:
+
+   ant -verbose
+
+------------------------------------------------------------------------------
+
 Make sure the generated code can be made more meaningful to developers, so
 instead of writing:
 
