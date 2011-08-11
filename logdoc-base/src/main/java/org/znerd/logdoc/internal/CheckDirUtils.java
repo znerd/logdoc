@@ -65,7 +65,7 @@ public class CheckDirUtils {
             }
         }
     }
-    
+
     private CheckDirUtils() {
     }
 }
