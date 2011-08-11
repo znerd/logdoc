@@ -9,6 +9,7 @@
 * LogdocMojo now also generates docs under target/logdoc-html/.
 * A default CSS stylesheet is now stored with the generated HTML docs.
 * Renamed IoUtils to CheckDirUtils.
+* Added 'mvn-test-prj' subdirectory.
 
 
 --- CHANGES SINCE LOGDOC 0.14 ------------------------------------------------
