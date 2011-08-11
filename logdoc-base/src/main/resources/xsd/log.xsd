@@ -25,9 +25,10 @@
 			<xsd:element name="param"       type="ParamDef" minOccurs="0" maxOccurs="unbounded" />
 		</xsd:sequence>
 
-		<xsd:attribute name="id"        type="EntryID"  use="required" />
-		<xsd:attribute name="level"     type="LogLevel" use="required" />
-		<xsd:attribute name="exception" type="Boolean"  use="optional" />
+		<xsd:attribute name="id"             type="EntryID"            use="required" />
+		<xsd:attribute name="level"          type="LogLevel"           use="required" />
+		<xsd:attribute name="exception"      type="Boolean"            use="optional" />
+		<xsd:attribute name="exceptionClass" type="ExceptionClassName" use="optional" />
 	</xsd:complexType>
 
 	<!-- Type "EntryDescription" -->
@@ -61,6 +62,11 @@
 
 	<!-- EntryGroupName -->
 	<xsd:simpleType name="EntryGroupName">
+		<xsd:restriction base="xsd:string" />
+	</xsd:simpleType>
+
+	<!-- Type "ParamDef" -->
+	<xsd:simpleType name="ExceptionClassName">
 		<xsd:restriction base="xsd:string" />
 	</xsd:simpleType>
 

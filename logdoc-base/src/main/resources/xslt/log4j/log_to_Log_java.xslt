@@ -164,8 +164,18 @@
 	</xsl:template>
 
 	<xsl:template match="group/entry">
-		<xsl:variable name="category"   select="concat($package_name, '.', ../@id, '.', @id)" />
-		<xsl:variable name="exception" select="@exception = 'true'" />
+		<xsl:variable name="category"       select="concat($package_name, '.', ../@id, '.', @id)" />
+		<xsl:variable name="exception"      select="@exception = 'true'" />
+		<xsl:variable name="exceptionClass">
+			<xsl:choose>
+				<xsl:when test="string-length(@exceptionClass) &gt; 0">
+					<xsl:value-of select="@exceptionClass" />
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:text>Throwable</xsl:text>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
 
 		<xsl:text>
 
@@ -184,7 +194,8 @@
 		<xsl:value-of select="@id" />
 		<xsl:text>(</xsl:text>
 		<xsl:if test="$exception">
-			<xsl:text>Throwable _exception</xsl:text>
+			<xsl:value-of select="$exceptionClass" />
+			<xsl:text> _exception</xsl:text>
 			<xsl:if test="count(param) &gt; 0">
 				<xsl:text>, </xsl:text>
 			</xsl:if>
