@@ -1,4 +1,7 @@
---- CHANGES SINCE LOGDOC 0.15 ------------------------------------------------
+--- CHANGES INTRODUCED IN LOGDOC 0.16 ----------------------------------------
+
+
+--- CHANGES INTRODUCED IN LOGDOC 0.15 ----------------------------------------
 
 * Moved MavenInternalLogging down to .internal package.
 * Improved style, based on the Clean Code principles.
@@ -12,7 +15,7 @@
 * Added 'mvn-test-prj' subdirectory.
 
 
---- CHANGES SINCE LOGDOC 0.14 ------------------------------------------------
+--- CHANGES INTRODUCED IN LOGDOC 0.14 ----------------------------------------
 
 * Added base/src/main/resources/dtd/log.dtd.
 * Big refactoring, renamed all modules and changed Maven group/artifact IDs.
@@ -24,13 +27,13 @@
 * Maven plugin now works, it generates Java code only.
 
 
---- CHANGES SINCE LOGDOC 0.13 ------------------------------------------------
+--- CHANGES INTRODUCED IN LOGDOC 0.13 ----------------------------------------
 
 * Fixed bug: TranslationBundle .java files were placed in top directory.
 * Cleaned code.
 
 
---- CHANGES SINCE LOGDOC 0.12 ------------------------------------------------
+--- CHANGES INTRODUCED IN LOGDOC 0.12 ----------------------------------------
 
 * Fixed bugs: XSLT files now get all parameters they need.
 * Minor refactorings applied to Xformer, CodeGenerator and DocGenerator.
@@ -38,7 +41,7 @@
 * Downgraded all XSLT files from XSLT 2.0 to XSLT 1.0.
 
 
---- CHANGES SINCE LOGDOC 0.11 ------------------------------------------------
+--- CHANGES INTRODUCED IN LOGDOC 0.11 ----------------------------------------
 
 * Refactored LogDef class.
 * Introduced org.znerd.logdoc.gen packagel
@@ -49,7 +52,7 @@
 * Renamed Ant task 'logdoc-html' to 'logdoc-doc'.
 
 
---- CHANGES SINCE LOGDOC 0.10 ------------------------------------------------
+--- CHANGES INTRODUCED IN LOGDOC 0.10 ----------------------------------------
 
 * JAR files no longer have the version number in the name.
 * Changed 'log_file' in translation-bundle_to_java.xslt to a constant.
@@ -57,7 +60,7 @@
 * Refactored XSLT transformation functionality in LogDef class.
 
 
---- CHANGES SINCE LOGDOC 0.9 -------------------------------------------------
+--- CHANGES INTRODUCED IN LOGDOC 0.9 -----------------------------------------
 
 * Bugfix: Including antlib.xml file in logdoc-ant-tasks JAR.
 * Bugfix: Include XSD and XSLT files under META-INF in logdoc-base JAR.
@@ -68,7 +71,7 @@
 * Upgraded from JUnit 4.8.1 to 4.8.2.
 
 
---- CHANGES SINCE LOGDOC 0.8 -------------------------------------------------
+--- CHANGES INTRODUCED IN LOGDOC 0.8 -----------------------------------------
 
 * Logdoc is now built with Maven; removed the build.xml file.
 * Removed the lib/ directory.
@@ -77,7 +80,7 @@
 * Added (no-op) LogdocMojo to 'maven-plugins' module.
 
 
---- CHANGES SINCE LOGDOC 0.7 -------------------------------------------------
+--- CHANGES INTRODUCED IN LOGDOC 0.7 -----------------------------------------
 
 * Moved functionality from LogCentral to Library class.
 * Moved LogCentral class to org.znerd.logdoc.internal.log4j package.
@@ -88,26 +91,26 @@
 * Changed encoding (in XML declaration) in XSLT files from US-ASCII to UTF-8.
 
 
---- CHANGES SINCE LOGDOC 0.6 -------------------------------------------------
+--- CHANGES INTRODUCED IN LOGDOC 0.6 -----------------------------------------
 
 * Removed unused commons-io and commons-lang dependencies from lib/ dir.
 * Moved ExceptionUtils to org.znerd.logdoc.internal package.
 * Extended and improved XSDs.
 
 
---- CHANGES SINCE LOGDOC 0.5 -------------------------------------------------
+--- CHANGES INTRODUCED IN LOGDOC 0.5 -----------------------------------------
 
 * Validating XML definitions using XSDs stored inside JAR file.
 
 
---- CHANGES SINCE LOGDOC 0.4 -------------------------------------------------
+--- CHANGES INTRODUCED IN LOGDOC 0.4 -----------------------------------------
 
 * Hid property name constants from LogCentral class.
 * No longer including unused version.txt in JAR file.
 * Removed DTDs.
 
 
---- CHANGES SINCE LOGDOC 0.3 -------------------------------------------------
+--- CHANGES INTRODUCED IN LOGDOC 0.3 -----------------------------------------
 
 * Reading version information just once, at Library class initialization.
 * No longer requiring DTD declaration in XML file.
@@ -115,12 +118,12 @@
 * Internal packages not included in generated Javadoc API documentation.
 
 
---- CHANGES SINCE LOGDOC 0.2 -------------------------------------------------
+--- CHANGES INTRODUCED IN LOGDOC 0.2 -----------------------------------------
 
 * Sending internal log messages through Ant when appropriate.
 
 
---- CHANGES SINCE LOGDOC 0.1 (COMPARED TO XINS 2.X) --------------------------
+--- CHANGES INTRODUCED IN LOGDOC 0.1 (COMPARED TO XINS 2.X) ------------------
 
 * Changed package names from org.xins.logdoc to org.znerd.logdoc.
 * Removed all deprecated members.
