@@ -1,5 +1,9 @@
 ------------------------------------------------------------------------------
 
+Document the cause and resolution in the generated documentation.
+
+------------------------------------------------------------------------------
+
 Separate Maven plugins:
 - one for generating code
 - one for generating documentation
