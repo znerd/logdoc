@@ -2,6 +2,9 @@
 
 * Moved MavenInternalLogging down to .internal package.
 * Improved style, based on the Clean Code principles.
+* Split LibraryTest into three distinct unit test classes. 
+* Allowing 'exceptionClass' attribute on <entry>.
+* Improved error reporting from Maven plugin.
 
 
 --- CHANGES SINCE LOGDOC 0.14 ------------------------------------------------

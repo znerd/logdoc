@@ -1,3 +1,24 @@
+Support documenting the following for log messages:
+- cause
+- (potential) resolution(s)
+
+------------------------------------------------------------------------------
+
+Also generate docs via Maven plugin.
+
+------------------------------------------------------------------------------
+
+Only allow 'exceptionClass' attribute if 'exception' attribute is also set.
+
+------------------------------------------------------------------------------
+
+Do not require a translation for all log messages. If no translation is
+available, then fall back to a default format that displays the parameters in
+a quoted form. E.g.:
+
+   10202 transaction="FNC-5569"; label=null; grtID=null; grxID="1233890-22"
+
+------------------------------------------------------------------------------
 Change directory structure for XSLT files, to for example:
 
    xslt/
@@ -16,17 +37,11 @@ Share the same versions of plugins across all pom.xml files.
 
 ------------------------------------------------------------------------------
 
-Support documenting the following for log messages:
-- cause
-- (potential) resolution(s)
-
-------------------------------------------------------------------------------
-
 Update the README to explain how to use the Maven plugin.
 
 ------------------------------------------------------------------------------
 
-Make the unit test that tests the Logdoc version work.
+Make the automated test that tests the Logdoc version work.
 
 ------------------------------------------------------------------------------
 
@@ -42,14 +57,6 @@ Support multiple types of code generation, e.g.:
 
 Support custom code generation, letting the user specify how to generate code.
 This requires the user to provide XSLT.
-
-------------------------------------------------------------------------------
-
-Do not require a translation for all log messages. If no translation is
-available, then fall back to a default format that displays the parameters in
-a quoted form. E.g.:
-
-   10202 transaction="FNC-5569"; label=null; grtID=null; grxID="1233890-22"
 
 ------------------------------------------------------------------------------
 
