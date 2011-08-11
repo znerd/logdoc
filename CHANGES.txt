@@ -5,6 +5,7 @@
 * Split LibraryTest into three distinct unit test classes. 
 * Allowing 'exceptionClass' attribute on <entry>.
 * Improved error reporting from Maven plugin.
+* Now 'cause' and 'resolution' are optional within an 'entry' element.
 
 
 --- CHANGES SINCE LOGDOC 0.14 ------------------------------------------------

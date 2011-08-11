@@ -1,9 +1,3 @@
-Support documenting the following for log messages:
-- cause
-- (potential) resolution(s)
-
-------------------------------------------------------------------------------
-
 Also generate docs via Maven plugin.
 
 ------------------------------------------------------------------------------

@@ -18,11 +18,18 @@
 		</xsd:restriction>
 	</xsd:simpleType>
 
+	<!-- Type "EntryCause" -->
+	<xsd:simpleType name="EntryCause">
+		<xsd:restriction base="xsd:string" />
+	</xsd:simpleType>
+
 	<!-- Type "EntryDef" -->
 	<xsd:complexType name="EntryDef">
 		<xsd:sequence>
-			<xsd:element name="description" type="EntryDescription" />
-			<xsd:element name="param"       type="ParamDef" minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="description" type="EntryDescription" minOccurs="1" maxOccurs="1"         />
+			<xsd:element name="param"       type="ParamDef"         minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="cause"       type="EntryCause"       minOccurs="0" maxOccurs="1"         />
+			<xsd:element name="resolution"  type="EntryResolution"  minOccurs="0" maxOccurs="1"         />
 		</xsd:sequence>
 
 		<xsd:attribute name="id"             type="EntryID"            use="required" />
@@ -62,6 +69,11 @@
 
 	<!-- EntryGroupName -->
 	<xsd:simpleType name="EntryGroupName">
+		<xsd:restriction base="xsd:string" />
+	</xsd:simpleType>
+
+	<!-- Type "EntryResolution" -->
+	<xsd:simpleType name="EntryResolution">
 		<xsd:restriction base="xsd:string" />
 	</xsd:simpleType>
 
