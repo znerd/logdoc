@@ -35,7 +35,7 @@ public class LogdocMojo extends AbstractMojo {
             CodeGenerator generator = new CodeGenerator(_sourceDir, _destDir);
             generator.generate();
         } catch (IOException cause) {
-            throw new MojoExecutionException("Failed to perform transformation");
+            throw new MojoExecutionException("Failed to perform transformation", cause);
         }
     }
 
