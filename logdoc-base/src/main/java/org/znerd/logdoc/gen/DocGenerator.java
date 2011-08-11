@@ -2,14 +2,19 @@
 package org.znerd.logdoc.gen;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
 
+import org.apache.commons.io.IOUtils;
+import org.znerd.logdoc.Library;
 import org.znerd.logdoc.LogDef;
+import org.znerd.logdoc.NoSuchResourceException;
 
 /**
  * Documentation generator.
@@ -40,6 +45,7 @@ public final class DocGenerator extends Generator {
             generateOverviewDoc();
             generateEntryListDoc();
             generateGroupAndEntryDocs();
+            generateCssFile();
         }
 
         private final void generateOverviewDoc() throws IOException {
@@ -85,6 +91,35 @@ public final class DocGenerator extends Generator {
             String outFileName = outName + ".html";
 
             new Xformer(_def).transform(source, xsltPath, xsltParams, _destDir, outFileName);
+        }
+
+        private final void generateCssFile() throws NoSuchResourceException, IOException {
+            String fileName = "style.css";
+            InputStream inStream = createCssInputStream(fileName);
+            FileOutputStream outStream = createCssOutputStream(fileName);
+            writeCssToStream(fileName, inStream, outStream);
+        }
+
+        private InputStream createCssInputStream(String fileName) throws IOException {
+            InputStream inStream = Library.getMetaResourceAsStream("css/" + fileName);
+            return inStream;
+        }
+
+        private FileOutputStream createCssOutputStream(String fileName) throws IOException {
+            File outFile = new File(_destDir, fileName);
+            try {
+                return new FileOutputStream(outFile);
+            } catch (IOException cause) {
+                throw new IOException("Failed to open file \"" + fileName + "\" in output directory \"" + _destDir.getAbsolutePath() + "\".");
+            }
+        }
+
+        private void writeCssToStream(String fileName, InputStream inStream, FileOutputStream outStream) throws IOException {
+            try {
+                IOUtils.copy(inStream, outStream);
+            } catch (IOException cause) {
+                throw new IOException("Failed to write \"" + fileName + "\" to output directory \"" + _destDir.getAbsolutePath() + "\".");
+            }
         }
     }
 }

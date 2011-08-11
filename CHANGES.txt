@@ -7,6 +7,8 @@
 * Improved error reporting from Maven plugin.
 * Now 'cause' and 'resolution' are optional within an 'entry' element.
 * LogdocMojo now also generates docs under target/logdoc-html/.
+* A default CSS stylesheet is now stored with the generated HTML docs.
+* Renamed IoUtils to CheckDirUtils.
 
 
 --- CHANGES SINCE LOGDOC 0.14 ------------------------------------------------

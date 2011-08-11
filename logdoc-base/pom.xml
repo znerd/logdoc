@@ -38,6 +38,10 @@
 				<directory>src/main/resources/xslt</directory>
 				<targetPath>META-INF/xslt</targetPath>
 			</resource>
+			<resource>
+				<directory>src/main/resources/css</directory>
+				<targetPath>META-INF/css</targetPath>
+			</resource>
 		</resources>
 		<plugins>
 			<plugin>

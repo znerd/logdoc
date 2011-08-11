@@ -1,5 +1,3 @@
-Also add CSS to generated documentation. 
-
 ------------------------------------------------------------------------------
 
 Separate Maven plugins:
@@ -23,6 +21,7 @@ a quoted form. E.g.:
    10202 transaction="FNC-5569"; label=null; grtID=null; grxID="1233890-22"
 
 ------------------------------------------------------------------------------
+
 Change directory structure for XSLT files, to for example:
 
    xslt/

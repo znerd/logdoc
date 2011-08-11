@@ -8,7 +8,7 @@ import org.xml.sax.SAXException;
 import org.znerd.logdoc.LogDef;
 import org.znerd.logdoc.LogLevel;
 import org.znerd.logdoc.internal.InternalLogging;
-import org.znerd.logdoc.internal.IoUtils;
+import org.znerd.logdoc.internal.CheckDirUtils;
 
 /**
  * Abstract base class for generators.
@@ -37,8 +37,8 @@ public abstract class Generator {
     }
 
     private void checkDirs(File sourceDir, File destDir) throws IOException {
-        IoUtils.checkDir("Source directory", sourceDir, true, false, false);
-        IoUtils.checkDir("Destination directory", destDir, false, true, true);
+        CheckDirUtils.checkDir("Source directory", sourceDir, true, false, false);
+        CheckDirUtils.checkDir("Destination directory", destDir, false, true, true);
     }
 
     private void processFiles(File sourceDir, File destDir) throws IOException {
