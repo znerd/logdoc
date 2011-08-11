@@ -4,6 +4,17 @@ Document the cause and resolution in the generated documentation.
 
 ------------------------------------------------------------------------------
 
+Make sure the generated code can be made more meaningful to developers, so
+instead of writing:
+
+   Log.log_4000(i, str);
+
+they can write:
+
+   Log.log_FlexCapacitorFailing(i, str);
+
+------------------------------------------------------------------------------
+
 Separate Maven plugins:
 - one for generating code
 - one for generating documentation
