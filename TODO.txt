@@ -11,7 +11,7 @@ instead of writing:
 
 they can write:
 
-   Log.log_FlexCapacitorFailing(i, str);
+   Log.logFlexCapacitorFailing(i, str);
 
 ------------------------------------------------------------------------------
 
