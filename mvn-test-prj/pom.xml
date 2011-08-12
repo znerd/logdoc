@@ -9,7 +9,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.znerd</groupId>
-			<artifactId>logdoc-base</artifactId>
+			<artifactId>logdoc-core</artifactId>
 			<version>${logdoc.version}</version>
 		</dependency>
 	</dependencies>
