@@ -7,7 +7,7 @@
 	<name>Logdoc (complete)</name>
 
 	<modules>
-		<module>logdoc-base</module>
+		<module>logdoc-core</module>
 		<module>logdoc-ant-tasks</module>
 		<module>logdoc-maven-plugin</module>
 	</modules>

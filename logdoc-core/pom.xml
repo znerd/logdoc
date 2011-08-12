@@ -3,7 +3,7 @@
 	<groupId>org.znerd</groupId>
 	<artifactId>logdoc-base</artifactId>
 	<packaging>jar</packaging>
-	<name>Logdoc</name>
+	<name>Logdoc Core</name>
 	<url>http://www.github.com/znerd/logdoc</url>
 
 	<parent>

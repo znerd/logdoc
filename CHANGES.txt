@@ -1,13 +1,8 @@
 --- CHANGES INTRODUCED IN LOGDOC 0.16 ----------------------------------------
 
 * Improved style, based on the Clean Code principles.
-* Moved ExceptionUtils to package org.znerd.util.
-* Moved CheckDirUtils to package org.znerd.util.io.
-* Renamed InternalLogging to Limb, moved to package org.znerd.util.log.
-* Moved LogLevel to package org.znerd.util.log.
-* Moved TextUtils to package org.znerd.util.text.
-* Renamed AntInternalLogging to AntLimb.
-* Renamed MavenInternalLogging to MavenLimb.
+* Moved several utility classes to external znerd-util project.
+* Renamed logdoc-base to logdoc-core.
 
 
 --- CHANGES INTRODUCED IN LOGDOC 0.15 ----------------------------------------
