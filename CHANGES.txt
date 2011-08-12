@@ -1,5 +1,8 @@
 --- CHANGES INTRODUCED IN LOGDOC 0.18 ----------------------------------------
 
+* Generated HTML docs now go under target/site/logdoc/.
+
+
 --- CHANGES INTRODUCED IN LOGDOC 0.17 ----------------------------------------
 
 * Depending on znerd-util 0.3, there is a severe bug in 0.2.

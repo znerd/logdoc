@@ -63,7 +63,7 @@ public class LogdocMojo extends AbstractMojo {
     private File _sourceDir;
 
     /**
-     * @parameter name="out" expression="${basedir}/target/generated-sources/logdoc"
+     * @parameter name="out" expression="${basedir}/target/site/logdoc"
      * @required
      */
     private File _destDir;
