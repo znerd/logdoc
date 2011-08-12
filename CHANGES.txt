@@ -3,6 +3,7 @@
 * Improved style, based on the Clean Code principles.
 * Moved several utility classes to external znerd-util project.
 * Renamed logdoc-base to logdoc-core.
+* Changed to 2-clause BSD license.
 
 
 --- CHANGES INTRODUCED IN LOGDOC 0.15 ----------------------------------------
