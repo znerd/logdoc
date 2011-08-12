@@ -1,3 +1,6 @@
+--- CHANGES INTRODUCED IN LOGDOC 0.17 ----------------------------------------
+
+
 --- CHANGES INTRODUCED IN LOGDOC 0.16 ----------------------------------------
 
 * Improved style, based on the Clean Code principles.

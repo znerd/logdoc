@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.znerd</groupId>
 		<artifactId>logdoc</artifactId>
-		<version>0.16</version>
+		<version>0.17-SNAPSHOT</version>
 	</parent>
 
 	<dependencies>
