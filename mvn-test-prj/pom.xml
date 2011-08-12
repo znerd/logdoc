@@ -6,6 +6,10 @@
 	<version>0.1-SNAPSHOT</version>
 	<name>Logdoc Maven Test</name>
 
+	<properties>
+		<logdoc.version>0.16-SNAPSHOT</logdoc.version>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.znerd</groupId>
@@ -31,8 +35,4 @@
 			</plugin>
 		</plugins>
     </build> 
-
-	<properties>
-		<logdoc.version>0.15-SNAPSHOT</logdoc.version>
-	</properties>
 </project>
