@@ -5,11 +5,13 @@
 	<packaging>jar</packaging>
 	<name>Logdoc Ant tasks</name>
 	<url>http://www.github.com/znerd/logdoc</url>
+
 	<parent>
 		<groupId>org.znerd</groupId>
 		<artifactId>logdoc</artifactId>
 		<version>0.16-SNAPSHOT</version>
 	</parent>
+
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
@@ -21,6 +23,7 @@
 			<artifactId>ant</artifactId>
 		</dependency>
 	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
