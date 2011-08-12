@@ -9,10 +9,11 @@ import static org.apache.tools.ant.Project.MSG_VERBOSE;
 import org.apache.tools.ant.taskdefs.MatchingTask;
 
 import org.znerd.logdoc.gen.Generator;
-import org.znerd.logdoc.internal.InternalLogging;
-import static org.znerd.logdoc.internal.TextUtils.quote;
 
-import org.znerd.logdoc.ant.tasks.internal.AntInternalLogging;
+import static org.znerd.util.text.TextUtils.quote;
+
+import org.znerd.logdoc.ant.tasks.internal.AntLimb;
+import org.znerd.util.log.Limb;
 
 /**
  * Abstract base class for the Logdoc Ant task implementations.
@@ -54,7 +55,7 @@ public abstract class AbstractLogdocTask extends MatchingTask {
     }
 
     private void sendInternalLoggingThroughAnt() {
-        InternalLogging.setLogger(new AntInternalLogging(this));
+        Limb.setLogger(new AntLimb(this));
     }
 
     private File determineSourceDir(File specifiedSourceDir) {

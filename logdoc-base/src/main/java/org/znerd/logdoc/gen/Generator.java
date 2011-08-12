@@ -6,9 +6,9 @@ import java.io.IOException;
 
 import org.xml.sax.SAXException;
 import org.znerd.logdoc.LogDef;
-import org.znerd.logdoc.LogLevel;
-import org.znerd.logdoc.internal.InternalLogging;
-import org.znerd.logdoc.internal.CheckDirUtils;
+import org.znerd.util.io.CheckDirUtils;
+import org.znerd.util.log.Limb;
+import org.znerd.util.log.LogLevel;
 
 /**
  * Abstract base class for generators.
@@ -50,12 +50,12 @@ public abstract class Generator {
     }
 
     private void logProcessingStart(File sourceDir, File destDir) {
-        InternalLogging.log(LogLevel.INFO, "Processing from " + sourceDir.getPath() + " to " + destDir.getPath() + '.');
+        Limb.log(LogLevel.INFO, "Processing from " + sourceDir.getPath() + " to " + destDir.getPath() + '.');
     }
 
     private void logProcessingFinish(long start) {
         long duration = System.currentTimeMillis() - start;
-        InternalLogging.log(LogLevel.NOTICE, "Processed definitions in " + duration + " ms.");
+        Limb.log(LogLevel.NOTICE, "Processed definitions in " + duration + " ms.");
     }
 
     private LogDef loadAndValidateDefinitions(File sourceDir) throws IOException {

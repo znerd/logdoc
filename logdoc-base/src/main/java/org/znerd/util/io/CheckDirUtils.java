@@ -1,11 +1,13 @@
 // See the COPYRIGHT file for copyright and license information
-package org.znerd.logdoc.internal;
+package org.znerd.util.io;
 
 import java.io.File;
 import java.io.IOException;
-import static org.znerd.logdoc.internal.TextUtils.quote;
 
-import org.znerd.logdoc.LogLevel;
+import static org.znerd.util.text.TextUtils.quote;
+
+import org.znerd.util.log.Limb;
+import org.znerd.util.log.LogLevel;
 
 public class CheckDirUtils {
     
@@ -61,7 +63,7 @@ public class CheckDirUtils {
 
     private static void createDirectoryIfAppropriate(String description, File path, boolean createIfNonexistent) throws IOException {
         if (createIfNonexistent && !path.exists()) {
-            InternalLogging.log(LogLevel.INFO, "Creating directory " + quote(path) + '.');
+            Limb.log(LogLevel.INFO, "Creating directory " + quote(path) + '.');
             if (!path.mkdirs()) {
                 throw new IOException(description + " (\"" + path + "\") could not be created.");
             }

@@ -5,8 +5,9 @@ import java.io.InputStream;
 import java.io.IOException;
 import java.net.URL;
 
-import org.znerd.logdoc.internal.InternalLogging;
 import org.znerd.logdoc.internal.LogCentral;
+import org.znerd.util.log.Limb;
+import org.znerd.util.log.LogLevel;
 
 /**
  * Class that represents the Logdoc library.
@@ -130,7 +131,7 @@ public final class Library {
             throw new IllegalArgumentException("logFilter == null");
         }
 
-        InternalLogging.log(LogLevel.INFO, "Set LogFilter to instance of class " + logFilter.getClass().getName() + '.');
+        Limb.log(LogLevel.INFO, "Set LogFilter to instance of class " + logFilter.getClass().getName() + '.');
 
         // Store the filter in this class
         LOG_FILTER = logFilter;
@@ -158,7 +159,7 @@ public final class Library {
             // Instance construction failed, eclipse potential issues using a
             // NullLogFilter
         } catch (Throwable cause) {
-            InternalLogging.log(LogLevel.ERROR, "Failed to construct LogFilter of class: " + className + ". Using NullLogFilter.", cause);
+            Limb.log(LogLevel.ERROR, "Failed to construct LogFilter of class: " + className + ". Using NullLogFilter.", cause);
             logFilter = new NullLogFilter();
         }
 
@@ -196,11 +197,11 @@ public final class Library {
 
         // Resource not found - this is fatal
         if (url == null) {
-            InternalLogging.log(LogLevel.ERROR, "Failed to load resource \"" + absPath + "\".");
+            Limb.log(LogLevel.ERROR, "Failed to load resource \"" + absPath + "\".");
             throw new NoSuchResourceException("Failed to load resource \"" + absPath + "\".");
         }
 
-        InternalLogging.log(LogLevel.DEBUG, "Loaded \"" + absPath + "\".");
+        Limb.log(LogLevel.DEBUG, "Loaded \"" + absPath + "\".");
 
         return url;
     }

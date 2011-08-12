@@ -10,8 +10,8 @@ import org.apache.maven.project.MavenProject;
 import org.znerd.logdoc.gen.CodeGenerator;
 import org.znerd.logdoc.gen.DocGenerator;
 import org.znerd.logdoc.gen.Generator;
-import org.znerd.logdoc.internal.InternalLogging;
-import org.znerd.logdoc.maven.plugins.internal.MavenInternalLogging;
+import org.znerd.logdoc.maven.plugins.internal.MavenLimb;
+import org.znerd.util.log.Limb;
 
 /**
  * An Maven plugin for generating source files and/or documentation from Logdoc definitions.
@@ -29,7 +29,7 @@ public class LogdocMojo extends AbstractMojo {
     }
 
     private void sendInternalLoggingThroughMaven() {
-        InternalLogging.setLogger(new MavenInternalLogging(getLog()));
+        Limb.setLogger(new MavenLimb(getLog()));
     }
 
     private void generate() throws MojoExecutionException {

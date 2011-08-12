@@ -3,15 +3,15 @@ package org.znerd.logdoc.ant.tasks.internal;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
-import org.znerd.logdoc.LogLevel;
-import org.znerd.logdoc.internal.InternalLogging;
+import org.znerd.util.log.Limb;
+import org.znerd.util.log.LogLevel;
 
 /**
  * Logdoc-internal logger that sends output via the Ant logging mechanism.
  */
-public class AntInternalLogging extends InternalLogging {
+public class AntLimb extends Limb {
 
-    public AntInternalLogging(Task task) {
+    public AntLimb(Task task) {
         if (task == null) {
             throw new IllegalArgumentException("task == null");
         }

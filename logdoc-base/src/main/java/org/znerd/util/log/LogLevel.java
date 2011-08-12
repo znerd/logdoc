@@ -1,5 +1,5 @@
 // See the COPYRIGHT file for copyright and license information
-package org.znerd.logdoc;
+package org.znerd.util.log;
 
 /**
  * Enumeration type for log levels.

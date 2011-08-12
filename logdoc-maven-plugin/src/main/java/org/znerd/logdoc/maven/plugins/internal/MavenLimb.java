@@ -2,11 +2,11 @@
 package org.znerd.logdoc.maven.plugins.internal;
 
 import org.apache.maven.plugin.logging.Log;
-import org.znerd.logdoc.LogLevel;
-import org.znerd.logdoc.internal.InternalLogging;
+import org.znerd.util.log.Limb;
+import org.znerd.util.log.LogLevel;
 
-public class MavenInternalLogging extends InternalLogging {
-    public MavenInternalLogging(Log log) {
+public class MavenLimb extends Limb {
+    public MavenLimb(Log log) {
         _log = log;
     }
 

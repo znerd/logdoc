@@ -18,8 +18,9 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import org.znerd.logdoc.Library;
-import org.znerd.logdoc.LogLevel;
-import static org.znerd.logdoc.internal.InternalLogging.log;
+import org.znerd.util.log.LogLevel;
+
+import static org.znerd.util.log.Limb.log;
 
 /**
  * URI resolver that can be used during XSLT transformations.

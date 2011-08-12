@@ -1,16 +1,14 @@
 // See the COPYRIGHT file for copyright and license information
-package org.znerd.logdoc.internal;
-
-import org.znerd.logdoc.LogLevel;
+package org.znerd.util.log;
 
 /**
- * Logdoc-internal logging.
+ * Simple logging interface.
  * <p>
  * When <code>null</code> is passed as a {@link LogLevel}, then {@link LogLevel#DEBUG} is assumed.
  * <p>
  * When <code>null</code> is passed as a message, then an empty string is assumed.
  */
-public class InternalLogging {
+public class Limb {
 
     public static synchronized void log(LogLevel level, String message) {
         log(level, message, (Throwable) null);
@@ -27,9 +25,9 @@ public class InternalLogging {
         INSTANCE.logImpl(level, message, exception);
     }
 
-    private static InternalLogging INSTANCE = new InternalLogging();
+    private static Limb INSTANCE = new Limb();
 
-    public static synchronized void setLogger(InternalLogging logger) throws IllegalArgumentException {
+    public static synchronized void setLogger(Limb logger) throws IllegalArgumentException {
         if (logger == null) {
             throw new IllegalArgumentException("logger == null");
         }
@@ -47,6 +45,6 @@ public class InternalLogging {
         }
     }
 
-    protected InternalLogging() {
+    protected Limb() {
     }
 }
