@@ -8,6 +8,8 @@ import static org.znerd.logdoc.internal.TextUtils.quote;
 import org.znerd.logdoc.LogLevel;
 
 public class CheckDirUtils {
+    
+    // TODO: Move to more generic package, e.g. org.znerd.util.io
 
     /**
      * Checks if the specified abstract path name refers to an existing directory and creates the directory if appropriate.
