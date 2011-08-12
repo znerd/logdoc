@@ -249,16 +249,16 @@
 		<xsl:text>, _translation, </xsl:text>
 		<xsl:choose>
 			<xsl:when test="$exception and @level = 'DEBUG'">
-				<xsl:text>org.znerd.logdoc.internal.ExceptionUtils.getRootCause(_exception));</xsl:text>
+				<xsl:text>org.znerd.util.ExceptionUtils.getRootCause(_exception));</xsl:text>
 			</xsl:when>
 			<xsl:when test="$exception">
-				<xsl:text>org.znerd.logdoc.Library.isStackTraceAtMessageLevel() ? org.znerd.logdoc.internal.ExceptionUtils.getRootCause(_exception) : null);
+				<xsl:text>org.znerd.logdoc.Library.isStackTraceAtMessageLevel() ? org.znerd.util.ExceptionUtils.getRootCause(_exception) : null);
          if (_exception != null &amp;&amp; !org.znerd.logdoc.Library.isStackTraceAtMessageLevel() &amp;&amp; LOGGER_</xsl:text>
 				<xsl:value-of select="@id" />
 				<xsl:text>.isEnabledFor(DEBUG)) {
             LOGGER_</xsl:text>
 				<xsl:value-of select="@id" />
-				<xsl:text>.log(FQCN, DEBUG, _translation, org.znerd.logdoc.internal.ExceptionUtils.getRootCause(_exception));
+				<xsl:text>.log(FQCN, DEBUG, _translation, org.znerd.util.ExceptionUtils.getRootCause(_exception));
          }</xsl:text>
 			</xsl:when>
 			<xsl:otherwise>
