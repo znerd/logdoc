@@ -7,7 +7,7 @@
 	<name>Logdoc Maven Test</name>
 
 	<properties>
-		<logdoc.version>0.17-SNAPSHOT</logdoc.version>
+		<logdoc.version>0.17</logdoc.version>
 	</properties>
 
 	<dependencies>
