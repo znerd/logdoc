@@ -7,6 +7,7 @@
 	<name>Logdoc (complete)</name>
 
 	<modules>
+		<module>znerd-util</module>
 		<module>logdoc-base</module>
 		<module>logdoc-ant-tasks</module>
 		<module>logdoc-maven-plugin</module>
@@ -14,6 +15,11 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<!-- TODO: <dependency>
+				<groupId>org.znerd</groupId>
+				<artifactId>znerd-util</artifactId>
+				<version>0.1-SNAPSHOT</version>
+			</dependency> -->
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
