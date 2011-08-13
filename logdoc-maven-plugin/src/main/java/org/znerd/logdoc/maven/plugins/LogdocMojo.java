@@ -10,8 +10,8 @@ import org.apache.maven.project.MavenProject;
 import org.znerd.logdoc.gen.CodeGenerator;
 import org.znerd.logdoc.gen.DocGenerator;
 import org.znerd.logdoc.gen.Generator;
-import org.znerd.logdoc.maven.plugins.internal.MavenLimb;
 import org.znerd.util.log.Limb;
+import org.znerd.util.log.MavenLimb;
 
 /**
  * An Maven plugin for generating source files and/or documentation from Logdoc definitions.

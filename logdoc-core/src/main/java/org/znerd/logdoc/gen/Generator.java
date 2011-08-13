@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import org.xml.sax.SAXException;
 import org.znerd.logdoc.LogDef;
-import org.znerd.util.io.CheckDirUtils;
+import org.znerd.util.io.DirectoryUtils;
 import org.znerd.util.log.Limb;
 import org.znerd.util.log.LogLevel;
 
@@ -37,8 +37,8 @@ public abstract class Generator {
     }
 
     private void checkDirs(File sourceDir, File destDir) throws IOException {
-        CheckDirUtils.checkDir("Source directory", sourceDir, true, false, false);
-        CheckDirUtils.checkDir("Destination directory", destDir, false, true, true);
+        DirectoryUtils.checkDir("Source directory", sourceDir, true, false, false);
+        DirectoryUtils.checkDir("Destination directory", destDir, false, true, true);
     }
 
     private void processFiles(File sourceDir, File destDir) throws IOException {

@@ -12,7 +12,7 @@ import org.znerd.logdoc.gen.Generator;
 
 import static org.znerd.util.text.TextUtils.quote;
 
-import org.znerd.logdoc.ant.tasks.internal.AntLimb;
+import org.znerd.util.log.AntLimb;
 import org.znerd.util.log.Limb;
 
 /**
