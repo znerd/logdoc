@@ -3,7 +3,7 @@ package org.znerd.logdoc.ant.tasks;
 
 import java.io.File;
 
-import org.znerd.logdoc.gen.DocGenerator;
+import org.znerd.logdoc.gen.DocsGenerator;
 import org.znerd.logdoc.gen.Generator;
 
 /**
@@ -12,6 +12,6 @@ import org.znerd.logdoc.gen.Generator;
 public final class LogdocDocTask extends AbstractLogdocTask {
     @Override
     protected Generator createGenerator(File sourceDir, File destDir) {
-        return new DocGenerator(sourceDir, destDir);
+        return new DocsGenerator(sourceDir, destDir);
     }
 }

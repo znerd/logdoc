@@ -8,7 +8,7 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.znerd.logdoc.gen.CodeGenerator;
-import org.znerd.logdoc.gen.DocGenerator;
+import org.znerd.logdoc.gen.DocsGenerator;
 import org.znerd.logdoc.gen.Generator;
 import org.znerd.util.log.Limb;
 import org.znerd.util.log.MavenLimb;
@@ -33,10 +33,10 @@ public class LogdocMojo extends AbstractMojo {
     }
 
     private void generate() throws MojoExecutionException {
-        generate(new CodeGenerator(_sourceDir, _destDir));
-        generate(new DocGenerator(_sourceDir, _docsDestDir));
+        generate(new CodeGenerator(_sourceDir, _codeTargetDir));
+        generate(new DocsGenerator(_sourceDir, _docsTargetDir));
     }
-    
+
     private void generate(Generator generator) throws MojoExecutionException {
         try {
             generator.generate();
@@ -46,7 +46,7 @@ public class LogdocMojo extends AbstractMojo {
     }
 
     private void markGeneratedSourcesForCompilation() {
-        _project.addCompileSourceRoot(_destDir.getAbsolutePath());
+        _project.addCompileSourceRoot(_codeTargetDir.getAbsolutePath());
     }
 
     /**
@@ -66,11 +66,11 @@ public class LogdocMojo extends AbstractMojo {
      * @parameter name="out" expression="${basedir}/target/site/logdoc"
      * @required
      */
-    private File _destDir;
-    
+    private File _codeTargetDir;
+
     /**
      * @parameter name="docsOut" expression="${basedir}/target/logdoc-html"
      * @required
      */
-     private File _docsDestDir;
+    private File _docsTargetDir;
 }

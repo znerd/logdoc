@@ -2,6 +2,7 @@
 
 * Generated HTML docs now go under target/site/logdoc/.
 * Changed scope of JUnit dependency to 'test'.
+* Renamed DocGenerator to DocsGenerator.
 
 
 --- CHANGES INTRODUCED IN LOGDOC 0.17 ----------------------------------------

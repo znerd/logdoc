@@ -19,9 +19,9 @@ import org.znerd.logdoc.NoSuchResourceException;
 /**
  * Documentation generator.
  */
-public final class DocGenerator extends Generator {
+public final class DocsGenerator extends Generator {
 
-    public DocGenerator(File sourceDir, File destDir) throws IllegalArgumentException {
+    public DocsGenerator(File sourceDir, File destDir) throws IllegalArgumentException {
         super(sourceDir, destDir);
     }
 
