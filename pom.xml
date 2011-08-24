@@ -13,6 +13,7 @@
     <module>logdoc-core</module>
     <module>logdoc-ant-tasks</module>
     <module>logdoc-maven-plugin</module>
+    <module>logdoc-sample-project</module>
   </modules>
 
   <properties>
