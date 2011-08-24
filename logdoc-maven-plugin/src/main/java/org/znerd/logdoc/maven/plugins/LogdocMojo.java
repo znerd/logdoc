@@ -57,32 +57,32 @@ public class LogdocMojo extends AbstractMojo {
     }
 
     /**
-     * @parameter name="project" default-value="${project}"
+     * @parameter alias="project" default-value="${project}"
      * @readonly
      * @required
      */
     private MavenProject _project;
 
     /**
-     * @parameter name="in" expression="${basedir}/src/logdoc"
+     * @parameter alias="in" expression="${basedir}/src/logdoc"
      * @required
      */
     private File _sourceDir;
 
     /**
-     * @parameter name="out" expression="${basedir}/target/site/logdoc"
+     * @parameter alias="out" expression="${basedir}/target/site/logdoc"
      * @required
      */
     private File _codeTargetDir;
 
     /**
-     * @parameter name="docsOut" expression="${basedir}/target/logdoc-html"
+     * @parameter alias="docsOut" expression="${basedir}/target/logdoc-html"
      * @required
      */
     private File _docsTargetDir;
     
     /**
-     * @parameter name="loggingFramework" default-value="log4j"
+     * @parameter alias="loggingFramework" expression="log4j"
      * @required
      */
     private String _loggingFramework;

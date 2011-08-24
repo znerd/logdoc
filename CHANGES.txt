@@ -1,6 +1,7 @@
 --- CHANGES INTRODUCED IN LOGDOC 0.19 ----------------------------------------
 
 * Introduced LoggingFramework.
+* Maven plugin settings allow regular names.
 
 
 --- CHANGES INTRODUCED IN LOGDOC 0.18 ----------------------------------------
