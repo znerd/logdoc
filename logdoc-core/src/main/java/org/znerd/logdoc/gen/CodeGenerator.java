@@ -10,34 +10,36 @@ import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
 
 import org.w3c.dom.Document;
-
 import org.znerd.logdoc.LogDef;
+import org.znerd.logdoc.LoggingFramework;
 
 /**
  * Code generator. Transforms Logdoc input files to programming code.
  */
 public final class CodeGenerator extends Generator {
 
-    public CodeGenerator(File sourceDir, File destDir) throws IllegalArgumentException {
+    public CodeGenerator(File sourceDir, File destDir, LoggingFramework loggingFramework) throws IllegalArgumentException {
         super(sourceDir, destDir);
+        _loggingFramework = loggingFramework;
     }
+    
+    private final LoggingFramework _loggingFramework;
 
     @Override
     protected void generateImpl(LogDef logDef, File destDir) throws IOException {
-
         String domainPath = logDef.getDomainName().replace(".", "/");
         File outDir = new File(destDir, domainPath);
 
-        Processor processor = new Processor(logDef, outDir, "log4j");
+        Processor processor = new Processor(logDef, outDir, _loggingFramework);
         processor.process();
     }
 
     static class Processor {
 
-        Processor(LogDef logDef, File outDir, String target) {
+        Processor(LogDef logDef, File outDir, LoggingFramework loggingFramework) {
             _def = logDef;
             _outDir = outDir;
-            _target = target;
+            _target = loggingFramework.name().toLowerCase();
         }
 
         private final LogDef _def;
@@ -55,7 +57,6 @@ public final class CodeGenerator extends Generator {
         }
 
         private void transformToCode(String xsltSubDir, String className) throws IOException {
-
             final Source source = new DOMSource(_def.getXML());
             final String xsltPath = xsltSubDir + "log_to_" + className + "_java" + ".xslt";
             final String outFileName = className + ".java";
@@ -70,7 +71,6 @@ public final class CodeGenerator extends Generator {
         }
 
         private void transformToCodeForLocale(String locale, Document translationXML) throws IOException {
-
             final Source source = new DOMSource(translationXML);
             final String xsltPath = "translation-bundle_to_java.xslt";
             final String outFileName = "TranslationBundle_" + locale + ".java";

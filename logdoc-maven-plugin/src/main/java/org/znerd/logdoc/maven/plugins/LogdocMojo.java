@@ -7,14 +7,17 @@ import java.io.IOException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
+
+import org.znerd.logdoc.LoggingFramework;
 import org.znerd.logdoc.gen.CodeGenerator;
 import org.znerd.logdoc.gen.DocsGenerator;
 import org.znerd.logdoc.gen.Generator;
+
 import org.znerd.util.log.Limb;
 import org.znerd.util.log.MavenLimb;
 
 /**
- * An Maven plugin for generating source files and/or documentation from Logdoc definitions.
+ * A Maven plugin for generating source files and/or documentation from Logdoc definitions.
  * 
  * @goal java
  * @phase generate-sources
@@ -33,7 +36,7 @@ public class LogdocMojo extends AbstractMojo {
     }
 
     private void generate() throws MojoExecutionException {
-        generate(new CodeGenerator(_sourceDir, _codeTargetDir));
+        generate(new CodeGenerator(_sourceDir, _codeTargetDir, loggingFrameworkEnum()));
         generate(new DocsGenerator(_sourceDir, _docsTargetDir));
     }
 
@@ -43,6 +46,10 @@ public class LogdocMojo extends AbstractMojo {
         } catch (IOException cause) {
             throw new MojoExecutionException("Failed to perform transformation", cause);
         }
+    }
+    
+    private LoggingFramework loggingFrameworkEnum() {
+        return LoggingFramework.valueOf(_loggingFramework.toUpperCase());
     }
 
     private void markGeneratedSourcesForCompilation() {
@@ -73,4 +80,10 @@ public class LogdocMojo extends AbstractMojo {
      * @required
      */
     private File _docsTargetDir;
+    
+    /**
+     * @parameter name="loggingFramework" default-value="log4j"
+     * @required
+     */
+    private String _loggingFramework;
 }
