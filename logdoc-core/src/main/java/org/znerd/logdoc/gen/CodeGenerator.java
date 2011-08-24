@@ -12,6 +12,8 @@ import javax.xml.transform.dom.DOMSource;
 import org.w3c.dom.Document;
 import org.znerd.logdoc.LogDef;
 import org.znerd.logdoc.LoggingFramework;
+import org.znerd.util.log.Limb;
+import org.znerd.util.log.LogLevel;
 
 /**
  * Code generator. Transforms Logdoc input files to programming code.
@@ -30,6 +32,7 @@ public final class CodeGenerator extends Generator {
         String domainPath = logDef.getDomainName().replace(".", "/");
         File outDir = new File(destDir, domainPath);
 
+        Limb.log(LogLevel.INFO, "Generating code for " + _loggingFramework.name() + " logging framework.");
         Processor processor = new Processor(logDef, outDir, _loggingFramework);
         processor.process();
     }
