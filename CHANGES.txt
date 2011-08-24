@@ -2,6 +2,7 @@
 
 * Introduced LoggingFramework.
 * Maven plugin settings allow regular names.
+* Preparations for supporting logging via ATG.
 
 
 --- CHANGES INTRODUCED IN LOGDOC 0.18 ----------------------------------------

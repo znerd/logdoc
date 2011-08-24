@@ -2,5 +2,5 @@
 package org.znerd.logdoc;
 
 public enum LoggingFramework {
-    LOG4J;
+    LOG4J, ATG;
 }

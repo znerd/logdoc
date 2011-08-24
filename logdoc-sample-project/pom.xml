@@ -38,7 +38,7 @@
               <goal>java</goal>
             </goals>
             <configuration>
-              <loggingFramework>log4j</loggingFramework>
+              <loggingFramework>atg</loggingFramework>
             </configuration>
           </execution>
         </executions>

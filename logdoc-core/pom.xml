@@ -40,6 +40,12 @@
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>atg</groupId>
+      <artifactId>das</artifactId>
+      <version>10.0.2</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
 
   <build>
