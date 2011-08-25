@@ -1,3 +1,10 @@
+--- CHANGES INTRODUCED IN LOGDOC 0.19 ----------------------------------------
+
+* Introduced LoggingFramework.
+* Maven plugin settings allow regular names.
+* Preparations for supporting logging via ATG.
+
+
 --- CHANGES INTRODUCED IN LOGDOC 0.18 ----------------------------------------
 
 * Generated HTML docs now go under target/site/logdoc/.
