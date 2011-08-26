@@ -4,6 +4,18 @@ In the XSLT, use "java.lang.Throwable" instead of just "Throwable".
 
 ------------------------------------------------------------------------------
 
+Introduce Log4JBridge do the actual logging. Let the generated code use it.
+
+------------------------------------------------------------------------------
+
+Introduce AtgLogBridge do the actual logging. Let the generated code use it.
+
+------------------------------------------------------------------------------
+
+Simplify the XSLT and the resulting generated code.
+
+------------------------------------------------------------------------------
+
 Document the cause and resolution in the generated documentation.
 
 ------------------------------------------------------------------------------
