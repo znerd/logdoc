@@ -12,22 +12,23 @@ Introduce AtgLogBridge do the actual logging. Let the generated code use it.
 
 ------------------------------------------------------------------------------
 
-Simplify the XSLT and the resulting generated code.
-
-------------------------------------------------------------------------------
-
 Document the cause and resolution in the generated documentation.
 
 ------------------------------------------------------------------------------
 
-Combine a lot of the XSLT in log4j/ and atg/.
+Do not require a translation for all log messages. If no translation is
+available, then fall back to a default format that displays the parameters in
+a quoted form. E.g.:
+
+   10202 transaction="FNC-5569"; label=null; grtID=null; grxID="1233890-22"
 
 ------------------------------------------------------------------------------
 
-Print the Logdoc version when logging at INFO level. So for example when
-using:
+Simplify the XSLT and the resulting generated code.
 
-   ant -verbose
+------------------------------------------------------------------------------
+
+Combine a lot of the XSLT in log4j/ and atg/.
 
 ------------------------------------------------------------------------------
 
@@ -42,6 +43,13 @@ they can write:
 
 ------------------------------------------------------------------------------
 
+Print the Logdoc version when logging at INFO level. So for example when
+using:
+
+   ant -verbose
+
+------------------------------------------------------------------------------
+
 Separate Maven plugins:
 - one for generating code
 - one for generating documentation
@@ -53,14 +61,6 @@ Let the Maven plugin put the generated documentation in the correct location.
 ------------------------------------------------------------------------------
 
 Only allow 'exceptionClass' attribute if 'exception' attribute is also set.
-
-------------------------------------------------------------------------------
-
-Do not require a translation for all log messages. If no translation is
-available, then fall back to a default format that displays the parameters in
-a quoted form. E.g.:
-
-   10202 transaction="FNC-5569"; label=null; grtID=null; grxID="1233890-22"
 
 ------------------------------------------------------------------------------
 
@@ -90,13 +90,12 @@ Make the automated test that tests the Logdoc version work.
 
 ------------------------------------------------------------------------------
 
-Support multiple types of code generation, e.g.:
-- SLF4J, see http://slf4j.org/
-- Java Logging Framework (available since J2SE 1.4), see http://java.sun.com/javase/6/docs/technotes/guides/logging/
-- Apache Commons Logging, see http://commons.apache.org/logging/
-- Log4c, see http://log4c.sourceforge.net/
-- Log4PHP, see http://logging.apache.org/log4php/
-- Log::Log4perl, see http://mschilli.github.com/log4perl/
+Support the Java Logging Framework as a 'loggingFramework'.
+See http://java.sun.com/javase/6/docs/technotes/guides/logging/
+
+------------------------------------------------------------------------------
+
+Make the Java Logging Framework the default 'loggingFramework'.
 
 ------------------------------------------------------------------------------
 
