@@ -5,8 +5,10 @@
 
 	<xsl:template match="param" mode="method-argument">
 		<xsl:param name="exception" select="false()" />
+		<xsl:param name="comma"     select="false()" />
 
 		<xsl:variable name="nullable" select="not(@nullable) or @nullable = 'true'" />
+
 		<xsl:if test="starts-with(@name, '_')">
 			<xsl:message terminate="yes">
 				<xsl:text>Parameter name "</xsl:text>
@@ -14,7 +16,8 @@
 				<xsl:text>" starts with underscore.</xsl:text>
 			</xsl:message>
 		</xsl:if>
-		<xsl:if test="$exception or (position() &gt; 1)">
+
+		<xsl:if test="$comma or $exception or (position() &gt; 1)">
 			<xsl:text>, </xsl:text>
 		</xsl:if>
 		<xsl:choose>

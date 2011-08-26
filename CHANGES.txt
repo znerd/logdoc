@@ -1,8 +1,8 @@
 --- CHANGES INTRODUCED IN LOGDOC 0.19 ----------------------------------------
 
 * Introduced LoggingFramework.
+* Initial support for logging via ATG.
 * Maven plugin settings allow regular names.
-* Preparations for supporting logging via ATG.
 * Using 'java.lang.Throwable' iso 'Throwable' in generated code.
 
 

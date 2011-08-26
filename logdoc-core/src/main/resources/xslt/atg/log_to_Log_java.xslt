@@ -176,15 +176,15 @@
     */
    public static final void log_]]></xsl:text>
 		<xsl:value-of select="@id" />
-		<xsl:text>(</xsl:text>
+		<xsl:text>(atg.nucleus.logging.ApplicationLogging logger</xsl:text>
 		<xsl:if test="$exception">
+			<xsl:text>, </xsl:text>
 			<xsl:value-of select="$exceptionClass" />
 			<xsl:text> _exception</xsl:text>
-			<xsl:if test="count(param) &gt; 0">
-				<xsl:text>, </xsl:text>
-			</xsl:if>
 		</xsl:if>
-		<xsl:apply-templates select="param" mode="method-argument" />
+		<xsl:apply-templates select="param" mode="method-argument">
+      <xsl:with-param name="comma" select="true()" />
+    </xsl:apply-templates>
 		<xsl:text>) {</xsl:text>
 		<xsl:for-each select="param[@filter='true']">
 			<xsl:text>
@@ -199,7 +199,7 @@
 			<xsl:text>);</xsl:text>
 		</xsl:for-each>
     <xsl:text>
-      log("</xsl:text>
+      log(logger, "</xsl:text>
         <xsl:value-of select="$package_name" />
         <xsl:text>", "</xsl:text>
         <xsl:value-of select="@id" />

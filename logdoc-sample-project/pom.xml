@@ -23,6 +23,11 @@
       <artifactId>logdoc-core</artifactId>
       <version>${logdoc.version}</version>
     </dependency>
+    <dependency>
+      <groupId>atg</groupId>
+      <artifactId>das</artifactId>
+      <version>${atg.version}</version>
+    </dependency>
   </dependencies>
 
   <build>
