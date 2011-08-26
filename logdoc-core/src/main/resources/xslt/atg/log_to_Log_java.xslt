@@ -156,7 +156,7 @@
 					<xsl:value-of select="@exceptionClass" />
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:text>Throwable</xsl:text>
+					<xsl:text>java.lang.Throwable</xsl:text>
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>

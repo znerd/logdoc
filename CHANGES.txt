@@ -3,6 +3,7 @@
 * Introduced LoggingFramework.
 * Maven plugin settings allow regular names.
 * Preparations for supporting logging via ATG.
+* Using 'java.lang.Throwable' iso 'Throwable' in generated code.
 
 
 --- CHANGES INTRODUCED IN LOGDOC 0.18 ----------------------------------------

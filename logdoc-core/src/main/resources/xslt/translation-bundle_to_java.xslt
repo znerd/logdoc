@@ -97,7 +97,7 @@
 		<xsl:value-of select="$entry" />
 		<xsl:text>(</xsl:text>
 		<xsl:if test="$exception">
-			<xsl:text>Throwable _exception</xsl:text>
+			<xsl:text>java.lang.Throwable _exception</xsl:text>
 		</xsl:if>
 		<xsl:apply-templates select="$log_node/group/entry[@id = $entry]/param" mode="method-argument">
 			<xsl:with-param name="exception" select="$exception" />
