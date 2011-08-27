@@ -10,18 +10,14 @@
   <parent>
     <groupId>org.znerd</groupId>
     <artifactId>logdoc</artifactId>
-    <version>0.19-SNAPSHOT</version>
+    <version>0.19</version>
   </parent>
-
-  <properties>
-    <logdoc.version>0.19-SNAPSHOT</logdoc.version>
-  </properties>
 
   <dependencies>
     <dependency>
       <groupId>org.znerd</groupId>
       <artifactId>logdoc-core</artifactId>
-      <version>${logdoc.version}</version>
+      <version>${project.parent.version}</version>
     </dependency>
     <dependency>
       <groupId>atg</groupId>
