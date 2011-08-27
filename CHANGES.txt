@@ -1,3 +1,6 @@
+--- CHANGES INTRODUCED IN LOGDOC 0.20 ----------------------------------------
+
+
 --- CHANGES INTRODUCED IN LOGDOC 0.19 ----------------------------------------
 
 * Introduced LoggingFramework.
