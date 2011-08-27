@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.XMLConstants;
 import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
@@ -72,7 +71,7 @@ public final class LogDef {
         }
 
         // We need a factory first
-        SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+        SchemaFactory factory = SchemaFactory.newInstance(W3C_XML_SCHEMA_NS_URI);
 
         // Create a Source for the XSD file
         String xsdPath = "xsd/" + name + ".xsd";
@@ -81,6 +80,8 @@ public final class LogDef {
 
         return factory.newSchema(xsdSource);
     }
+    
+    private static final String W3C_XML_SCHEMA_NS_URI = "http://www.w3.org/2001/XMLSchema";
 
     /**
      * Validates the specified XML document against the specified schema.
