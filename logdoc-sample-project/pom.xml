@@ -31,7 +31,7 @@
       <plugin>
         <groupId>org.znerd</groupId>
         <artifactId>logdoc-maven-plugin</artifactId>
-        <version>${logdoc.version}</version>
+        <version>${project.parent.version}</version>
         <executions>
           <execution>
             <phase>generate-sources</phase>
