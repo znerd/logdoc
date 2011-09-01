@@ -28,7 +28,7 @@
     <maven-jar-plugin.version>2.3.1</maven-jar-plugin.version>
     <maven-javadoc-plugin.version>2.8</maven-javadoc-plugin.version>
     <maven-project.version>2.2.1</maven-project.version>
-    <maven-surefire-plugin.version>2.5</maven-surefire-plugin.version>
+    <maven-surefire-plugin.version>2.9</maven-surefire-plugin.version>
     <znerd-util.version>0.5</znerd-util.version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
