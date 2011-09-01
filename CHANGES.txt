@@ -1,6 +1,7 @@
 --- CHANGES INTRODUCED IN LOGDOC 0.20 ----------------------------------------
 
 * Default source directory for Maven plugin is now: src/main/logdoc/.
+* Allowing digits in category names, as long as it is not the first char.
 
 
 --- CHANGES INTRODUCED IN LOGDOC 0.19 ----------------------------------------
