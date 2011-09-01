@@ -47,8 +47,8 @@ using:
 ------------------------------------------------------------------------------
 
 Separate Maven plugins:
-- one for generating code
-- one for generating documentation
+- one Mojo for generating code
+- one Mojo for generating documentation
 
 ------------------------------------------------------------------------------
 
