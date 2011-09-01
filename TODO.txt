@@ -1,5 +1,27 @@
 ------------------------------------------------------------------------------
 
+Include sources and javadoc when deploying.
+
+------------------------------------------------------------------------------
+
+Fix bug: Currently the code generated from the Maven plugin goes below
+target/site/.
+
+The offending piece of code is:
+
+    /**
+     * @parameter alias="out" expression="${basedir}/target/site/logdoc"
+     * @required
+     */
+    private File _codeTargetDir;
+
+------------------------------------------------------------------------------
+
+Automatically add the znerd-logdoc dependency to projects that use the 
+Maven plugin. If possible.
+
+------------------------------------------------------------------------------
+
 Introduce Log4JBridge do the actual logging. Let the generated code use it.
 
 ------------------------------------------------------------------------------
