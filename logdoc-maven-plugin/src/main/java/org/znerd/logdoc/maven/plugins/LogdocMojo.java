@@ -64,7 +64,7 @@ public class LogdocMojo extends AbstractMojo {
     private MavenProject _project;
 
     /**
-     * @parameter alias="in" expression="${basedir}/src/logdoc"
+     * @parameter alias="in" expression="${basedir}/src/main/logdoc"
      * @required
      */
     private File _sourceDir;

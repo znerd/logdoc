@@ -1,5 +1,7 @@
 --- CHANGES INTRODUCED IN LOGDOC 0.20 ----------------------------------------
 
+* Default source directory for Maven plugin is now: src/main/logdoc/.
+
 
 --- CHANGES INTRODUCED IN LOGDOC 0.19 ----------------------------------------
 
