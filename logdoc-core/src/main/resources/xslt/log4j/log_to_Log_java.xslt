@@ -188,10 +188,21 @@
     * The description for this log entry is:
     * <blockquote><em>]]></xsl:text>
 		<xsl:apply-templates select="description" />
+                <xsl:variable name="methodName">
+                        <xsl:choose>
+                                <xsl:when test="string-length(@methodName) &gt; 0">
+                                        <xsl:value-of select="@methodName" />
+                                </xsl:when>
+                                <xsl:otherwise>
+                                        <xsl:text>log_</xsl:text>
+                                        <xsl:value-of select="@id" />
+                                </xsl:otherwise>
+                        </xsl:choose>
+                </xsl:variable>
 		<xsl:text><![CDATA[</em></blockquote>
     */
-   public static final void log_]]></xsl:text>
-		<xsl:value-of select="@id" />
+   public static final void ]]></xsl:text>
+		<xsl:value-of select="$methodName" />
 		<xsl:text>(</xsl:text>
 		<xsl:if test="$exception">
 			<xsl:value-of select="$exceptionClass" />

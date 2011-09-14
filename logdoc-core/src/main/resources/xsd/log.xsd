@@ -34,6 +34,7 @@
 
 		<xsd:attribute name="id"             type="EntryID"            use="required" />
 		<xsd:attribute name="level"          type="LogLevel"           use="required" />
+		<xsd:attribute name="methodName"     type="EntryMethodName"    use="optional" />
 		<xsd:attribute name="exception"      type="Boolean"            use="optional" />
 		<xsd:attribute name="exceptionClass" type="ExceptionClassName" use="optional" />
 	</xsd:complexType>
@@ -69,7 +70,16 @@
 
 	<!-- EntryGroupName -->
 	<xsd:simpleType name="EntryGroupName">
-		<xsd:restriction base="xsd:string" />
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value=".+" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<!-- EntryMethodName -->
+	<xsd:simpleType name="EntryMethodName">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[a-zA-Z0-9_]+" />
+		</xsd:restriction>
 	</xsd:simpleType>
 
 	<!-- Type "EntryResolution" -->

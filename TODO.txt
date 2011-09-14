@@ -50,17 +50,6 @@ Combine a lot of the XSLT in log4j/ and atg/.
 
 ------------------------------------------------------------------------------
 
-Make sure the generated code can be made more meaningful to developers, so
-instead of writing:
-
-   Log.log_4000(i, str);
-
-they can write:
-
-   Log.logFlexCapacitorFailing(i, str);
-
-------------------------------------------------------------------------------
-
 Print the Logdoc version when logging at INFO level. So for example when
 using:
 

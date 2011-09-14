@@ -4,10 +4,10 @@
 	<translation-bundle locale="en_US" />
 
 	<group id="transactions" name="Transactions">
-		<entry id="100" level="NOTICE">
+		<entry id="100" level="NOTICE" methodName="initializingTransactionSystem">
 			<description>Transaction system initializing.</description>
 		</entry>
-		<entry id="101" level="NOTICE">
+		<entry id="101" level="NOTICE" methodName="initializedTransactionSystem">
 			<description>Transaction system initialized.</description>
 			<param name="duration" type="int64" nullable="false"  />
 		</entry>

@@ -3,6 +3,7 @@
 * Default source directory for Maven plugin is now: src/main/logdoc/.
 * Allowing digits in category names, as long as it is not the first char.
 * Updated to Surefire 2.9.
+* Instead of writing Log.log_4000(x) you can now write Log.logStartup(x).
 
 
 --- CHANGES INTRODUCED IN LOGDOC 0.19 ----------------------------------------
