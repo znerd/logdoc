@@ -1,44 +1,37 @@
 // See the COPYRIGHT file for copyright and license information
 package org.znerd.logdoc;
 
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 
 import org.znerd.logdoc.internal.LogCentral;
+import org.znerd.util.Preconditions;
 import org.znerd.util.log.Limb;
 import org.znerd.util.log.LogLevel;
 
 /**
  * Class that represents the Logdoc library.
  * <p>
- * This class can be run as a program. When it is, all it does is print the name of this library and, if known, the version to standard out.
+ * When this class is run as a program, then it prints the name and version (if known) of this library to standard out.
  */
 public final class Library {
 
-    private static final String VERSION = Library.class.getPackage().getImplementationVersion();
-
-    private static final String LOG_LOCALE_PROPERTY = "org.znerd.logdoc.locale";
-
-    private static final String LOG_STACK_TRACE_AT_MESSAGE_LEVEL = "org.znerd.logdoc.stackTraceAtMessageLevel";
-
-    private static final String LOG_FILTER_PROPERTY = "org.znerd.logdoc.filterClass";
-
-    /**
-     * The default locale used at start-up, if no locale is specified in a system property.
-     */
-    public static final String DEFAULT_LOCALE = "en_US";
-
-    private static String LOCALE = null;
-
-    private static boolean STACK_TRACE_AT_MESSAGE_LEVEL = false;
-
-    private static LogFilter LOG_FILTER;
-
     static {
-        LOCALE = determineStartupLocale();
-        initLogFilter();
+        try {
+            VERSION = Library.class.getPackage().getImplementationVersion();
+            CURRENT_LOCALE = determineStartupLocale();
+            initLogFilter();
+        } catch (Throwable cause) {
+            String message = "Failed to initialize " + Library.class.getName() + " class.";
+            Limb.log(LogLevel.FATAL, message, cause);
+            throw new RuntimeException(message, cause);
+        }
     }
+
+    private static final String VERSION;
+
+    private static String CURRENT_LOCALE;
 
     private static String determineStartupLocale() {
         String locale = System.getProperty(LOG_LOCALE_PROPERTY);
@@ -49,174 +42,29 @@ public final class Library {
         }
     }
 
-    private static void initLogFilter() {
+    private static final String LOG_LOCALE_PROPERTY = "org.znerd.logdoc.locale";
+
+    public static final String DEFAULT_LOCALE = "en_US";
+
+    private static void initLogFilter() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
         String s = System.getProperty(LOG_FILTER_PROPERTY);
         if (s == null || s.trim().length() < 1) {
             setLogFilter(new SimpleLogFilter());
         } else {
-            setLogFilterByClass(s);
+            setLogFilterByClassName(s);
         }
     }
 
-    /**
-     * Sets the locale on all <em>logdoc</em> <code>Log</code> classes.
-     * 
-     * @param newLocale the new locale, cannot be <code>null</code>.
-     * @throws IllegalArgumentException if <code>newLocale == null</code>.
-     * @throws UnsupportedLocaleException if the specified locale is not supported by all registered <em>logdoc</em> <code>Log</code> classes.
-     */
-    public static void setLocale(String newLocale) throws IllegalArgumentException, UnsupportedLocaleException {
+    private static final String LOG_FILTER_PROPERTY = "org.znerd.logdoc.filterClass";
 
-        // Check preconditions
-        if (newLocale == null) {
-            throw new IllegalArgumentException("newLocale == null");
-        }
-
-        // Short-circuit if the new locale equals the current one
-        if (newLocale.equals(LOCALE)) {
-            return;
-        }
-
-        // Pass it on - this can fail with an UnsupportedLocaleException
-        LogCentral.setLocale(newLocale);
-
-        // Store the new setting
-        LOCALE = newLocale;
+    public static final void main(String[] args) {
+        System.out.println(getNameAndVersion());
     }
 
-    /**
-     * Sets the locale on all <em>logdoc</em> <code>Log</code> classes to the default locale.
-     */
-    public static void useDefaultLocale() {
-        setLocale(DEFAULT_LOCALE);
-    }
-
-    /**
-     * Get the locale set in this LogCentral.
-     * 
-     * @return the locale, e.g. <code>"en_US"</code>; never <code>null</code>.
-     */
-    public static String getLocale() {
-        return LOCALE;
-    }
-
-    /**
-     * Enables or disables the display of the stack trace at the same level as the message.
-     * 
-     * @param sameLevel <code>true</code> if the stack trace should be at the same level, <code>false</code> if the stack trace should be at DEBUG level.
-     */
-    public static void setStackTraceAtMessageLevel(boolean sameLevel) {
-        STACK_TRACE_AT_MESSAGE_LEVEL = sameLevel;
-    }
-
-    /**
-     * Indicates whether the stack trace should be displayed at the same level as the message.
-     * 
-     * @return <code>true</code> if the stack trace should be at the same level, <code>false</code> if the stack trace should be at DEBUG level.
-     */
-    public static boolean isStackTraceAtMessageLevel() {
-        return STACK_TRACE_AT_MESSAGE_LEVEL;
-    }
-
-    /**
-     * Set the active <code>LogFilter</code>.
-     * 
-     * @param logFilter the new {@link LogFilter} to use, cannot be <code>null</code>.
-     * @throws IllegalArgumentException if <code>logFilter == null</code>.
-     */
-    public static synchronized void setLogFilter(LogFilter logFilter) throws IllegalArgumentException {
-
-        // Check preconditions
-        if (logFilter == null) {
-            throw new IllegalArgumentException("logFilter == null");
-        }
-
-        Limb.log(LogLevel.INFO, "Set LogFilter to instance of class " + logFilter.getClass().getName() + '.');
-
-        // Store the filter in this class
-        LOG_FILTER = logFilter;
-    }
-
-    /**
-     * Set the active <code>LogFilter</code> by class name. If the parameter is <code>null</code> then an exception is thrown. Otherwise if an instance cannot be constructed, then an instance of class
-     * {@link NullLogFilter} is used instead.
-     * 
-     * @param className the name of the {@link LogFilter} class to use, cannot be <code>null</code>.
-     * @throws IllegalArgumentException if <code>className == null</code>.
-     */
-    public static void setLogFilterByClass(String className) throws IllegalArgumentException {
-
-        // Check preconditions
-        if (className == null) {
-            throw new IllegalArgumentException("className == null");
-        }
-
-        // Construct an instance
-        LogFilter logFilter;
-        try {
-            logFilter = (LogFilter) Class.forName(className).newInstance();
-
-            // Instance construction failed, eclipse potential issues using a
-            // NullLogFilter
-        } catch (Throwable cause) {
-            Limb.log(LogLevel.ERROR, "Failed to construct LogFilter of class: " + className + ". Using NullLogFilter.", cause);
-            logFilter = new NullLogFilter();
-        }
-
-        // Delegate to synchronized setter
-        setLogFilter(logFilter);
-    }
-
-    /**
-     * Returns the active <code>LogFilter</code>.
-     * 
-     * @return the current {@link LogFilter}, never <code>null</code>.
-     */
-    public static synchronized LogFilter getLogFilter() {
-        return LOG_FILTER;
-    }
-
-    /**
-     * Retrieves a meta resource and returns it as a <code>URL</code>.
-     * 
-     * @param path the path to the meta resource, cannot be <code>null</code>.
-     * @return the resource as a {@link URL}, never <code>null</code>.
-     * @throws IllegalArgumentException if <code>path == null</code>.
-     * @throws NoSuchResourceException if the resource could not be found.
-     */
-    static URL getMetaResource(String path) throws IllegalArgumentException, NoSuchResourceException {
-
-        // Check preconditions
-        if (path == null) {
-            throw new IllegalArgumentException("path == null");
-        }
-
-        // Load the resource
-        String absPath = "/META-INF/" + path;
-        URL url = Library.class.getResource(absPath);
-
-        // Resource not found - this is fatal
-        if (url == null) {
-            Limb.log(LogLevel.ERROR, "Failed to load resource \"" + absPath + "\".");
-            throw new NoSuchResourceException("Failed to load resource \"" + absPath + "\".");
-        }
-
-        Limb.log(LogLevel.DEBUG, "Loaded \"" + absPath + "\".");
-
-        return url;
-    }
-
-    /**
-     * Retrieves a meta resource and returns it as an <code>InputStream</code>. Calling this function will not trigger initialization of the library.
-     * 
-     * @param path the path to the meta resource, cannot be <code>null</code>.
-     * @return the resource as an {@link InputStream}.
-     * @throws IllegalArgumentException if <code>path == null</code>.
-     * @throws NoSuchResourceException if the resource could not be found.
-     * @throws IOException if the stream could not be opened.
-     */
-    public static InputStream getMetaResourceAsStream(String path) throws IllegalArgumentException, NoSuchResourceException, IOException {
-        return getMetaResource(path).openStream();
+    private static String getNameAndVersion() {
+        String name = getName();
+        String version = getVersion();
+        return version == null ? name : name + " " + version;
     }
 
     /**
@@ -237,15 +85,126 @@ public final class Library {
         return VERSION;
     }
 
-    public static final void main(String[] args) {
-        if (VERSION == null) {
-            System.out.println(getName());
-        } else {
-            System.out.println(getName() + " " + getVersion());
+    private static boolean STACK_TRACE_AT_MESSAGE_LEVEL = false;
+
+    private static LogFilter LOG_FILTER;
+
+    /**
+     * Sets the locale for the complete Logdoc library.
+     * 
+     * @param newLocale the new locale, cannot be <code>null</code>.
+     * @throws UnsupportedLocaleException if the specified locale is not supported by <em>all</em> registered <code>Log</code> classes.
+     */
+    public static synchronized void setLocale(String newLocale) throws UnsupportedLocaleException {
+        Preconditions.checkArgument(newLocale == null, "newLocale == null");
+        if (!newLocale.equals(CURRENT_LOCALE)) {
+            LogCentral.setLocale(newLocale);
+            CURRENT_LOCALE = newLocale;
         }
     }
 
+    /**
+     * Sets the locale on all <em>logdoc</em> <code>Log</code> classes to the default locale.
+     */
+    public static synchronized void useDefaultLocale() {
+        setLocale(DEFAULT_LOCALE);
+    }
+
+    /**
+     * Get the current locale.
+     * 
+     * @return the locale, e.g. <code>"fr_FR"</code>; never <code>null</code>.
+     */
+    public static synchronized String getLocale() {
+        return CURRENT_LOCALE;
+    }
+
+    /**
+     * Enables or disables the display of the stack trace at the same level as the message.
+     * 
+     * @param sameLevel <code>true</code> if the stack trace should be at the same level, <code>false</code> if the stack trace should be at DEBUG level.
+     */
+    public static synchronized void setStackTraceAtMessageLevel(boolean sameLevel) {
+        STACK_TRACE_AT_MESSAGE_LEVEL = sameLevel;
+    }
+
+    /**
+     * Indicates whether the stack trace should be displayed at the same level as the message.
+     * 
+     * @return <code>true</code> if the stack trace should be at the same level, <code>false</code> if the stack trace should be at DEBUG level.
+     */
+    public static synchronized boolean isStackTraceAtMessageLevel() {
+        return STACK_TRACE_AT_MESSAGE_LEVEL;
+    }
+
+    /**
+     * Sets the current log filter.
+     * 
+     * @param logFilter the new {@link LogFilter}, cannot be <code>null</code>.
+     */
+    public static synchronized void setLogFilter(LogFilter logFilter) {
+        Preconditions.checkArgument(logFilter == null, "logFilter == null");
+        Limb.log(LogLevel.INFO, "Set LogFilter to instance of class " + logFilter.getClass().getName() + '.');
+        LOG_FILTER = logFilter;
+    }
+
+    /**
+     * Set the active <code>LogFilter</code> by class name. If the parameter is <code>null</code> then an exception is thrown. Otherwise if an instance cannot be constructed, then an instance of class
+     * {@link NullLogFilter} is used instead.
+     * 
+     * @param className the name of the {@link LogFilter} class to use, cannot be <code>null</code>.
+     */
+    public static void setLogFilterByClassName(String className) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+        Preconditions.checkArgument(className == null, "className == null");
+        LogFilter logFilter = createLogFilterByClassName(className);
+        setLogFilter(logFilter);
+    }
+
+    private static LogFilter createLogFilterByClassName(String className) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+        return (LogFilter) Class.forName(className).newInstance();
+    }
+
+    /**
+     * Returns the active <code>LogFilter</code>.
+     * 
+     * @return the current {@link LogFilter}, never <code>null</code>.
+     */
+    public static synchronized LogFilter getLogFilter() {
+        return LOG_FILTER;
+    }
+
+    /**
+     * Retrieves a meta resource and returns it as a <code>URL</code>.
+     * 
+     * @param path the path to the meta resource, cannot be <code>null</code>.
+     * @return the resource as a {@link URL}, never <code>null</code>.
+     * @throws NoSuchResourceException if the resource could not be found.
+     */
+    static URL getMetaResource(String path) throws NoSuchResourceException {
+        Preconditions.checkArgument(path == null, "path == null");
+        String absPath = "/META-INF/" + path;
+        URL url = Library.class.getResource(absPath);
+        if (url == null) {
+            Limb.log(LogLevel.ERROR, "Failed to load resource \"" + absPath + "\".");
+            throw new NoSuchResourceException("Failed to load resource \"" + absPath + "\".");
+        } else {
+            Limb.log(LogLevel.DEBUG, "Loaded \"" + absPath + "\".");
+            return url;
+        }
+    }
+
+    /**
+     * Retrieves a meta resource and returns it as an <code>InputStream</code>. Calling this function will not trigger initialization of the library.
+     * 
+     * @param path the path to the meta resource, cannot be <code>null</code>.
+     * @return the resource as an {@link InputStream}.
+     * @throws NoSuchResourceException if the resource could not be found.
+     * @throws IOException if the stream could not be opened.
+     */
+    public static InputStream getMetaResourceAsStream(String path) throws NoSuchResourceException, IOException {
+        return getMetaResource(path).openStream();
+    }
+
     private Library() {
-        // empty
     }
 }
