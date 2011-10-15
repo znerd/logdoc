@@ -3,7 +3,7 @@
   <groupId>org.znerd</groupId>
   <artifactId>logdoc</artifactId>
   <packaging>pom</packaging>
-  <version>0.20-SNAPSHOT</version>
+  <version>0.20</version>
 
   <name>Logdoc</name>
   <description>Contract-first logging tool, featuring internationalization and generation of code/web docs</description>
@@ -94,20 +94,4 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
-  <distributionManagement>
-    <repository>
-      <uniqueVersion>false</uniqueVersion>
-      <id>ArtifactoryRepository</id>
-      <name>Deli XL Artifact Repository</name>
-      <url>${artifactory.plugins.release.url}</url>
-      <layout>default</layout>
-    </repository>
-    <snapshotRepository>
-      <uniqueVersion>true</uniqueVersion>
-      <id>ArtifactoryRepository</id>
-      <name>Deli XL Artifact Repository</name>
-      <url>${artifactory.plugins.snapshot.url}/</url>
-    </snapshotRepository>
-  </distributionManagement>
 </project>
