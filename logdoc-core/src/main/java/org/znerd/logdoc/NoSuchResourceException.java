@@ -6,16 +6,13 @@ package org.znerd.logdoc;
  */
 public class NoSuchResourceException extends RuntimeException {
 
-    private static final long serialVersionUID = 8394805671837180263L;
-
     public NoSuchResourceException(String message) {
         super(message);
     }
 
     public NoSuchResourceException(String message, Throwable cause) {
-        this(message);
-        if (cause != null) {
-            initCause(cause);
-        }
+        super(message, cause);
     }
+
+    private static final long serialVersionUID = 8394805671837180263L;
 }
