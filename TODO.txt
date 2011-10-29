@@ -1,6 +1,42 @@
 ------------------------------------------------------------------------------
 
+Update the README to explain how to use the Maven plugin.
+
+------------------------------------------------------------------------------
+
+Change the sample project to use the invoker plugin:
+http://maven.apache.org/plugins/maven-invoker-plugin/
+
+------------------------------------------------------------------------------
+
+Change directory structure for XSLT files, to for example:
+
+   xslt/
+   xslt/code/
+   xslt/code/log4j/
+   xslt/docs/
+   xslt/docs/html/
+
+------------------------------------------------------------------------------
+
+Add another sample project that uses an Ant task.
+
+------------------------------------------------------------------------------
+
+Group the sample projects under one directory.
+
+------------------------------------------------------------------------------
+
 Include sources and javadoc when deploying.
+
+------------------------------------------------------------------------------
+
+Add an automated test for the Ant task. See:
+http://ant.apache.org/manual/antexternal.html
+
+------------------------------------------------------------------------------
+
+Add an automated test for the Maven task.
 
 ------------------------------------------------------------------------------
 
@@ -89,10 +125,6 @@ Share the same versions of plugins across all pom.xml files.
 
 ------------------------------------------------------------------------------
 
-Update the README to explain how to use the Maven plugin.
-
-------------------------------------------------------------------------------
-
 Make the automated test that tests the Logdoc version work.
 
 ------------------------------------------------------------------------------
@@ -102,7 +134,7 @@ See http://java.sun.com/javase/6/docs/technotes/guides/logging/
 
 ------------------------------------------------------------------------------
 
-Make the Java Logging Framework the default 'loggingFramework'.
+Make the Java Logging Framework the default 'loggingFramework' ?
 
 ------------------------------------------------------------------------------
 
