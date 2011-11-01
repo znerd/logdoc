@@ -17,6 +17,14 @@ import org.znerd.util.log.LogLevel;
  */
 public final class Library {
 
+    private static final String VERSION;
+    private static String CURRENT_LOCALE;
+    private static final String LOG_LOCALE_PROPERTY = "org.znerd.logdoc.locale";
+    public static final String DEFAULT_LOCALE = "en_US";
+    private static boolean STACK_TRACE_AT_MESSAGE_LEVEL = false;
+    private static LogFilter LOG_FILTER;
+
+
     static {
         try {
             VERSION = Library.class.getPackage().getImplementationVersion();
@@ -29,10 +37,6 @@ public final class Library {
         }
     }
 
-    private static final String VERSION;
-
-    private static String CURRENT_LOCALE;
-
     private static String determineStartupLocale() {
         String locale = System.getProperty(LOG_LOCALE_PROPERTY);
         if (locale != null && locale.trim().length() > 0) {
@@ -41,10 +45,6 @@ public final class Library {
             return DEFAULT_LOCALE;
         }
     }
-
-    private static final String LOG_LOCALE_PROPERTY = "org.znerd.logdoc.locale";
-
-    public static final String DEFAULT_LOCALE = "en_US";
 
     private static void initLogFilter() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
         String s = System.getProperty(LOG_FILTER_PROPERTY);
@@ -85,10 +85,6 @@ public final class Library {
         return VERSION;
     }
 
-    private static boolean STACK_TRACE_AT_MESSAGE_LEVEL = false;
-
-    private static LogFilter LOG_FILTER;
-
     /**
      * Sets the locale for the complete Logdoc library.
      * 
@@ -96,6 +92,7 @@ public final class Library {
      * @throws UnsupportedLocaleException if the specified locale is not supported by <em>all</em> registered <code>Log</code> classes.
      */
     public static synchronized void setLocale(String newLocale) throws UnsupportedLocaleException {
+        // TODO: Log?
         Preconditions.checkArgument(newLocale == null, "newLocale == null");
         if (!newLocale.equals(CURRENT_LOCALE)) {
             LogCentral.setLocale(newLocale);
