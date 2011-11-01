@@ -25,6 +25,7 @@
     <log4j.version>1.2.15</log4j.version>
     <maven.version>3.0.3</maven.version>
     <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
+    <maven-eclipse-plugin.version>2.8</maven-eclipse-plugin.version> <!-- TODO: Upgrade to 2.9 as soon as it is available, to get rid of the cacheFile workaround, see http://jira.codehaus.org/browse/MCHECKSTYLE-159 -->
     <maven-jar-plugin.version>2.3.1</maven-jar-plugin.version>
     <maven-javadoc-plugin.version>2.8</maven-javadoc-plugin.version>
     <maven-project.version>2.2.1</maven-project.version>
@@ -94,4 +95,18 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-eclipse-plugin</artifactId>
+        <version>${maven-eclipse-plugin.version}</version>
+        <configuration>
+          <downloadSources>true</downloadSources>
+          <downloadJavadocs>true</downloadJavadocs>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
