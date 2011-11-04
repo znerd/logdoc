@@ -1,5 +1,15 @@
 ------------------------------------------------------------------------------
 
+Add the possibility to truncate log messages at a certain length.
+
+------------------------------------------------------------------------------
+
+Decide on SLF4J: Should Logdoc treat it as one of the target logging frame-
+works, or as the (one and only) underlying framework. In the latter case,
+SLF4J should support Log4J, JUL and ATG as underlying loggers.
+
+------------------------------------------------------------------------------
+
 Update the README to explain how to use the Maven plugin.
 
 ------------------------------------------------------------------------------
