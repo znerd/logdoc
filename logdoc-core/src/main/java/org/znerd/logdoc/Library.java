@@ -24,6 +24,8 @@ public final class Library {
     private static boolean STACK_TRACE_AT_MESSAGE_LEVEL = false;
     private static LogFilter LOG_FILTER;
 
+    private Library() {
+    }
 
     static {
         try {
@@ -88,8 +90,10 @@ public final class Library {
     /**
      * Sets the locale for the complete Logdoc library.
      * 
-     * @param newLocale the new locale, cannot be <code>null</code>.
-     * @throws UnsupportedLocaleException if the specified locale is not supported by <em>all</em> registered <code>Log</code> classes.
+     * @param newLocale
+     *            the new locale, cannot be <code>null</code>.
+     * @throws UnsupportedLocaleException
+     *             if the specified locale is not supported by <em>all</em> registered <code>Log</code> classes.
      */
     public static synchronized void setLocale(String newLocale) throws UnsupportedLocaleException {
         // TODO: Log?
@@ -119,7 +123,8 @@ public final class Library {
     /**
      * Enables or disables the display of the stack trace at the same level as the message.
      * 
-     * @param sameLevel <code>true</code> if the stack trace should be at the same level, <code>false</code> if the stack trace should be at DEBUG level.
+     * @param sameLevel
+     *            <code>true</code> if the stack trace should be at the same level, <code>false</code> if the stack trace should be at DEBUG level.
      */
     public static synchronized void setStackTraceAtMessageLevel(boolean sameLevel) {
         STACK_TRACE_AT_MESSAGE_LEVEL = sameLevel;
@@ -137,7 +142,8 @@ public final class Library {
     /**
      * Sets the current log filter.
      * 
-     * @param logFilter the new {@link LogFilter}, cannot be <code>null</code>.
+     * @param logFilter
+     *            the new {@link LogFilter}, cannot be <code>null</code>.
      */
     public static synchronized void setLogFilter(LogFilter logFilter) {
         Preconditions.checkArgument(logFilter == null, "logFilter == null");
@@ -149,7 +155,8 @@ public final class Library {
      * Set the active <code>LogFilter</code> by class name. If the parameter is <code>null</code> then an exception is thrown. Otherwise if an instance cannot be constructed, then an instance of class
      * {@link NullLogFilter} is used instead.
      * 
-     * @param className the name of the {@link LogFilter} class to use, cannot be <code>null</code>.
+     * @param className
+     *            the name of the {@link LogFilter} class to use, cannot be <code>null</code>.
      */
     public static void setLogFilterByClassName(String className) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
         Preconditions.checkArgument(className == null, "className == null");
@@ -173,9 +180,11 @@ public final class Library {
     /**
      * Retrieves a meta resource and returns it as a <code>URL</code>.
      * 
-     * @param path the path to the meta resource, cannot be <code>null</code>.
+     * @param path
+     *            the path to the meta resource, cannot be <code>null</code>.
      * @return the resource as a {@link URL}, never <code>null</code>.
-     * @throws NoSuchResourceException if the resource could not be found.
+     * @throws NoSuchResourceException
+     *             if the resource could not be found.
      */
     static URL getMetaResource(String path) throws NoSuchResourceException {
         Preconditions.checkArgument(path == null, "path == null");
@@ -193,15 +202,15 @@ public final class Library {
     /**
      * Retrieves a meta resource and returns it as an <code>InputStream</code>. Calling this function will not trigger initialization of the library.
      * 
-     * @param path the path to the meta resource, cannot be <code>null</code>.
+     * @param path
+     *            the path to the meta resource, cannot be <code>null</code>.
      * @return the resource as an {@link InputStream}.
-     * @throws NoSuchResourceException if the resource could not be found.
-     * @throws IOException if the stream could not be opened.
+     * @throws NoSuchResourceException
+     *             if the resource could not be found.
+     * @throws IOException
+     *             if the stream could not be opened.
      */
     public static InputStream getMetaResourceAsStream(String path) throws NoSuchResourceException, IOException {
         return getMetaResource(path).openStream();
-    }
-
-    private Library() {
     }
 }
