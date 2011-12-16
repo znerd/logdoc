@@ -1,8 +1,9 @@
-target
-META-INF
 *.swp
+.checkstyle
 .classpath
 .externalToolBuilders
 .project
 .settings
+META-INF
 maven-eclipse.xml
+target
