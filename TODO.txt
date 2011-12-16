@@ -1,5 +1,30 @@
 ------------------------------------------------------------------------------
 
+Make it possible to configure the logging framework at runtime. E.g.:
+
+   Logdoc.setLoggingFramework(LoggingFramework.LOG4J);
+
+------------------------------------------------------------------------------
+
+When 'loggingFramework' is set, then generate a piece of code like this in the
+generated Log class:
+
+   static {
+      Logdoc.setLoggingFramework(LoggingFramework.LOG4J);
+   }
+
+------------------------------------------------------------------------------
+
+Separate Maven plugins:
+- one Mojo for generating code
+- one Mojo for generating documentation
+
+------------------------------------------------------------------------------
+
+Add support for SLF4J.
+
+------------------------------------------------------------------------------
+
 Add the possibility to truncate log messages at a certain length.
 
 ------------------------------------------------------------------------------
@@ -100,12 +125,6 @@ Print the Logdoc version when logging at INFO level. So for example when
 using:
 
    ant -verbose
-
-------------------------------------------------------------------------------
-
-Separate Maven plugins:
-- one Mojo for generating code
-- one Mojo for generating documentation
 
 ------------------------------------------------------------------------------
 
