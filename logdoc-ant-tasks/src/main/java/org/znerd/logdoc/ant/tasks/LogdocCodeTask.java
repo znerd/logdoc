@@ -3,7 +3,7 @@ package org.znerd.logdoc.ant.tasks;
 
 import java.io.File;
 
-import org.znerd.logdoc.LoggingFramework;
+import org.znerd.logdoc.LogFramework;
 import org.znerd.logdoc.gen.CodeGenerator;
 import org.znerd.logdoc.gen.Generator;
 import org.znerd.util.text.TextUtils;
@@ -21,8 +21,8 @@ public final class LogdocCodeTask extends AbstractLogdocTask {
         if (TextUtils.isEmpty(loggingFramework)) {
             throw new IllegalArgumentException("loggingFramework is empty");
         }
-        _loggingFramework = LoggingFramework.valueOf(loggingFramework.trim().toUpperCase());
+        _loggingFramework = LogFramework.valueOf(loggingFramework.trim().toUpperCase());
     }
     
-    private LoggingFramework _loggingFramework = LoggingFramework.LOG4J;
+    private LogFramework _loggingFramework = LogFramework.LOG4J;
 }

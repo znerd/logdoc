@@ -11,7 +11,7 @@ import javax.xml.transform.dom.DOMSource;
 
 import org.w3c.dom.Document;
 import org.znerd.logdoc.LogDef;
-import org.znerd.logdoc.LoggingFramework;
+import org.znerd.logdoc.LogFramework;
 import org.znerd.util.log.Limb;
 import org.znerd.util.log.LogLevel;
 
@@ -20,26 +20,25 @@ import org.znerd.util.log.LogLevel;
  */
 public final class CodeGenerator extends Generator {
 
-    public CodeGenerator(File sourceDir, File destDir, LoggingFramework loggingFramework) throws IllegalArgumentException {
+    public CodeGenerator(File sourceDir, File destDir, LogFramework loggingFramework) throws IllegalArgumentException {
         super(sourceDir, destDir);
-        _loggingFramework = loggingFramework;
+        logFramework = loggingFramework;
     }
     
-    private final LoggingFramework _loggingFramework;
+    private final LogFramework logFramework;
 
     @Override
     protected void generateImpl(LogDef logDef, File destDir) throws IOException {
         String domainPath = logDef.getDomainName().replace(".", "/");
         File outDir = new File(destDir, domainPath);
 
-        Limb.log(LogLevel.INFO, "Generating code for " + _loggingFramework.name() + " logging framework.");
-        Processor processor = new Processor(logDef, outDir, _loggingFramework);
+        Limb.log(LogLevel.INFO, "Generating code for " + logFramework.name() + " logging framework.");
+        Processor processor = new Processor(logDef, outDir, logFramework);
         processor.process();
     }
 
     static class Processor {
-
-        Processor(LogDef logDef, File outDir, LoggingFramework loggingFramework) {
+        Processor(LogDef logDef, File outDir, LogFramework loggingFramework) {
             _def = logDef;
             _outDir = outDir;
             _target = loggingFramework.name().toLowerCase();

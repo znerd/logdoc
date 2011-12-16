@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+import org.znerd.logdoc.bridges.LogBridge;
 import org.znerd.logdoc.internal.LogCentral;
 import org.znerd.util.Preconditions;
 import org.znerd.util.log.Limb;
@@ -17,10 +18,13 @@ import org.znerd.util.log.LogLevel;
  */
 public final class Library {
 
+    public static final String DEFAULT_LOCALE = "en_US";
+    public static final LogFramework DEFAULT_LOG_FRAMEWORK = LogFramework.LOG4J;
     private static final String VERSION;
     private static String CURRENT_LOCALE;
+    private static LogFramework CURRENT_LOG_FRAMEWORK;
     private static final String LOG_LOCALE_PROPERTY = "org.znerd.logdoc.locale";
-    public static final String DEFAULT_LOCALE = "en_US";
+    private static final String LOG_FRAMEWORK_PROPERTY = "org.znerd.logdoc.framework";
     private static boolean STACK_TRACE_AT_MESSAGE_LEVEL = false;
     private static LogFilter LOG_FILTER;
 
@@ -31,6 +35,7 @@ public final class Library {
         try {
             VERSION = Library.class.getPackage().getImplementationVersion();
             CURRENT_LOCALE = determineStartupLocale();
+            CURRENT_LOG_FRAMEWORK = determineStartupLogFramework();
             initLogFilter();
         } catch (Throwable cause) {
             String message = "Failed to initialize " + Library.class.getName() + " class.";
@@ -41,10 +46,19 @@ public final class Library {
 
     private static String determineStartupLocale() {
         String locale = System.getProperty(LOG_LOCALE_PROPERTY);
-        if (locale != null && locale.trim().length() > 0) {
-            return locale;
-        } else {
+        if (locale == null || locale.trim().length() < 1) {
             return DEFAULT_LOCALE;
+        } else {
+            return locale;
+        }
+    }
+
+    private static LogFramework determineStartupLogFramework() {
+        String logFrameworkName = System.getProperty(LOG_FRAMEWORK_PROPERTY);
+        if (logFrameworkName == null || logFrameworkName.trim().length() < 1) {
+            return DEFAULT_LOG_FRAMEWORK;
+        } else {
+            return LogFramework.valueOf(logFrameworkName);
         }
     }
 
@@ -118,6 +132,35 @@ public final class Library {
      */
     public static synchronized String getLocale() {
         return CURRENT_LOCALE;
+    }
+
+    /**
+     * Get the current logging framework used.
+     * 
+     * @return the logging framework, never <code>null</code>.
+     */
+    public static synchronized LogFramework getLogFramework() {
+        return CURRENT_LOG_FRAMEWORK;
+    }
+    
+    /**
+     * Get the current logging bridge.
+     * 
+     * @return the logging bridge, never <code>null</code>.
+     */
+    public static LogBridge getLogBridge() {
+        return getLogFramework().getLogBridge();
+    }
+
+    /**
+     * Sets the logging framework to be used.
+     * 
+     * @param logFramework
+     *            the {@link LogFramework} to use, cannot be <code>null</code>.
+     */
+    public static synchronized void setLogFramework(LogFramework logFramework) {
+        Preconditions.checkArgument(logFramework == null, "logFramework == null");
+        CURRENT_LOG_FRAMEWORK = logFramework;
     }
 
     /**

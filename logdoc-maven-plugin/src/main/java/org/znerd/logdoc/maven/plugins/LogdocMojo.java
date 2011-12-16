@@ -8,7 +8,7 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 
-import org.znerd.logdoc.LoggingFramework;
+import org.znerd.logdoc.LogFramework;
 import org.znerd.logdoc.gen.CodeGenerator;
 import org.znerd.logdoc.gen.DocsGenerator;
 import org.znerd.logdoc.gen.Generator;
@@ -48,8 +48,8 @@ public class LogdocMojo extends AbstractMojo {
         }
     }
     
-    private LoggingFramework loggingFrameworkEnum() {
-        return LoggingFramework.valueOf(_loggingFramework.toUpperCase());
+    private LogFramework loggingFrameworkEnum() {
+        return LogFramework.valueOf(_loggingFramework.toUpperCase());
     }
 
     private void markGeneratedSourcesForCompilation() {
