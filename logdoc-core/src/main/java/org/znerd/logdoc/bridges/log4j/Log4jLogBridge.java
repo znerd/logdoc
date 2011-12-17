@@ -5,7 +5,6 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 import org.znerd.logdoc.bridges.LogBridge;
-import org.znerd.logdoc.internal.log4j.CustomLevel;
 import org.znerd.util.log.LogLevel;
 
 public final class Log4jLogBridge extends LogBridge {
@@ -54,17 +53,9 @@ public final class Log4jLogBridge extends LogBridge {
     }
 
     @Override
-    public void log(String domain, String groupId, String entryId, LogLevel level, String message, Throwable exception) {
+    public void log(String fqcn, String domain, String groupId, String entryId, LogLevel level, String message, Throwable exception) {
         Logger logger = getLogger(domain, groupId, entryId);
         Priority log4jPriority = toLog4jPriority(level);
-        log(logger, log4jPriority, message, exception);
-    }
-
-    private void log(Logger logger, Priority priority, String message, Throwable exception) {
-        if (exception == null) {
-            logger.log(priority, message);
-        } else {
-            logger.log(priority, message, exception);
-        }
+        logger.log(fqcn, log4jPriority, message, exception);
     }
 }

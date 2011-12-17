@@ -36,7 +36,7 @@ public final class AtgLogBridge extends LogBridge {
     }
 
     @Override
-    public void log(String domain, String groupId, String entryId, LogLevel level, String message, Throwable exception) {
+    public void log(String fqcn, String domain, String groupId, String entryId, LogLevel level, String message, Throwable exception) {
         ApplicationLogging logger = getApplicationLogging(domain, groupId);
         log(logger, entryId, level, message, exception);
     }

@@ -1,5 +1,5 @@
 // Copyright 2011, Deli XL B.V. (Netherlands)
-package org.znerd.logdoc.internal.log4j;
+package org.znerd.logdoc.bridges.log4j;
 
 import org.apache.log4j.Level;
 

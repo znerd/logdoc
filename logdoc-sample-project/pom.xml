@@ -19,11 +19,6 @@
       <artifactId>logdoc-core</artifactId>
       <version>${project.parent.version}</version>
     </dependency>
-    <dependency>
-      <groupId>atg</groupId>
-      <artifactId>das</artifactId>
-      <version>${atg.version}</version>
-    </dependency>
   </dependencies>
 
   <build>
@@ -39,7 +34,7 @@
               <goal>java</goal>
             </goals>
             <configuration>
-              <loggingFramework>atg</loggingFramework>
+              <loggingFramework>log4j</loggingFramework>
             </configuration>
           </execution>
         </executions>

@@ -13,8 +13,8 @@ public final class LogFacade {
         return Library.getLogBridge().shouldLog(domain, groupId, entryId, level);
     }
 
-    public static void log(String domain, String groupId, String entryId, LogLevel level, String message, Throwable exception) {
+    public static void log(String fqcn, String domain, String groupId, String entryId, LogLevel level, String message, Throwable exception) {
         LogBridge logBridge = Library.getLogBridge();
-        logBridge.log(domain, groupId, entryId, level, message, exception);
+        logBridge.log(fqcn, domain, groupId, entryId, level, message, exception);
     }
 }
