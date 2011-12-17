@@ -1,5 +1,5 @@
 // See the COPYRIGHT file for copyright and license information
-package org.znerd.logdoc.bridges.log4j;
+package org.znerd.logdoc.log4j;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
