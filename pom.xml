@@ -10,8 +10,10 @@
   <url>https://github.com/znerd/logdoc</url>
 
   <modules>
-    <module>logdoc-core</module>
     <module>logdoc-ant-tasks</module>
+    <module>logdoc-atg</module>
+    <module>logdoc-core</module>
+    <module>logdoc-log4j</module>
     <module>logdoc-maven-plugin</module>
     <module>logdoc-sample-project</module>
   </modules>

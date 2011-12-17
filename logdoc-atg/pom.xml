@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.znerd</groupId>
-  <artifactId>logdoc-maven-plugin</artifactId>
-  <packaging>maven-plugin</packaging>
+  <artifactId>logdoc-atg</artifactId>
+  <packaging>jar</packaging>
 
-  <name>Logdoc Maven plugin</name>
+  <name>Logdoc ATG Support</name>
 
   <parent>
     <groupId>org.znerd</groupId>
@@ -19,20 +19,9 @@
       <version>${project.parent.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-plugin-api</artifactId>
-      <version>${maven.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-project</artifactId>
-      <version>${maven-project.version}</version>
-    </dependency>
-    <dependency>
       <groupId>atg</groupId>
       <artifactId>das</artifactId>
       <version>${atg.version}</version>
-      <scope>provided</scope>
     </dependency>
   </dependencies>
 </project>
