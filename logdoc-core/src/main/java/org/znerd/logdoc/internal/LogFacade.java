@@ -2,7 +2,7 @@
 package org.znerd.logdoc.internal;
 
 import org.znerd.logdoc.Library;
-import org.znerd.logdoc.bridges.LogBridge;
+import org.znerd.logdoc.LogBridge;
 import org.znerd.util.log.LogLevel;
 
 public final class LogFacade {

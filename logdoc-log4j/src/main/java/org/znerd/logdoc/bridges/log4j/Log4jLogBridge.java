@@ -4,7 +4,7 @@ package org.znerd.logdoc.bridges.log4j;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
-import org.znerd.logdoc.bridges.LogBridge;
+import org.znerd.logdoc.LogBridge;
 import org.znerd.util.log.LogLevel;
 
 public final class Log4jLogBridge extends LogBridge {

@@ -11,19 +11,15 @@ import javax.xml.transform.dom.DOMSource;
 
 import org.w3c.dom.Document;
 import org.znerd.logdoc.LogDef;
-import org.znerd.logdoc.LogFramework;
 import org.znerd.util.log.Limb;
 import org.znerd.util.log.LogLevel;
 
 /**
- * Code generator. Transforms Logdoc input files to programming code.
+ * Code generator that transforms Logdoc input files to programming code.
  */
 public final class CodeGenerator extends Generator {
-    private final LogFramework logFramework;
-
-    public CodeGenerator(File sourceDir, File destDir, LogFramework logFramework) {
+    public CodeGenerator(File sourceDir, File destDir) {
         super(sourceDir, destDir);
-        this.logFramework = logFramework;
     }
 
     @Override
@@ -31,8 +27,8 @@ public final class CodeGenerator extends Generator {
         String domainPath = logDef.getDomainName().replace(".", "/");
         File outDir = new File(destDir, domainPath);
 
-        Limb.log(LogLevel.INFO, "Generating code for " + logFramework.name() + " logging framework.");
-        Processor processor = new Processor(logDef, outDir, logFramework);
+        Limb.log(LogLevel.INFO, "Generating code.");
+        Processor processor = new Processor(logDef, outDir);
         processor.process();
     }
 
@@ -41,7 +37,7 @@ public final class CodeGenerator extends Generator {
         private final File outDir;
         private final String target;
 
-        Processor(LogDef logDef, File outDir, LogFramework logFramework) {
+        Processor(LogDef logDef, File outDir) {
             this.def = logDef;
             this.outDir = outDir;
             this.target = "code";

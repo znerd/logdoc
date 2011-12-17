@@ -1,7 +1,7 @@
 // See the COPYRIGHT file for copyright and license information
 package org.znerd.logdoc.bridges.atg;
 
-import org.znerd.logdoc.bridges.LogBridge;
+import org.znerd.logdoc.LogBridge;
 import org.znerd.util.log.LogLevel;
 
 import atg.nucleus.logging.ApplicationLogging;

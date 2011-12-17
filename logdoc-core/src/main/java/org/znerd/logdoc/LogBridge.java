@@ -1,5 +1,5 @@
 // See the COPYRIGHT file for copyright and license information
-package org.znerd.logdoc.bridges;
+package org.znerd.logdoc;
 
 import org.znerd.util.log.LogLevel;
 
