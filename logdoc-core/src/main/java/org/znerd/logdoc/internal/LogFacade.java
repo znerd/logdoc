@@ -6,6 +6,9 @@ import org.znerd.logdoc.bridges.LogBridge;
 import org.znerd.util.log.LogLevel;
 
 public final class LogFacade {
+
+    // TODO: org.znerd.logdoc.Library.isStackTraceAtMessageLevel() ? org.znerd.util.ExceptionUtils.getRootCause(_exception) : null);
+
     private LogFacade() {
     }
 

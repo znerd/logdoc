@@ -27,6 +27,12 @@
       <artifactId>maven-project</artifactId>
       <version>${maven-project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>atg</groupId>
+      <artifactId>das</artifactId>
+      <version>${atg.version}</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
   <build>
     <finalName>${project.parent.artifactId}-${project.artifactId}</finalName>

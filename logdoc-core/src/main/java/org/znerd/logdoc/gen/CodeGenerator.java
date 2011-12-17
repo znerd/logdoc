@@ -19,13 +19,12 @@ import org.znerd.util.log.LogLevel;
  * Code generator. Transforms Logdoc input files to programming code.
  */
 public final class CodeGenerator extends Generator {
-
-    public CodeGenerator(File sourceDir, File destDir, LogFramework loggingFramework) throws IllegalArgumentException {
-        super(sourceDir, destDir);
-        logFramework = loggingFramework;
-    }
-    
     private final LogFramework logFramework;
+
+    public CodeGenerator(File sourceDir, File destDir, LogFramework logFramework) {
+        super(sourceDir, destDir);
+        this.logFramework = logFramework;
+    }
 
     @Override
     protected void generateImpl(LogDef logDef, File destDir) throws IOException {
@@ -38,20 +37,20 @@ public final class CodeGenerator extends Generator {
     }
 
     static class Processor {
-        Processor(LogDef logDef, File outDir, LogFramework loggingFramework) {
-            _def = logDef;
-            _outDir = outDir;
-            _target = loggingFramework.name().toLowerCase();
+        private final LogDef def;
+        private final File outDir;
+        private final String target;
+
+        Processor(LogDef logDef, File outDir, LogFramework logFramework) {
+            this.def = logDef;
+            this.outDir = outDir;
+            this.target = "code";
         }
 
-        private final LogDef _def;
-        private final File _outDir;
-        private final String _target;
-
         void process() throws IOException {
-            transformToCode(_target + '/', "Log");
+            transformToCode(target + '/', "Log");
             transformToCode("", "TranslationBundle");
-            for (Map.Entry<String, Document> entry : _def.getTranslations().entrySet()) {
+            for (Map.Entry<String, Document> entry : def.getTranslations().entrySet()) {
                 String locale = entry.getKey();
                 Document translationXML = entry.getValue();
                 transformToCodeForLocale(locale, translationXML);
@@ -59,32 +58,32 @@ public final class CodeGenerator extends Generator {
         }
 
         private void transformToCode(String xsltSubDir, String className) throws IOException {
-            final Source source = new DOMSource(_def.getXML());
+            final Source source = new DOMSource(def.getXML());
             final String xsltPath = xsltSubDir + "log_to_" + className + "_java" + ".xslt";
             final String outFileName = className + ".java";
-            final String domainName = _def.getDomainName();
-            final String accessLevel = _def.isPublic() ? "public" : "protected";
+            final String domainName = def.getDomainName();
+            final String accessLevel = def.isPublic() ? "public" : "protected";
 
             final Map<String, String> xsltParams = new HashMap<String, String>();
             xsltParams.put("package_name", domainName);
             xsltParams.put("accesslevel", accessLevel);
 
-            new Xformer(_def).transform(source, xsltPath, xsltParams, _outDir, outFileName);
+            new Xformer(def).transform(source, xsltPath, xsltParams, outDir, outFileName);
         }
 
         private void transformToCodeForLocale(String locale, Document translationXML) throws IOException {
             final Source source = new DOMSource(translationXML);
             final String xsltPath = "translation-bundle_to_java.xslt";
             final String outFileName = "TranslationBundle_" + locale + ".java";
-            final String domainName = _def.getDomainName();
-            final String accesslevel = _def.isPublic() ? "public" : "protected";
+            final String domainName = def.getDomainName();
+            final String accesslevel = def.isPublic() ? "public" : "protected";
 
             final Map<String, String> xsltParams = new HashMap<String, String>();
             xsltParams.put("package_name", domainName);
             xsltParams.put("accesslevel", accesslevel);
             xsltParams.put("locale", locale);
 
-            new Xformer(_def).transform(source, xsltPath, xsltParams, _outDir, outFileName);
+            new Xformer(def).transform(source, xsltPath, xsltParams, outDir, outFileName);
         }
     }
 }
