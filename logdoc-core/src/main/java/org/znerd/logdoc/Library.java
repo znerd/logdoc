@@ -167,7 +167,7 @@ public final class Library {
      * Enables or disables the display of the stack trace at the same level as the message.
      * 
      * @param sameLevel
-     *            <code>true</code> if the stack trace should be at the same level, <code>false</code> if the stack trace should be at DEBUG level.
+     *            <code>true</code> if the stack trace should be at the same level, <code>false</code> if the stack trace should be at LOG4J_DEBUG_LEVEL level.
      */
     public static synchronized void setStackTraceAtMessageLevel(boolean sameLevel) {
         STACK_TRACE_AT_MESSAGE_LEVEL = sameLevel;
@@ -176,7 +176,7 @@ public final class Library {
     /**
      * Indicates whether the stack trace should be displayed at the same level as the message.
      * 
-     * @return <code>true</code> if the stack trace should be at the same level, <code>false</code> if the stack trace should be at DEBUG level.
+     * @return <code>true</code> if the stack trace should be at the same level, <code>false</code> if the stack trace should be at LOG4J_DEBUG_LEVEL level.
      */
     public static synchronized boolean isStackTraceAtMessageLevel() {
         return STACK_TRACE_AT_MESSAGE_LEVEL;

@@ -13,23 +13,14 @@ public abstract class AbstractLog {
 
         DEBUG = Level.DEBUG;
         INFO = Level.INFO;
-        NOTICE = new CustomLevel(noticeInt, "NOTICE", 5);
+        NOTICE = new CustomLevel(noticeInt, "LOG4J_NOTICE_LEVEL", 5);
         WARNING = Level.WARN;
         ERROR = Level.ERROR;
         FATAL = Level.FATAL;
     }
 
     public static final Level DEBUG, INFO, NOTICE, WARNING, ERROR, FATAL;
-
+    
     protected AbstractLog() {
-    }
-
-    private static final class CustomLevel extends Level {
-
-        private static final long serialVersionUID = 1909887126346631322L;
-
-        private CustomLevel(int value, String name, int syslogEquivalent) {
-            super(value, name, syslogEquivalent);
-        }
     }
 }

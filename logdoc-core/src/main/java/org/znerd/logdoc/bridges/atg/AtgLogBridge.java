@@ -1,10 +1,7 @@
 // See the COPYRIGHT file for copyright and license information
 package org.znerd.logdoc.bridges.atg;
 
-import java.util.Map;
-
 import org.znerd.logdoc.bridges.LogBridge;
-import org.znerd.logdoc.internal.AbstractTranslationBundle;
 import org.znerd.util.log.LogLevel;
 
 import atg.nucleus.logging.ApplicationLogging;
@@ -22,20 +19,11 @@ public final class AtgLogBridge extends LogBridge {
     }
 
     @Override
-    public void log(String domain, String groupId, String entryId, LogLevel level, AbstractTranslationBundle translationBundle, Throwable exception, Map<String, Object> parameters) {
-        String componentId = domain + '.' + groupId;
-        ApplicationLogging logger = getApplicationLogging(componentId);
-        if (isLevelEnabled(logger, level)) {
-            log(logger, entryId, level, translationBundle, exception);
-        }
+    public boolean shouldLog(String domain, String groupId, String entryId, LogLevel level) {
+        return shouldLog(getApplicationLogging(domain, groupId), level);
     }
 
-    private ApplicationLogging getApplicationLogging(String componentId) {
-        ApplicationLoggingImpl logger = new ApplicationLoggingImpl(componentId);
-        return logger;
-    }
-
-    private boolean isLevelEnabled(ApplicationLogging logger, LogLevel level) {
+    private boolean shouldLog(ApplicationLogging logger, LogLevel level) {
         if (LogLevel.DEBUG.equals(level)) {
             return logger.isLoggingDebug();
         } else if (LogLevel.INFO.equals(level) || LogLevel.NOTICE.equals(level)) {
@@ -47,15 +35,62 @@ public final class AtgLogBridge extends LogBridge {
         }
     }
 
-    private void log(ApplicationLogging logger, String entryId, LogLevel level, AbstractTranslationBundle translationBundle, Throwable exception) {
+    @Override
+    public void log(String domain, String groupId, String entryId, LogLevel level, String message, Throwable exception) {
+        ApplicationLogging logger = getApplicationLogging(domain, groupId);
+        log(logger, entryId, level, message, exception);
+    }
+
+    private ApplicationLogging getApplicationLogging(String domain, String groupId) {
+        String componentId = domain + '.' + groupId;
+        return new ApplicationLoggingImpl(componentId);
+    }
+
+    private void log(ApplicationLogging logger, String entryId, LogLevel level, String message, Throwable exception) {
         if (LogLevel.DEBUG.equals(level)) {
-            logger.logDebug(message, exception);
-        } else if (LogLevel.INFO.equals(level) || LogLevel.NOTICE.equals(level)) {
-            return logger.isLoggingInfo();
+            logDebug(logger, message, exception);
+        } else if (LogLevel.INFO.equals(level)) {
+            logInfo(logger, message, exception);
+        } else if (LogLevel.NOTICE.equals(level)) {
+            logInfo(logger, "(LOG4J_NOTICE_LEVEL) " + message, exception);
         } else if (LogLevel.WARNING.equals(level)) {
-            return logger.isLoggingWarning();
+            logWarning(logger, message, exception);
+        } else if (LogLevel.ERROR.equals(level)) {
+            logError(logger, message, exception);
         } else {
-            return logger.isLoggingError();
+            logError(logger, "(LOG4J_FATAL_LEVEL) " + message, exception);
+        }
+    }
+
+    private void logDebug(ApplicationLogging logger, String message, Throwable exception) {
+        if (exception == null) {
+            logger.logDebug(message);
+        } else {
+            logger.logDebug(message, exception);
+        }
+    }
+
+    private void logInfo(ApplicationLogging logger, String message, Throwable exception) {
+        if (exception == null) {
+            logger.logInfo(message);
+        } else {
+            logger.logInfo(message, exception);
+        }
+    }
+
+    private void logWarning(ApplicationLogging logger, String message, Throwable exception) {
+        if (exception == null) {
+            logger.logWarning(message);
+        } else {
+            logger.logWarning(message, exception);
+        }
+    }
+
+    private void logError(ApplicationLogging logger, String message, Throwable exception) {
+        if (exception == null) {
+            logger.logError(message);
+        } else {
+            logger.logError(message, exception);
         }
     }
 }

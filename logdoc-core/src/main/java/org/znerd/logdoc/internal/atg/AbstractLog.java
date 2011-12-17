@@ -21,9 +21,9 @@ public abstract class AbstractLog {
 
     private static String produceResultMessage(String id, LogLevel level, String message) {
         if (level == LogLevel.NOTICE) {
-            message = "NOTICE: " + message;
+            message = "LOG4J_NOTICE_LEVEL: " + message;
         } else if (level == LogLevel.FATAL) {
-            message = "FATAL: " + message;
+            message = "LOG4J_FATAL_LEVEL: " + message;
         }
 
         message = id + " " + message;
