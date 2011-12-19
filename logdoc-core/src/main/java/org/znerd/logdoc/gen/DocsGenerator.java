@@ -17,7 +17,7 @@ import org.znerd.logdoc.LogDef;
 import org.znerd.logdoc.NoSuchResourceException;
 
 /**
- * Documentation generator.
+ * Logdoc documentation generator.
  */
 public final class DocsGenerator extends Generator {
 
@@ -90,7 +90,7 @@ public final class DocsGenerator extends Generator {
             String xsltPath = "log_to" + stylesheetName + "_html.xslt";
             String outFileName = outName + ".html";
 
-            new Xformer(_def).transform(source, xsltPath, xsltParams, _destDir, outFileName);
+            new Xformer(_def, "docs/").transform(source, xsltPath, xsltParams, _destDir, outFileName);
         }
 
         private final void generateCssFile() throws NoSuchResourceException, IOException {

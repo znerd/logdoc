@@ -6,7 +6,7 @@
 * Added support for JUL (Java Util Logging).
 * Log4J support is now split out to a separate JAR: logdoc-log4j.jar.
 * ATG support is now split out to a separate JAR: logdoc-atg.jar.
-* XSLT for code generation is now under xslt/code/.
+* XSLT is now split between xslt/code/ and xslt/docs/.
 
 
 --- CHANGES INTRODUCED IN LOGDOC 0.20 ----------------------------------------

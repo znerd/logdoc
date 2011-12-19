@@ -24,186 +24,118 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import org.znerd.logdoc.internal.Resolver;
+import org.znerd.util.Preconditions;
 
 /**
  * Log definition. Typically read from a <code>log.xml</code> file.
  */
 public final class LogDef {
 
-    /**
-     * The <code>Schema</code> for validating log XML files.
-     */
-    private static final Schema LOG_SCHEMA;
-
-    /**
-     * The <code>Schema</code> for validating translation bundle XML files.
-     */
-    private static final Schema TB_SCHEMA;
-
-    /**
-     * Initializes this class.
-     */
-    static {
-        String schemaName = "log";
-        try {
-            LOG_SCHEMA = loadSchema(schemaName);
-
-            schemaName = "translation-bundle";
-            TB_SCHEMA = loadSchema(schemaName);
-        } catch (Throwable cause) {
-            throw new Error("Failed to load LogDef class, because \"" + schemaName + "\" schema could not be loaded.", cause);
-        }
-    }
-
-    /**
-     * Loads a <code>Schema</code>.
-     * 
-     * @return the loaded {@link Schema}, never <code>null</code>.
-     * @throws IllegalArgumentException if <code>name == null</code>.
-     * @throws IOException if the schema could not be loaded due to an I/O error.
-     * @throws SAXException if the schema could not be loaded.
-     */
-    private static Schema loadSchema(String name) throws IllegalArgumentException, IOException, SAXException {
-
-        // Check preconditions
-        if (name == null) {
-            throw new IllegalArgumentException("name == null");
-        }
-
-        // We need a factory first
-        SchemaFactory factory = SchemaFactory.newInstance(W3C_XML_SCHEMA_NS_URI);
-
-        // Create a Source for the XSD file
-        String xsdPath = "xsd/" + name + ".xsd";
-        InputStream xsdStream = Library.getMetaResourceAsStream(xsdPath);
-        Source xsdSource = new StreamSource(xsdStream);
-
-        return factory.newSchema(xsdSource);
-    }
-    
+    private static final Schema LOG_SCHEMA = loadSchema("log");;
+    private static final Schema TRANSLATION_BUNDLE_SCHEMA = loadSchema("translation-bundle");
     private static final String W3C_XML_SCHEMA_NS_URI = "http://www.w3.org/2001/XMLSchema";
+    
+    private final File sourceDir;
+    private final Document xml;
+    private final String domainName;
+    private final boolean publicLog;
+    private final Map<String, Document> translations;
+    private final List<Group> groups;
 
-    /**
-     * Validates the specified XML document against the specified schema.
-     * 
-     * @param schema the {@link Schema} to validate against, cannot be <code>null</code>.
-     * @param document the XML {@link Document} to validate, cannot be <code>null</code>.
-     * @throws IllegalArgumentException if <code>schema == null || document == null</code>.
-     * @throws IOException in case of an I/O error.
-     * @throws SAXException in case the validation encounters an issue.
-     */
-    private static void validate(Schema schema, Document document) throws IllegalArgumentException, IOException, SAXException {
-
-        // Check preconditions
-        if (schema == null) {
-            throw new IllegalArgumentException("schema == null");
-        } else if (document == null) {
-            throw new IllegalArgumentException("document == null");
-        }
-
-        // Validate
-        Validator validator = schema.newValidator();
-        validator.validate(new DOMSource(document));
-    }
-
-    /**
-     * Loads a log definition from a specified directory.
-     * 
-     * @param dir the directory to load the log definition from, cannot be <code>null</code>.
-     * @throws IllegalArgumentException if <code>dir == null</code>, or if it is not a directory.
-     * @throws IOException if the definition could not be loaded.
-     * @throws SAXException if definition(s) could not be validated successfully.
-     */
-    public static final LogDef loadFromDirectory(File dir) throws IllegalArgumentException, IOException, SAXException {
-        return new LogDef(dir);
-    }
-
-    /**
-     * Constructs a new <code>LogDef</code>.
-     * 
-     * @param dir the directory to load the log definition from, cannot be <code>null</code>.
-     * @throws IllegalArgumentException if <code>dir == null</code>.
-     * @throws IOException if the definition(s) could not be loaded.
-     * @throws SAXException if definition(s) could not be validated successfully.
-     */
-    private LogDef(File dir) throws IllegalArgumentException, IOException, SAXException {
-
-        // Check preconditions
-        if (dir == null) {
-            throw new IllegalArgumentException("dir == null");
-        } else if (!dir.isDirectory()) {
-            throw new IOException("Path (\"" + dir.getPath() + "\") is not a directory.");
-        }
+    private LogDef(File sourceDir) throws IllegalArgumentException, IOException, SAXException {
+        Preconditions.checkArgument(sourceDir == null, "sourceDir == null");
+        Preconditions.checkArgument(!sourceDir.isDirectory(), "Path (\"" + sourceDir.getPath() + "\") is not a directory.");
 
         // Create a resolver for the specified input directory
-        _sourceDir = dir;
-        _resolver = new Resolver(dir);
+        this.sourceDir = sourceDir;
+        Resolver resolver = new Resolver(sourceDir, "");
 
         // Load the log.xml file and validate it
-        _xml = _resolver.loadInputDocument("log.xml");
-        validate(LOG_SCHEMA, _xml);
+        xml = resolver.loadInputDocument("log.xml");
+        validate(LOG_SCHEMA, xml);
 
         // Parse the domain name and determine access level
-        Element docElem = _xml.getDocumentElement();
-        _domainName = docElem.getAttribute("domain");
-        _public = Boolean.parseBoolean(docElem.getAttribute("public"));
+        Element docElem = xml.getDocumentElement();
+        domainName = docElem.getAttribute("domain");
+        publicLog = Boolean.parseBoolean(docElem.getAttribute("public"));
 
         // Load the translation bundles
-        _translations = new HashMap<String, Document>();
+        translations = new HashMap<String, Document>();
         NodeList elems = docElem.getElementsByTagName("translation-bundle");
         for (int index = 0; index < elems.getLength(); index++) {
             Element elem = (Element) elems.item(index);
             String locale = elem.getAttribute("locale");
 
-            Document tbXML = _resolver.loadInputDocument("translation-bundle-" + locale + ".xml");
-            validate(TB_SCHEMA, tbXML);
-            _translations.put(locale, tbXML);
+            Document tbXML = resolver.loadInputDocument("translation-bundle-" + locale + ".xml");
+            validate(TRANSLATION_BUNDLE_SCHEMA, tbXML);
+            translations.put(locale, tbXML);
         }
 
         // Parse the groups and entries
-        _groups = parseGroups(docElem);
+        groups = parseGroups(docElem);
     }
 
-    private final File _sourceDir;
+    private static Schema loadSchema(String name) {
+        try {
+            return loadSchemaImpl(name);
+        } catch (Throwable cause) {
+            throw new RuntimeException("Failed to load \"" + name + "\" schema.", cause);
+        }
+    }
+    
+    private static Schema loadSchemaImpl(String name) throws IOException, SAXException {
+        Preconditions.checkArgument(name == null, "name == null");
+
+        SchemaFactory schemaFactory = SchemaFactory.newInstance(W3C_XML_SCHEMA_NS_URI);
+        Source xsdSource = createXsdSource(name);
+        return schemaFactory.newSchema(xsdSource);
+    }
+    
+    private static Source createXsdSource(String name) throws IOException {
+        String xsdPath = "xsd/" + name + ".xsd";
+        InputStream xsdStream = Library.getMetaResourceAsStream(xsdPath);
+        Source xsdSource = new StreamSource(xsdStream);
+        return xsdSource;
+    }
+
+    private static void validate(Schema schema, Document document) throws IllegalArgumentException, IOException, SAXException {
+        Preconditions.checkArgument(schema == null, "schema == null");
+        Preconditions.checkArgument(document == null, "document == null");
+
+        Validator validator = schema.newValidator();
+        validator.validate(new DOMSource(document));
+    }
+
+    public static final LogDef loadFromDirectory(File dir) throws IllegalArgumentException, IOException, SAXException {
+        return new LogDef(dir);
+    }
 
     public final File getSourceDir() {
-        return _sourceDir;
+        return sourceDir;
     }
 
-    private final Resolver _resolver;
-
-    public final Resolver getResolver() {
-        return _resolver;
+    public Resolver createResolver(String basePath) {
+        return new Resolver(sourceDir, basePath);
     }
-
-    private final Document _xml;
 
     public final Document getXML() {
-        return _xml;
+        return xml;
     }
-
-    private final String _domainName;
 
     public final String getDomainName() {
-        return _domainName;
+        return domainName;
     }
-
-    private final boolean _public;
 
     public final boolean isPublic() {
-        return _public;
+        return publicLog;
     }
-
-    private final Map<String, Document> _translations;
 
     public final Map<String, Document> getTranslations() {
-        return _translations;
+        return translations;
     }
 
-    private final List<Group> _groups;
-
     public List<Group> getGroups() {
-        return _groups;
+        return groups;
     }
 
     private final List<Group> parseGroups(Element element) {

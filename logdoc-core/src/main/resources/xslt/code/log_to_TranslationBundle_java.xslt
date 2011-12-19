@@ -7,8 +7,8 @@
 	<xsl:param name="package_name" />
 	<xsl:param name="accesslevel"  />
 
-	<xsl:include href="code/shared.xslt" />
-	<xsl:include href="code/xml_to_java.xslt" />
+	<xsl:include href="shared.xslt" />
+	<xsl:include href="xml_to_java.xslt" />
 
 	<!-- Set output method -->
 	<xsl:output method="text" />

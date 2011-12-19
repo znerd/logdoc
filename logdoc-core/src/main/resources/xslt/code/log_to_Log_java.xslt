@@ -6,7 +6,7 @@
   <xsl:param name="package_name" />
   <xsl:param name="accesslevel"  />
 
-  <xsl:include href="code/shared.xslt" />
+  <xsl:include href="shared.xslt" />
 
   <xsl:output method="text" />
   

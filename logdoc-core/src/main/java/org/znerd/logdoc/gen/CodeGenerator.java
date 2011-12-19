@@ -53,7 +53,7 @@ public final class CodeGenerator extends Generator {
 
         private void transformToCode(String className) throws IOException {
             final Source source = new DOMSource(def.getXML());
-            final String xsltPath = "code/log_to_" + className + "_java" + ".xslt";
+            final String xsltPath = "log_to_" + className + "_java" + ".xslt";
             final String outFileName = className + ".java";
             final String domainName = def.getDomainName();
             final String accessLevel = def.isPublic() ? "public" : "protected";
@@ -62,12 +62,12 @@ public final class CodeGenerator extends Generator {
             xsltParams.put("package_name", domainName);
             xsltParams.put("accesslevel", accessLevel);
 
-            new Xformer(def).transform(source, xsltPath, xsltParams, outDir, outFileName);
+            new Xformer(def, "code/").transform(source, xsltPath, xsltParams, outDir, outFileName);
         }
 
         private void transformToCodeForLocale(String locale, Document translationXML) throws IOException {
             final Source source = new DOMSource(translationXML);
-            final String xsltPath = "code/translation-bundle_to_java.xslt";
+            final String xsltPath = "translation-bundle_to_java.xslt";
             final String outFileName = "TranslationBundle_" + locale + ".java";
             final String domainName = def.getDomainName();
             final String accesslevel = def.isPublic() ? "public" : "protected";
@@ -77,7 +77,7 @@ public final class CodeGenerator extends Generator {
             xsltParams.put("accesslevel", accesslevel);
             xsltParams.put("locale", locale);
 
-            new Xformer(def).transform(source, xsltPath, xsltParams, outDir, outFileName);
+            new Xformer(def, "code/").transform(source, xsltPath, xsltParams, outDir, outFileName);
         }
     }
 }

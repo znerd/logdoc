@@ -33,15 +33,6 @@ http://maven.apache.org/plugins/maven-invoker-plugin/
 
 ------------------------------------------------------------------------------
 
-Change directory structure for XSLT files, to for example:
-
-   xslt/
-   xslt/code/
-   xslt/docs/
-   xslt/docs/html/
-
-------------------------------------------------------------------------------
-
 Add another sample project that uses an Ant task.
 
 ------------------------------------------------------------------------------
