@@ -1,14 +1,5 @@
 ------------------------------------------------------------------------------
 
-Support the Java Logging Framework.
-See http://java.sun.com/javase/6/docs/technotes/guides/logging/
-
-------------------------------------------------------------------------------
-
-Make the Java Logging Framework the default?
-
-------------------------------------------------------------------------------
-
 Allow the following piece of code to be generated:
 
    static {
