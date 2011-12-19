@@ -3,7 +3,7 @@ package org.znerd.logdoc;
 
 import java.io.PrintWriter;
 
-public final class StderrLogBridge extends PrintWriterLogBridge {
+public class StderrLogBridge extends PrintWriterLogBridge {
     public StderrLogBridge() {
         super(new PrintWriter(System.err));
     }
