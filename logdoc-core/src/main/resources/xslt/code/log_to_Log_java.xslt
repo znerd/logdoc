@@ -37,7 +37,7 @@ package </xsl:text>
     private static final String FQCN = "</xsl:text>
     <xsl:value-of select="$package_name" />
     <xsl:text><![CDATA[.Log";
-    private static final Controller CONTROLLER = new Controller();
+    @SuppressWarnings("unused") private static final Controller CONTROLLER = new Controller();
     private static final java.util.HashMap<String,TranslationBundle> TRANSLATION_BUNDLES_BY_NAME = new java.util.HashMap<String,TranslationBundle>();
     private static TranslationBundle CURRENT_TRANSLATION_BUNDLE;
    
