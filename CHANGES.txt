@@ -6,6 +6,7 @@
 * Added support for JUL (Java Util Logging).
 * Log4J support is now split out to a separate JAR: logdoc-log4j.jar.
 * ATG support is now split out to a separate JAR: logdoc-atg.jar.
+* Added support for SLF4J via logdoc-slf4j.jar.
 * XSLT is now split between xslt/code/ and xslt/docs/.
 * Separate Mojos for code and docs generation.
 * Introduced AbstractLogdocMojo.

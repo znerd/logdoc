@@ -1,0 +1,27 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.znerd</groupId>
+  <artifactId>logdoc-slf4j</artifactId>
+  <packaging>jar</packaging>
+
+  <name>Logdoc SLF4J Support</name>
+
+  <parent>
+    <groupId>org.znerd</groupId>
+    <artifactId>logdoc</artifactId>
+    <version>0.21-SNAPSHOT</version>
+  </parent>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.znerd</groupId>
+      <artifactId>logdoc-core</artifactId>
+      <version>0.21-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+  </dependencies>
+</project>

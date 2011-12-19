@@ -16,6 +16,7 @@
     <module>logdoc-log4j</module>
     <module>logdoc-maven-plugin</module>
     <module>logdoc-sample-project</module>
+    <module>logdoc-slf4j</module>
   </modules>
 
   <properties>
@@ -25,6 +26,7 @@
     <commons-lang.version>2.5</commons-lang.version>
     <junit.version>4.8.2</junit.version>
     <log4j.version>1.2.15</log4j.version>
+    <slf4j.version>1.6.4</slf4j.version>
     <maven.version>3.0.3</maven.version>
     <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
     <maven-eclipse-plugin.version>2.8</maven-eclipse-plugin.version> <!-- TODO: Upgrade to 2.9 as soon as it is available, to get rid of the cacheFile workaround, see http://jira.codehaus.org/browse/MCHECKSTYLE-159 -->

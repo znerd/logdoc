@@ -1,6 +1,6 @@
 ------------------------------------------------------------------------------
 
-Allow the following piece of code to be generated:
+Allow the following piece of code to be generated?
 
    static {
       Logdoc.setLogBridge(new Log4jLogBridge());
@@ -11,16 +11,6 @@ Allow the following piece of code to be generated:
 Separate Maven plugins:
 - one Mojo for generating code
 - one Mojo for generating documentation
-
-------------------------------------------------------------------------------
-
-Add support for SLF4J.
-
-------------------------------------------------------------------------------
-
-Decide on SLF4J: Should Logdoc treat it as one of the target logging frame-
-works, or as the (one and only) underlying framework. In the latter case,
-SLF4J should support Log4J, JUL and ATG as underlying loggers.
 
 ------------------------------------------------------------------------------
 
