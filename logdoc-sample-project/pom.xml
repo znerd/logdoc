@@ -32,9 +32,6 @@
             <goals>
               <goal>java</goal>
             </goals>
-            <configuration>
-              <loggingFramework>log4j</loggingFramework>
-            </configuration>
           </execution>
         </executions>
       </plugin>
