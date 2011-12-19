@@ -72,14 +72,6 @@ Maven plugin. If possible.
 
 ------------------------------------------------------------------------------
 
-Introduce Log4JBridge do the actual logging. Let the generated code use it.
-
-------------------------------------------------------------------------------
-
-Introduce AtgLogBridge do the actual logging. Let the generated code use it.
-
-------------------------------------------------------------------------------
-
 Document the cause and resolution in the generated documentation.
 
 ------------------------------------------------------------------------------
@@ -89,14 +81,6 @@ available, then fall back to a default format that displays the parameters in
 a quoted form. E.g.:
 
    10202 transaction="FNC-5569"; label=null; grtID=null; grxID="1233890-22"
-
-------------------------------------------------------------------------------
-
-Simplify the XSLT and the resulting generated code.
-
-------------------------------------------------------------------------------
-
-Combine a lot of the XSLT in log4j/ and atg/.
 
 ------------------------------------------------------------------------------
 
@@ -112,20 +96,6 @@ Let the Maven plugin put the generated documentation in the correct location.
 ------------------------------------------------------------------------------
 
 Only allow 'exceptionClass' attribute if 'exception' attribute is also set.
-
-------------------------------------------------------------------------------
-
-Change directory structure for XSLT files, to for example:
-
-   xslt/
-   xslt/code/
-   xslt/code/log4j/
-   xslt/docs/
-   xslt/docs/html/
-
-------------------------------------------------------------------------------
-
-Refactor LogDef class, remove XSLT transformation functionality.
 
 ------------------------------------------------------------------------------
 
