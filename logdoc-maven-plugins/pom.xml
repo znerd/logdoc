@@ -2,9 +2,9 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.znerd</groupId>
   <artifactId>logdoc-maven-plugin</artifactId>
-  <packaging>maven-plugin</packaging>
+  <packaging>maven-plugins</packaging>
 
-  <name>Logdoc Maven plugin</name>
+  <name>Logdoc Maven Plugins</name>
 
   <parent>
     <groupId>org.znerd</groupId>

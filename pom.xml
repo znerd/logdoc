@@ -14,7 +14,7 @@
     <module>logdoc-atg</module>
     <module>logdoc-core</module>
     <module>logdoc-log4j</module>
-    <module>logdoc-maven-plugin</module>
+    <module>logdoc-maven-plugins</module>
     <module>logdoc-sample-project</module>
   </modules>
 
