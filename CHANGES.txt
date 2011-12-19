@@ -2,6 +2,7 @@
 
 * Logging framework can now be changed at runtime, by setting a LogBridge.
 * Generated code is no longer specific for a certain logging framework.
+* Log classes now have methods for working with diagnostic context IDs.
 * Log4J support is now split out to a separate JAR: logdoc-log4j.jar.
 * ATG support is now split out to a separate JAR: logdoc-atg.jar.
 * XSLT for code generation is now under xslt/code/.

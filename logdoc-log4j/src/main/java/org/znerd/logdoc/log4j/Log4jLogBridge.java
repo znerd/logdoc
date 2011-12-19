@@ -3,6 +3,7 @@ package org.znerd.logdoc.log4j;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.apache.log4j.NDC;
 import org.apache.log4j.Priority;
 import org.znerd.logdoc.LogBridge;
 import org.znerd.util.log.LogLevel;
@@ -22,6 +23,21 @@ public final class Log4jLogBridge extends LogBridge {
 
     public static Log4jLogBridge getInstance() {
         return SINGLETON_INSTANCE;
+    }
+
+    @Override
+    public void putContextId(String newContextId) {
+        NDC.push(newContextId);
+    }
+    
+    @Override
+    public void unputContextId() {
+        NDC.pop();
+    }
+
+    @Override
+    public String getContextId() {
+        return NDC.peek();
     }
 
     @Override

@@ -2,6 +2,7 @@
 package org.znerd.logdoc.atg;
 
 import org.znerd.logdoc.LogBridge;
+import org.znerd.logdoc.internal.ContextIdSupport;
 import org.znerd.util.log.LogLevel;
 
 import atg.nucleus.logging.ApplicationLogging;
@@ -10,12 +11,28 @@ import atg.nucleus.logging.ApplicationLoggingImpl;
 public final class AtgLogBridge extends LogBridge {
 
     private static final AtgLogBridge SINGLETON_INSTANCE = new AtgLogBridge();
+    private final ContextIdSupport contextIdSupport = new ContextIdSupport();
 
     private AtgLogBridge() {
     }
 
     public static AtgLogBridge getInstance() {
         return SINGLETON_INSTANCE;
+    }
+
+    @Override
+    public void putContextId(String newContextId) {
+        contextIdSupport.putContextId(newContextId);
+    }
+
+    @Override
+    public void unputContextId() {
+        contextIdSupport.unputContextId();
+    }
+
+    @Override
+    public String getContextId() {
+        return contextIdSupport.getContextId();
     }
 
     @Override
