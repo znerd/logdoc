@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
  * Tests modification and retrieval of the <em>locale</em> setting in the <code>Library</code> class.
  */
 public final class LibraryLocaleTest {
-    
+
     @Before
     public void setUp() {
         Library.useDefaultLocale();
@@ -18,12 +18,9 @@ public final class LibraryLocaleTest {
     @Test
     public void testChangeLocale() {
         String newLocale = "nl_NL";
-        try {
-            Library.setLocale(newLocale);
-            assertEquals(newLocale, Library.getLocale());
-        } finally {
-            Library.useDefaultLocale();
-        }
+        Library.setLocale(newLocale);
+        assertEquals(newLocale, Library.getLocale());
+        Library.useDefaultLocale();
         assertEquals(Library.DEFAULT_LOCALE, Library.getLocale());
     }
 
@@ -43,11 +40,13 @@ public final class LibraryLocaleTest {
 
     @Test
     public void testSetLocaleToNull() {
+        boolean caughtExpectedException = false;
         try {
             Library.setLocale(null);
-            fail("Expected setLocale(null) to throw an IllegalArgumentException.");
         } catch (IllegalArgumentException e) {
+            caughtExpectedException = true;
         }
+        assertTrue("Expected setLocale(null) to throw an IllegalArgumentException.", caughtExpectedException);
         assertEquals(Library.DEFAULT_LOCALE, Library.getLocale());
     }
 }

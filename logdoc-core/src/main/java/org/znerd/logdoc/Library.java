@@ -19,8 +19,8 @@ public final class Library {
 
     public static final String DEFAULT_LOCALE = "en_US";
     private static final LogBridge DEFAULT_LOG_BRIDGE = new StderrLogBridge();
-    private static final String VERSION;
-    private static String CURRENT_LOCALE;
+    private static final String VERSION = Library.class.getPackage().getImplementationVersion();
+    private static String CURRENT_LOCALE = determineStartupLocale();
     private static LogBridge CURRENT_LOG_BRIDGE = DEFAULT_LOG_BRIDGE;
     private static final String LOG_LOCALE_PROPERTY = "org.znerd.logdoc.locale";
     private static boolean STACK_TRACE_AT_MESSAGE_LEVEL = false;
@@ -30,15 +30,7 @@ public final class Library {
     }
 
     static {
-        try {
-            VERSION = Library.class.getPackage().getImplementationVersion();
-            CURRENT_LOCALE = determineStartupLocale();
-            initLogFilter();
-        } catch (Throwable cause) {
-            String message = "Failed to initialize " + Library.class.getName() + " class.";
-            Limb.log(LogLevel.FATAL, message, cause);
-            throw new RuntimeException(message, cause);
-        }
+        initLogFilter();
     }
 
     private static String determineStartupLocale() {
@@ -50,7 +42,15 @@ public final class Library {
         }
     }
 
-    private static void initLogFilter() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+    private static void initLogFilter() {
+        try {
+            initLogFilterImpl();
+        } catch (Throwable cause) {
+            throw new RuntimeException("Failed to initialize log filter.", cause);
+        }
+    }
+
+    private static void initLogFilterImpl() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
         String s = System.getProperty(LOG_FILTER_PROPERTY);
         if (s == null || s.trim().length() < 1) {
             setLogFilter(new SimpleLogFilter());

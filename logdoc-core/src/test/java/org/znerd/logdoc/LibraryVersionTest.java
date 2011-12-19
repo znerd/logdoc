@@ -1,9 +1,12 @@
 // See the COPYRIGHT file for copyright and license information
 package org.znerd.logdoc;
 
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Ignore;
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  * Tests that the version of the library is valid.
@@ -15,7 +18,7 @@ public final class LibraryVersionTest {
     public void testVersion() {
         final String version = Library.getVersion();
         final String pattern = "^0|[1-9][0-9]*(\\.0|[1-9][0-9]*)(-SNAPSHOT)?$";
-        
+
         assertVersionNotNullOrEmpty(version);
         validateVersionPattern(pattern);
         assertVersionMatchesPattern(version, pattern);
