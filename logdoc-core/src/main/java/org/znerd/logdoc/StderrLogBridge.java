@@ -19,7 +19,7 @@ public class StderrLogBridge extends LogBridge {
     }
 
     @Override
-    public void log(String fqcn, String domain, String groupId, String entryId, LogLevel level, String message, Throwable exception) {
+    public void logOneMessage(String fqcn, String domain, String groupId, String entryId, LogLevel level, String message, Throwable exception) {
         String composedMessage = composeMessage(fqcn, domain, groupId, entryId, level, message, exception);
         PrintWriter stream = getStream(fqcn, domain, groupId, entryId, level);
         log(stream, composedMessage, exception);

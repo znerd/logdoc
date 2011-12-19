@@ -6,5 +6,5 @@ import org.znerd.util.log.LogLevel;
 public abstract class LogBridge {
     public abstract boolean shouldLog(String domain, String groupId, String entryId, LogLevel level);
 
-    public abstract void log(String fqcn, String domain, String groupId, String entryId, LogLevel level, String message, Throwable exception);
+    public abstract void logOneMessage(String fqcn, String domain, String groupId, String entryId, LogLevel level, String message, Throwable exception);
 }

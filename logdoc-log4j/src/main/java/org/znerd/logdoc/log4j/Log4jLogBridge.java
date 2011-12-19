@@ -53,7 +53,7 @@ public final class Log4jLogBridge extends LogBridge {
     }
 
     @Override
-    public void log(String fqcn, String domain, String groupId, String entryId, LogLevel level, String message, Throwable exception) {
+    public void logOneMessage(String fqcn, String domain, String groupId, String entryId, LogLevel level, String message, Throwable exception) {
         Logger logger = getLogger(domain, groupId, entryId);
         Priority log4jPriority = toLog4jPriority(level);
         logger.log(fqcn, log4jPriority, message, exception);

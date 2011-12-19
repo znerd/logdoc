@@ -1,16 +1,18 @@
 ------------------------------------------------------------------------------
 
-Make it possible to configure the logging framework at runtime. E.g.:
-
-   Logdoc.setLoggingFramework(LoggingFramework.LOG4J);
+Support the Java Logging Framework.
+See http://java.sun.com/javase/6/docs/technotes/guides/logging/
 
 ------------------------------------------------------------------------------
 
-When 'loggingFramework' is set, then generate a piece of code like this in the
-generated Log class:
+Make the Java Logging Framework the default?
+
+------------------------------------------------------------------------------
+
+Allow the following piece of code to be generated:
 
    static {
-      Logdoc.setLoggingFramework(LoggingFramework.LOG4J);
+      Logdoc.setLogBridge(new Log4jLogBridge());
    }
 
 ------------------------------------------------------------------------------
@@ -22,10 +24,6 @@ Separate Maven plugins:
 ------------------------------------------------------------------------------
 
 Add support for SLF4J.
-
-------------------------------------------------------------------------------
-
-Add the possibility to truncate log messages at a certain length.
 
 ------------------------------------------------------------------------------
 
@@ -48,7 +46,6 @@ Change directory structure for XSLT files, to for example:
 
    xslt/
    xslt/code/
-   xslt/code/log4j/
    xslt/docs/
    xslt/docs/html/
 
@@ -155,15 +152,6 @@ Share the same versions of plugins across all pom.xml files.
 ------------------------------------------------------------------------------
 
 Make the automated test that tests the Logdoc version work.
-
-------------------------------------------------------------------------------
-
-Support the Java Logging Framework as a 'loggingFramework'.
-See http://java.sun.com/javase/6/docs/technotes/guides/logging/
-
-------------------------------------------------------------------------------
-
-Make the Java Logging Framework the default 'loggingFramework' ?
 
 ------------------------------------------------------------------------------
 

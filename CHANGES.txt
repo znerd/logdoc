@@ -1,9 +1,10 @@
 --- CHANGES INTRODUCED IN LOGDOC 0.21 ----------------------------------------
 
-* Logging framework can now be changed at runtime.
+* Logging framework can now be changed at runtime, by setting a LogBridge.
 * Generated code is no longer specific for a certain logging framework.
 * Log4J support is now split out to a separate JAR: logdoc-log4j.jar.
 * ATG support is now split out to a separate JAR: logdoc-atg.jar.
+* XSLT for code generation is now under xslt/code/.
 
 
 --- CHANGES INTRODUCED IN LOGDOC 0.20 ----------------------------------------
