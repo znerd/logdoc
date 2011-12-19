@@ -66,7 +66,13 @@ public class PrintWriterLogBridge extends LogBridge {
     }
 
     protected String composeMessage(String fqcn, String domain, String groupId, String entryId, LogLevel level, String message, Throwable exception) {
-        return level.name() + "[" + getContextId() + "] " + domain + '.' + groupId + '.' + entryId + " " + message;
+        String composedMessage = level.name() + " [";
+        String contextId = getContextId();
+        if (contextId != null) {
+            composedMessage += contextId;
+        }
+        composedMessage += "] " + domain + '.' + groupId + '.' + entryId + " " + message;
+        return composedMessage;
     }
 
     protected PrintWriter getStream(String fqcn, String domain, String groupId, String entryId, LogLevel level) {
