@@ -122,6 +122,10 @@ public final class Library {
         return CURRENT_LOCALE;
     }
 
+    public static void resetLogBridge() {
+        CURRENT_LOG_BRIDGE = DEFAULT_LOG_BRIDGE;
+    }
+
     /**
      * Get the current logging bridge.
      * 
