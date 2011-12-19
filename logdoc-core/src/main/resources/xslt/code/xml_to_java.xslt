@@ -43,7 +43,7 @@
 	<!-- Normalize the text. This means that consecutive spaces (including tabs,
 	     \r and \n) are merged to one space.
 	     On the contrary to the normalize() method this template does not
-	     troncate the leading and trailing spaces.
+	     truncate the leading and trailing spaces.
 	-->
 	<xsl:template name="normalize">
 		<xsl:param name="text" />

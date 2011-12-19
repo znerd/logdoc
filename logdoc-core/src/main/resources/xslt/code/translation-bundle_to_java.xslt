@@ -9,8 +9,8 @@
 	<xsl:param name="accesslevel"  />
 
 	<!-- Perform includes -->
-	<xsl:include href="shared.xslt"         />
-	<xsl:include href="xml_to_java.xslt" />
+	<xsl:include href="code/shared.xslt"         />
+	<xsl:include href="code/xml_to_java.xslt" />
 
 	<!-- Set output method -->
 	<xsl:output method="text" />
@@ -99,7 +99,7 @@
 		<xsl:if test="$exception">
 			<xsl:text>java.lang.Throwable _exception</xsl:text>
 		</xsl:if>
-		<xsl:apply-templates select="$log_node/group/entry[@id = $entry]/param" mode="method-argument">
+		<xsl:apply-templates select="$log_node/group/entry[@id = $entry]/param" mode="methodArgument">
 			<xsl:with-param name="exception" select="$exception" />
 		</xsl:apply-templates>
 		<xsl:text>) {

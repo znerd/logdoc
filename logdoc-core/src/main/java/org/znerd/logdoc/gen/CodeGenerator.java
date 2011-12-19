@@ -35,17 +35,15 @@ public final class CodeGenerator extends Generator {
     static class Processor {
         private final LogDef def;
         private final File outDir;
-        private final String target;
 
         Processor(LogDef logDef, File outDir) {
             this.def = logDef;
             this.outDir = outDir;
-            this.target = "code";
         }
 
         void process() throws IOException {
-            transformToCode(target + '/', "Log");
-            transformToCode("", "TranslationBundle");
+            transformToCode("Log");
+            transformToCode("TranslationBundle");
             for (Map.Entry<String, Document> entry : def.getTranslations().entrySet()) {
                 String locale = entry.getKey();
                 Document translationXML = entry.getValue();
@@ -53,9 +51,9 @@ public final class CodeGenerator extends Generator {
             }
         }
 
-        private void transformToCode(String xsltSubDir, String className) throws IOException {
+        private void transformToCode(String className) throws IOException {
             final Source source = new DOMSource(def.getXML());
-            final String xsltPath = xsltSubDir + "log_to_" + className + "_java" + ".xslt";
+            final String xsltPath = "code/log_to_" + className + "_java" + ".xslt";
             final String outFileName = className + ".java";
             final String domainName = def.getDomainName();
             final String accessLevel = def.isPublic() ? "public" : "protected";
@@ -69,7 +67,7 @@ public final class CodeGenerator extends Generator {
 
         private void transformToCodeForLocale(String locale, Document translationXML) throws IOException {
             final Source source = new DOMSource(translationXML);
-            final String xsltPath = "translation-bundle_to_java.xslt";
+            final String xsltPath = "code/translation-bundle_to_java.xslt";
             final String outFileName = "TranslationBundle_" + locale + ".java";
             final String domainName = def.getDomainName();
             final String accesslevel = def.isPublic() ? "public" : "protected";
