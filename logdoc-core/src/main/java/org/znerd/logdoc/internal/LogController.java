@@ -13,7 +13,8 @@ public abstract class LogController {
     /**
      * Constructs a new <code>LogController</code> object.
      * 
-     * @throws UnsupportedLocaleException if this <code>LogController</code> does not support the current Locale.
+     * @throws UnsupportedLocaleException
+     *             if this <code>LogController</code> does not support the current Locale.
      */
     protected LogController() throws UnsupportedLocaleException {
 
@@ -26,7 +27,8 @@ public abstract class LogController {
     /**
      * Checks if the specified locale is supported.
      * 
-     * @param locale the locale, not <code>null</code>.
+     * @param locale
+     *            the locale, not <code>null</code>.
      * @return <code>true</code> if the locale is supported, <code>false</code> if it is not.
      */
     public abstract boolean isLocaleSupported(String locale);
@@ -36,7 +38,8 @@ public abstract class LogController {
      * <p>
      * This method should only be called with locales that are supported, according to {@link #isLocaleSupported(String)}. Otherwise the behaviour of this method is unspecified.
      * 
-     * @param newLocale the new locale, not <code>null</code>.
+     * @param newLocale
+     *            the new locale, not <code>null</code>.
      */
     public abstract void setLocale(String newLocale);
 }

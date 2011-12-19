@@ -1,6 +1,3 @@
 #!/bin/bash
 mvn -N versions:update-child-modules
-rm logdoc-core/pom.xml.versionsBackup \
-   logdoc-ant-tasks/pom.xml.versionsBackup \
-   logdoc-maven-plugin/pom.xml.versionsBackup \
-   logdoc-sample-project/pom.xml.versionsBackup
+rm */pom.xml.versionsBackup

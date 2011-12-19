@@ -37,24 +37,29 @@ package </xsl:text>
     private static final String FQCN = "</xsl:text>
     <xsl:value-of select="$package_name" />
     <xsl:text><![CDATA[.Log";
+    private static final java.util.HashMap<String,TranslationBundle> TRANSLATION_BUNDLES_BY_NAME = createTranslationBundlesMap();
+    private static TranslationBundle CURRENT_TRANSLATION_BUNDLE = TranslationBundle_]]></xsl:text>
+    <xsl:value-of select="translation-bundle[position() = 1]/@locale" />
+    <xsl:text><![CDATA[.SINGLETON;
     @SuppressWarnings("unused") private static final Controller CONTROLLER = new Controller();
-    private static final java.util.HashMap<String,TranslationBundle> TRANSLATION_BUNDLES_BY_NAME = new java.util.HashMap<String,TranslationBundle>();
-    private static TranslationBundle CURRENT_TRANSLATION_BUNDLE;
    
-    static {]]></xsl:text>
+    private Log() {
+    }
+    
+    private static java.util.HashMap<String,TranslationBundle> createTranslationBundlesMap() {
+        java.util.HashMap<String,TranslationBundle> map = new java.util.HashMap<String,TranslationBundle>();]]></xsl:text>
       <xsl:for-each select="translation-bundle">
         <xsl:text>
-        TRANSLATION_BUNDLES_BY_NAME.put("</xsl:text>
+          map.put("</xsl:text>
         <xsl:value-of select="@locale" />
         <xsl:text>", TranslationBundle_</xsl:text>
         <xsl:value-of select="@locale" />
         <xsl:text>.SINGLETON);</xsl:text>
       </xsl:for-each>
       <xsl:text><![CDATA[
+        return map;
     }
 
-    private Log() {
-    }
 
     /**
      * Sets the diagnostic context identifier for this thread.
