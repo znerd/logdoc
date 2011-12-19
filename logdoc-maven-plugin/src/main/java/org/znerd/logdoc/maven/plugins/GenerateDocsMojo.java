@@ -9,7 +9,7 @@ import org.znerd.logdoc.gen.DocsGenerator;
 /**
  * A Maven plugin for generating documentation from Logdoc definitions.
  * 
- * @goal docs
+ * @goal generate-docs
  */
 public class GenerateDocsMojo extends AbstractLogdocMojo {
 

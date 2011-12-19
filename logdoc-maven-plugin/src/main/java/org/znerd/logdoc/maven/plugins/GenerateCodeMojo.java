@@ -10,7 +10,7 @@ import org.znerd.logdoc.gen.CodeGenerator;
 /**
  * A Maven plugin for generating source files and/or documentation from Logdoc definitions.
  * 
- * @goal code
+ * @goal generate-code
  * @phase generate-sources
  */
 public class GenerateCodeMojo extends AbstractLogdocMojo {

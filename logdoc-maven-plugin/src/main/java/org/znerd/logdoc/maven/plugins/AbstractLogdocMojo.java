@@ -9,7 +9,7 @@ import org.znerd.logdoc.gen.Generator;
 import org.znerd.util.log.Limb;
 import org.znerd.util.log.MavenLimb;
 
-public abstract class AbstractLogdocMojo extends AbstractMojo {
+abstract class AbstractLogdocMojo extends AbstractMojo {
 
     protected AbstractLogdocMojo() {
     }

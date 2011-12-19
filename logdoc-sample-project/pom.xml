@@ -30,7 +30,7 @@
           <execution>
             <phase>generate-sources</phase>
             <goals>
-              <goal>java</goal>
+              <goal>generate-code</goal>
             </goals>
           </execution>
         </executions>
