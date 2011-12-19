@@ -68,7 +68,7 @@ package </xsl:text>
     /**
      * Unsets the diagnostic context identifier for this thread.
      */
-    public static void unputContextId(String newContextId) {
+    public static void unputContextId() {
         org.znerd.logdoc.internal.LogFacade.unputContextId();
     }
 
