@@ -14,9 +14,9 @@
 
   <dependencies>
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>org.znerd</groupId>
       <artifactId>logdoc-core</artifactId>
-      <version>${project.parent.version}</version>
+      <version>0.21-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>atg</groupId>

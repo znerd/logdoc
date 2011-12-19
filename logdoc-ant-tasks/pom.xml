@@ -14,9 +14,9 @@
 
   <dependencies>
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>org.znerd</groupId>
       <artifactId>logdoc-core</artifactId>
-      <version>${project.parent.version}</version>
+      <version>0.21-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.ant</groupId>
@@ -24,23 +24,4 @@
       <version>${ant.version}</version>
     </dependency>
   </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven-compiler-plugin.version}</version>
-        <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>${maven-javadoc-plugin.version}</version>
-      </plugin>
-    </plugins>
-  </build>
 </project>
