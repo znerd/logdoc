@@ -9,7 +9,15 @@ import org.znerd.util.log.LogLevel;
 
 public class JulLogBridge extends AbstractLogBridge {
 
+    private static final JulLogBridge SINGLETON_INSTANCE = new JulLogBridge();
     private final ContextIdSupport contextIdSupport = new ContextIdSupport();
+
+    private JulLogBridge() {
+    }
+
+    public static final JulLogBridge getInstance() {
+        return SINGLETON_INSTANCE;
+    }
 
     @Override
     public void putContextId(String newContextId) {
@@ -28,13 +36,12 @@ public class JulLogBridge extends AbstractLogBridge {
 
     @Override
     public boolean shouldLog(String domain, String groupId, String entryId, LogLevel level) {
-        if (getLevel().isSmallerThanOrEqualTo(level)) {
-            Logger logger = getLogger(domain, groupId, entryId);
-            Level julLevel = toJulLevel(level);
-            return logger.isLoggable(julLevel);
-        } else {
+        if (!getLevel().isSmallerThanOrEqualTo(level)) {
             return false;
         }
+        Logger logger = getLogger(domain, groupId, entryId);
+        Level julLevel = toJulLevel(level);
+        return logger.isLoggable(julLevel);
     }
 
     private Logger getLogger(String domain, String groupId, String entryId) {
