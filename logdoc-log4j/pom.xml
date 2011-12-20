@@ -19,9 +19,22 @@
       <version>0.21-SNAPSHOT</version>
     </dependency>
     <dependency>
+      <groupId>org.znerd</groupId>
+      <artifactId>logdoc-core</artifactId>
+      <version>0.21-SNAPSHOT</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
       <version>${log4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 </project>

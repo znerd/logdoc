@@ -1,14 +1,14 @@
 // See the COPYRIGHT file for copyright and license information
 package org.znerd.logdoc.atg;
 
-import org.znerd.logdoc.LogBridge;
+import org.znerd.logdoc.AbstractLogBridge;
 import org.znerd.logdoc.internal.ContextIdSupport;
 import org.znerd.util.log.LogLevel;
 
 import atg.nucleus.logging.ApplicationLogging;
 import atg.nucleus.logging.ApplicationLoggingImpl;
 
-public final class AtgLogBridge extends LogBridge {
+public final class AtgLogBridge extends AbstractLogBridge {
 
     private static final AtgLogBridge SINGLETON_INSTANCE = new AtgLogBridge();
     private final ContextIdSupport contextIdSupport = new ContextIdSupport();
@@ -41,7 +41,9 @@ public final class AtgLogBridge extends LogBridge {
     }
 
     private boolean shouldLog(ApplicationLogging logger, LogLevel level) {
-        if (LogLevel.DEBUG.equals(level)) {
+        if (! getLevel().isSmallerThanOrEqualTo(level)) {
+            return false;
+        } else if (LogLevel.DEBUG.equals(level)) {
             return logger.isLoggingDebug();
         } else if (LogLevel.INFO.equals(level) || LogLevel.NOTICE.equals(level)) {
             return logger.isLoggingInfo();
@@ -69,13 +71,13 @@ public final class AtgLogBridge extends LogBridge {
         } else if (LogLevel.INFO.equals(level)) {
             logInfo(logger, message, exception);
         } else if (LogLevel.NOTICE.equals(level)) {
-            logInfo(logger, "(LOG4J_NOTICE_LEVEL) " + message, exception);
+            logInfo(logger, "(NOTICE) " + message, exception);
         } else if (LogLevel.WARNING.equals(level)) {
             logWarning(logger, message, exception);
         } else if (LogLevel.ERROR.equals(level)) {
             logError(logger, message, exception);
         } else {
-            logError(logger, "(LOG4J_FATAL_LEVEL) " + message, exception);
+            logError(logger, "(FATAL) " + message, exception);
         }
     }
 

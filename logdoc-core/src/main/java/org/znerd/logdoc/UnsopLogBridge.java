@@ -6,7 +6,7 @@ import org.znerd.util.log.LogLevel;
 /**
  * Implementation of a <code>LogBridge</code> that throws an <code>UnsupportedOperationException</code> from each method.
  */
-public class UnsopLogBridge extends LogBridge {
+public class UnsopLogBridge implements LogBridge {
     @Override
     public void putContextId(String newContextId) {
         throw new UnsupportedOperationException();
@@ -30,5 +30,15 @@ public class UnsopLogBridge extends LogBridge {
     @Override
     public void logOneMessage(String fqcn, String domain, String groupId, String entryId, LogLevel level, String message, Throwable exception) {
         throw new UnsupportedOperationException();
-    }    
+    }
+
+    @Override
+    public void setLevel(LogLevel logLevel) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public LogLevel getLevel() {
+        throw new UnsupportedOperationException();
+    }
 }

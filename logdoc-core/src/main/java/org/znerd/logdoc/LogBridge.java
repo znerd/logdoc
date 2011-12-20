@@ -3,15 +3,18 @@ package org.znerd.logdoc;
 
 import org.znerd.util.log.LogLevel;
 
-public abstract class LogBridge {
-    public abstract void putContextId(String newContextId);
+public interface LogBridge {
+    void putContextId(String newContextId);
 
-    public abstract void unputContextId();
+    void unputContextId();
 
-    public abstract String getContextId();
+    String getContextId();
 
-    public abstract boolean shouldLog(String domain, String groupId, String entryId, LogLevel level);
+    boolean shouldLog(String domain, String groupId, String entryId, LogLevel level);
 
-    public abstract void logOneMessage(String fqcn, String domain, String groupId, String entryId, LogLevel level, String message, Throwable exception);
+    void logOneMessage(String fqcn, String domain, String groupId, String entryId, LogLevel level, String message, Throwable exception);
 
+    void setLevel(LogLevel logLevel);
+    
+    LogLevel getLevel();
 }

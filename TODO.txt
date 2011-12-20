@@ -1,5 +1,22 @@
 ------------------------------------------------------------------------------
 
+Have common way of logging DEBUG mesages?
+
+------------------------------------------------------------------------------
+
+Have a way to aggregate all Logdoc documentation, like with the Javadoc
+plugin.
+
+------------------------------------------------------------------------------
+
+Allow the name of the Log class to be specified.
+
+------------------------------------------------------------------------------
+
+Allow the name of the package to be specified.
+
+------------------------------------------------------------------------------
+
 Allow the following piece of code to be generated?
 
    static {
@@ -41,19 +58,6 @@ http://ant.apache.org/manual/antexternal.html
 ------------------------------------------------------------------------------
 
 Add an automated test for the Maven task.
-
-------------------------------------------------------------------------------
-
-Fix bug: Currently the code generated from the Maven plugin goes below
-target/site/.
-
-The offending piece of code is:
-
-    /**
-     * @parameter alias="out" expression="${basedir}/target/site/logdoc"
-     * @required
-     */
-    private File _codeTargetDir;
 
 ------------------------------------------------------------------------------
 

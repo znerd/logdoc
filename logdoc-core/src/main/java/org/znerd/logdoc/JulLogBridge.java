@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 import org.znerd.logdoc.internal.ContextIdSupport;
 import org.znerd.util.log.LogLevel;
 
-public class JulLogBridge extends LogBridge {
+public class JulLogBridge extends AbstractLogBridge {
 
     private final ContextIdSupport contextIdSupport = new ContextIdSupport();
 
@@ -28,9 +28,13 @@ public class JulLogBridge extends LogBridge {
 
     @Override
     public boolean shouldLog(String domain, String groupId, String entryId, LogLevel level) {
-        Logger logger = getLogger(domain, groupId, entryId);
-        Level julLevel = toJulLevel(level);
-        return logger.isLoggable(julLevel);
+        if (getLevel().isSmallerThanOrEqualTo(level)) {
+            Logger logger = getLogger(domain, groupId, entryId);
+            Level julLevel = toJulLevel(level);
+            return logger.isLoggable(julLevel);
+        } else {
+            return false;
+        }
     }
 
     private Logger getLogger(String domain, String groupId, String entryId) {

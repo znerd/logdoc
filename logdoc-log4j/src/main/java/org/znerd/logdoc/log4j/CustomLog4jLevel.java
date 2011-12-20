@@ -4,9 +4,8 @@ package org.znerd.logdoc.log4j;
 import org.apache.log4j.Level;
 
 @SuppressWarnings("serial")
-public class CustomLevel extends Level {
-
-    public CustomLevel(int value, String name, int syslogEquivalent) {
+public class CustomLog4jLevel extends Level {
+    public CustomLog4jLevel(int value, String name, int syslogEquivalent) {
         super(value, name, syslogEquivalent);
     }
 }
