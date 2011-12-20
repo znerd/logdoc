@@ -8,9 +8,9 @@ Allow the following piece of code to be generated?
 
 ------------------------------------------------------------------------------
 
-Separate Maven plugins:
-- one Mojo for generating code
-- one Mojo for generating documentation
+Avoid the following being printed to System.err:
+
+INFO Set LogFilter to instance of class org.znerd.logdoc.SimpleLogFilter.
 
 ------------------------------------------------------------------------------
 
