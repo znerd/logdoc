@@ -22,7 +22,7 @@ public class PrintWriterLogBridgeTest extends AbstractLogBridgeTest {
         PrintWriter printWriter = new PrintWriter(stringWriter, writeImmediately);
         return new PrintWriterLogBridge(printWriter);
     }
-    
+
     private PrintWriterLogBridge getPrintWriterLogBridge() {
         return (PrintWriterLogBridge) super.getLogBridge();
     }
@@ -31,7 +31,7 @@ public class PrintWriterLogBridgeTest extends AbstractLogBridgeTest {
     public void testDefaultLevelIsDebug() {
         assertEquals(LogLevel.DEBUG, getPrintWriterLogBridge().getLevel());
     }
-    
+
     @Test
     public void testLogOneMessageGoesToPrintWriter() {
         String fqcn = getClass().getName();
@@ -74,11 +74,18 @@ public class PrintWriterLogBridgeTest extends AbstractLogBridgeTest {
         String message = "Bla";
         String contextId = "TEST-CONTEXT-ID-123";
         Throwable exception = null;
-        getLogBridge().putContextId(contextId);
-        getLogBridge().logOneMessage(fqcn, domain, groupId, entryId, level, message, exception);
+        LogBridge logBridge = getLogBridge();
+        logBridge.putContextId(contextId);
+        try {
+            logBridge.logOneMessage(fqcn, domain, groupId, entryId, level, message, exception);
 
-        String outputString = stringWriter.toString();
-        String expectedComposedMessage = level.name() + " [" + contextId + "] " + domain + "." + groupId + '.' + entryId + ' ' + message + System.getProperty("line.separator");
-        assertEquals(expectedComposedMessage, outputString);
+            String outputString = stringWriter.toString();
+            String expectedComposedMessage = level.name() + " [" + contextId + "] " + domain + "." + groupId + '.' + entryId + ' ' + message + System.getProperty("line.separator");
+            assertEquals(expectedComposedMessage, outputString);
+        } finally {
+            logBridge.unputContextId();
+        }
     }
+
+    // TODO: With exception
 }
