@@ -1,3 +1,4 @@
+// See the COPYRIGHT file for copyright and license information
 package org.znerd.logdoc.maven.plugins;
 
 import java.io.IOException;
@@ -18,7 +19,7 @@ class LogdocMojoSupport {
         try {
             generator.generate();
         } catch (IOException cause) {
-            throw new MojoExecutionException("Failed to perform transformation", cause);
+            throw new MojoExecutionException("Failed to process Logdoc definitions.", cause);
         }
     }
 }
