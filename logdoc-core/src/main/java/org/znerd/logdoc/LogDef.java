@@ -31,28 +31,29 @@ import org.znerd.util.Preconditions;
  */
 public final class LogDef {
 
-    private static final Schema LOG_SCHEMA = loadSchema("log");;
-    private static final Schema TRANSLATION_BUNDLE_SCHEMA = loadSchema("translation-bundle");
+    private static final Schema LOG_SCHEMA;
+    private static final Schema TRANSLATION_BUNDLE_SCHEMA;
     private static final String W3C_XML_SCHEMA_NS_URI = "http://www.w3.org/2001/XMLSchema";
     
     private final File sourceDir;
+    private final Resolver resolver;
     private final Document xml;
     private final String domainName;
     private final boolean publicLog;
     private final Map<String, Document> translations;
     private final List<Group> groups;
 
-    private LogDef(File sourceDir) throws IllegalArgumentException, IOException, SAXException {
+    private LogDef(File sourceDir) throws IOException, SAXException {
         Preconditions.checkArgument(sourceDir == null, "sourceDir == null");
         Preconditions.checkArgument(!sourceDir.isDirectory(), "Path (\"" + sourceDir.getPath() + "\") is not a directory.");
 
-        // Create a resolver for the specified input directory
         this.sourceDir = sourceDir;
-        Resolver resolver = new Resolver(sourceDir, "");
+        
+        // Create a resolver for the specified input directory
+        resolver = new Resolver(sourceDir, "");
 
         // Load the log.xml file and validate it
-        xml = resolver.loadInputDocument("log.xml");
-        validate(LOG_SCHEMA, xml);
+        xml = validateXmlFileAgainstSchema(LOG_SCHEMA, "log.xml");
 
         // Parse the domain name and determine access level
         Element docElem = xml.getDocumentElement();
@@ -66,13 +67,16 @@ public final class LogDef {
             Element elem = (Element) elems.item(index);
             String locale = elem.getAttribute("locale");
 
-            Document tbXML = resolver.loadInputDocument("translation-bundle-" + locale + ".xml");
-            validate(TRANSLATION_BUNDLE_SCHEMA, tbXML);
+            Document tbXML = validateXmlFileAgainstSchema(TRANSLATION_BUNDLE_SCHEMA, "translation-bundle-" + locale + ".xml");
             translations.put(locale, tbXML);
         }
 
-        // Parse the groups and entries
-        groups = parseGroups(docElem);
+        groups = parseGroupsAndContainedEntries(docElem);
+    }
+    
+    static {
+        LOG_SCHEMA = loadSchema("log");
+        TRANSLATION_BUNDLE_SCHEMA = loadSchema("translation-bundle");
     }
 
     private static Schema loadSchema(String name) {
@@ -98,16 +102,75 @@ public final class LogDef {
         return xsdSource;
     }
 
-    private static void validate(Schema schema, Document document) throws IllegalArgumentException, IOException, SAXException {
-        Preconditions.checkArgument(schema == null, "schema == null");
-        Preconditions.checkArgument(document == null, "document == null");
+    private final List<Group> parseGroupsAndContainedEntries(Element element) {
+        List<Group> groups = new ArrayList<Group>();
+    
+        NodeList children = element.getChildNodes();
+        int childCount = (children == null) ? 0 : children.getLength();
+    
+        for (int i = 0; i < childCount; i++) {
+            Node childNode = children.item(i);
+    
+            if (childNode instanceof Element) {
+                Element childElement = (Element) childNode;
+                if ("group".equals(childElement.getTagName())) {
+                    Group group = new Group();
+                    group._id = childElement.getAttribute("id");
+                    group._name = childElement.getAttribute("name");
+                    group._entries = parseEntries(childElement);
+    
+                    groups.add(group);
+                }
+            }
+        }
+    
+        return groups;
+    }
 
-        Validator validator = schema.newValidator();
-        validator.validate(new DOMSource(document));
+    private final List<Entry> parseEntries(Element element) {
+        List<Entry> entries = new ArrayList<Entry>();
+    
+        NodeList children = element.getChildNodes();
+        int childCount = (children == null) ? 0 : children.getLength();
+    
+        for (int i = 0; i < childCount; i++) {
+            Node childNode = children.item(i);
+    
+            if (childNode instanceof Element) {
+                Element childElement = (Element) childNode;
+                if ("entry".equals(childElement.getTagName())) {
+                    Entry entry = new Entry();
+                    entry._id = childElement.getAttribute("id");
+    
+                    entries.add(entry);
+                }
+            }
+        }
+    
+        return entries;
     }
 
     public static final LogDef loadFromDirectory(File dir) throws IllegalArgumentException, IOException, SAXException {
         return new LogDef(dir);
+    }
+
+    private Document validateXmlFileAgainstSchema(Schema schema, String fileName) throws IOException, SAXException {
+        Document document = resolver.loadInputDocument(fileName);
+        validateXmlFileAgainstSchema(schema, fileName, document);
+        return document;
+    }
+    
+    private void validateXmlFileAgainstSchema(Schema schema, String fileName, Document document) throws IOException, SAXException {
+        Preconditions.checkArgument(schema == null, "schema == null");
+        Preconditions.checkArgument(document == null, "document == null");
+
+        Validator validator = schema.newValidator();
+        DOMSource source = new DOMSource(document);
+        try {
+            validator.validate(source);
+        } catch (SAXException cause) {
+            throw new IOException("Failed to validate " + fileName + " against XSD.", cause);
+        }
     }
 
     public final File getSourceDir() {
@@ -136,54 +199,6 @@ public final class LogDef {
 
     public List<Group> getGroups() {
         return groups;
-    }
-
-    private final List<Group> parseGroups(Element element) {
-        List<Group> groups = new ArrayList<Group>();
-
-        NodeList children = element.getChildNodes();
-        int childCount = (children == null) ? 0 : children.getLength();
-
-        for (int i = 0; i < childCount; i++) {
-            Node childNode = children.item(i);
-
-            if (childNode instanceof Element) {
-                Element childElement = (Element) childNode;
-                if ("group".equals(childElement.getTagName())) {
-                    Group group = new Group();
-                    group._id = childElement.getAttribute("id");
-                    group._name = childElement.getAttribute("name");
-                    group._entries = parseEntries(childElement);
-
-                    groups.add(group);
-                }
-            }
-        }
-
-        return groups;
-    }
-
-    private final List<Entry> parseEntries(Element element) {
-        List<Entry> entries = new ArrayList<Entry>();
-
-        NodeList children = element.getChildNodes();
-        int childCount = (children == null) ? 0 : children.getLength();
-
-        for (int i = 0; i < childCount; i++) {
-            Node childNode = children.item(i);
-
-            if (childNode instanceof Element) {
-                Element childElement = (Element) childNode;
-                if ("entry".equals(childElement.getTagName())) {
-                    Entry entry = new Entry();
-                    entry._id = childElement.getAttribute("id");
-
-                    entries.add(entry);
-                }
-            }
-        }
-
-        return entries;
     }
 
     public class Group {
