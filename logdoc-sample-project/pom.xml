@@ -37,4 +37,21 @@
       </plugin>
     </plugins>
   </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.znerd</groupId>
+        <artifactId>logdoc-maven-plugin</artifactId>
+        <version>${project.parent.version}</version>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>logdoc-docs</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>
