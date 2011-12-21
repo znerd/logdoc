@@ -4,10 +4,10 @@ package org.znerd.logdoc.slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
-import org.znerd.logdoc.LogBridge;
+import org.znerd.logdoc.AbstractLogBridge;
 import org.znerd.util.log.LogLevel;
 
-public class Slf4jLogBridge extends LogBridge {
+public class Slf4jLogBridge extends AbstractLogBridge {
 
     private static final String CONTEXT_ID_KEY = "contextID";
 
