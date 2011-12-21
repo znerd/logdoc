@@ -3,6 +3,7 @@ package org.znerd.logdoc.maven.plugins;
 
 import java.io.File;
 
+import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.znerd.logdoc.gen.CodeGenerator;
@@ -13,7 +14,7 @@ import org.znerd.logdoc.gen.CodeGenerator;
  * @goal generate-code
  * @phase generate-sources
  */
-public class GenerateCodeMojo extends AbstractLogdocMojo {
+public class GenerateCodeMojo extends AbstractMojo {
 
     /**
      * @parameter default-value="${project}"
@@ -33,11 +34,13 @@ public class GenerateCodeMojo extends AbstractLogdocMojo {
      * @required
      */
     private File out;
+    
+    private LogdocMojoSupport support = new LogdocMojoSupport();
 
     @Override
     public void execute() throws MojoExecutionException {
-        sendInternalLoggingThroughMaven();
-        generate(new CodeGenerator(in, out));
+        support.sendInternalLoggingThroughMaven(getLog());
+        support.generate(new CodeGenerator(in, out));
         markGeneratedSourcesForCompilation();
     }
 
