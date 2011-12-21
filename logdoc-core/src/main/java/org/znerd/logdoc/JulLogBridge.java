@@ -68,6 +68,17 @@ public class JulLogBridge extends AbstractLogBridge {
         final Level julLevel = toJulLevel(level);
         final String sourceClass = fqcn;
         final String sourceMethod = null;
-        logger.logp(julLevel, sourceClass, sourceMethod, message, exception);
+        final String composedMessage = composeMessage(fqcn, domain, groupId, entryId, level, message, exception);
+        logger.logp(julLevel, sourceClass, sourceMethod, composedMessage, exception);
+    }
+    
+    protected String composeMessage(String fqcn, String domain, String groupId, String entryId, LogLevel level, String message, Throwable exception) {
+        String composedMessage = level.name() + " [";
+        String contextId = getContextId();
+        if (contextId != null) {
+            composedMessage += contextId;
+        }
+        composedMessage += "] " + domain + '.' + groupId + '.' + entryId + " " + message;
+        return composedMessage;
     }
 }
