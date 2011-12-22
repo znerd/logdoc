@@ -59,6 +59,7 @@ public class Resolver implements URIResolver {
     private Document loadInputDocumentImpl(String fileName, File file) throws FactoryConfigurationError, IOException {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setNamespaceAware(true);
             factory.setValidating(false);
 
             DocumentBuilder domBuilder = factory.newDocumentBuilder();
