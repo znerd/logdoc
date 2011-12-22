@@ -2,9 +2,14 @@
 package org.znerd.logdoc;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.logging.Formatter;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
@@ -17,6 +22,7 @@ public class JulLogBridgeTest extends AbstractLogBridgeTest {
 
     private TestHandler testHandler;
     private Level originalLevel;
+    private boolean originalStackTraceAtMessageLevel;
     private static String DEFAULT_FQCN = JulLogBridgeTest.class.getName();
     private static String DEFAULT_LOG_DOMAIN = "org.znerd";
     private static String DEFAULT_GROUP_ID = "sample";
@@ -39,6 +45,8 @@ public class JulLogBridgeTest extends AbstractLogBridgeTest {
         originalLevel = rootLogger.getLevel();
         rootLogger.setLevel(Level.ALL);
         rootLogger.addHandler(testHandler);
+
+        originalStackTraceAtMessageLevel = Library.isStackTraceAtMessageLevel();
     }
 
     private Logger getRootLogger() {
@@ -53,31 +61,56 @@ public class JulLogBridgeTest extends AbstractLogBridgeTest {
 
     @After
     public void tearDown() {
+        Library.setStackTraceAtMessageLevel(originalStackTraceAtMessageLevel);
         Logger rootLogger = getRootLogger();
         rootLogger.removeHandler(testHandler);
         rootLogger.setLevel(originalLevel);
     }
 
     @Test
-    public void testLogOneMessageComposedMessage() {
+    public void testLogOneMessage() {
         Throwable exception = null;
         getLogBridge().logOneMessage(DEFAULT_FQCN, DEFAULT_LOG_DOMAIN, DEFAULT_GROUP_ID, DEFAULT_ENTRY_ID, DEFAULT_LEVEL, DEFAULT_MESSAGE, exception);
 
-        String actualMessage = testHandler.getLastMessage();
+        LogRecord lastRecord = testHandler.getLastLogRecord();
+        assertNotNull(lastRecord);
+        assertNull(lastRecord.getThrown());
+        String actualMessage = lastRecord.getMessage();
         String expectedMessage = DEFAULT_LEVEL.name() + " [] " + DEFAULT_LOG_DOMAIN + "." + DEFAULT_GROUP_ID + '.' + DEFAULT_ENTRY_ID + ' ' + DEFAULT_MESSAGE;
         assertEquals(expectedMessage, actualMessage);
     }
 
     @Test
-    public void testLogOneMessageComposedMessageWithContextId() {
-
+    public void testLogOneMessageWithContextId() {
         String contextId = "TEST-CONTEXT-ID-123";
         Throwable exception = null;
         getLogBridge().putContextId(contextId);
         try {
             getLogBridge().logOneMessage(DEFAULT_FQCN, DEFAULT_LOG_DOMAIN, DEFAULT_GROUP_ID, DEFAULT_ENTRY_ID, DEFAULT_LEVEL, DEFAULT_MESSAGE, exception);
 
-            String actualMessage = testHandler.getLastMessage();
+            LogRecord lastRecord = testHandler.getLastLogRecord();
+            assertNotNull(lastRecord);
+            assertNull(lastRecord.getThrown());
+            String actualMessage = lastRecord.getMessage();
+            String expectedMessage = DEFAULT_LEVEL.name() + " [" + contextId + "] " + DEFAULT_LOG_DOMAIN + "." + DEFAULT_GROUP_ID + '.' + DEFAULT_ENTRY_ID + ' ' + DEFAULT_MESSAGE;
+            assertEquals(expectedMessage, actualMessage);
+        } finally {
+            getLogBridge().unputContextId();
+        }
+    }
+
+    @Test
+    public void testLogOneMessageWithException() {
+        String contextId = "TEST-CONTEXT-ID-999";
+        Throwable exception = new Exception("Grrrreat!");
+        getLogBridge().putContextId(contextId);
+        try {
+            getLogBridge().logOneMessage(DEFAULT_FQCN, DEFAULT_LOG_DOMAIN, DEFAULT_GROUP_ID, DEFAULT_ENTRY_ID, DEFAULT_LEVEL, DEFAULT_MESSAGE, exception);
+
+            LogRecord lastRecord = testHandler.getLastLogRecord();
+            assertNotNull(lastRecord);
+            assertEquals(exception, lastRecord.getThrown());
+            String actualMessage = lastRecord.getMessage();
             String expectedMessage = DEFAULT_LEVEL.name() + " [" + contextId + "] " + DEFAULT_LOG_DOMAIN + "." + DEFAULT_GROUP_ID + '.' + DEFAULT_ENTRY_ID + ' ' + DEFAULT_MESSAGE;
             assertEquals(expectedMessage, actualMessage);
         } finally {
