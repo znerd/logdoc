@@ -43,7 +43,6 @@ public final class LogDef {
     private final boolean publicLog;
     private final Map<String, Document> translations;
     private final List<Group> groups;
-    private boolean validate = false; // FIXME
 
     private LogDef(File sourceDir) throws IOException, SAXException {
         Preconditions.checkArgument(sourceDir == null, "sourceDir == null");
@@ -73,15 +72,18 @@ public final class LogDef {
     }
 
     static {
-        LOG_SCHEMA = loadSchema("log");
-        TRANSLATION_BUNDLE_SCHEMA = loadSchema("translation-bundle");
+        SchemaFactory schemaFactory = SchemaFactory.newInstance(W3C_XML_SCHEMA_NS_URI);
+        log(LogLevel.INFO, "Retrieved schema factory of class " + schemaFactory.getClass().getName());
+
+        LOG_SCHEMA = loadSchema(schemaFactory, "log");
+        TRANSLATION_BUNDLE_SCHEMA = loadSchema(schemaFactory, "translation-bundle");
     }
 
-    private static NamedSchema loadSchema(String name) {
+    private static NamedSchema loadSchema(SchemaFactory schemaFactory, String name) {
         log(LogLevel.DEBUG, "Loading schema \"" + name + "\".");
         Schema schema;
         try {
-            schema = loadSchemaImpl(name);
+            schema = loadSchemaImpl(schemaFactory, name);
         } catch (Throwable cause) {
             String detailMessage = "Failed to load \"" + name + "\" schema.";
             log(LogLevel.FATAL, detailMessage);
@@ -91,10 +93,8 @@ public final class LogDef {
         return new NamedSchema(name, schema);
     }
 
-    private static Schema loadSchemaImpl(String name) throws IOException, SAXException {
+    private static Schema loadSchemaImpl(SchemaFactory schemaFactory, String name) throws IOException, SAXException {
         Preconditions.checkArgument(name == null, "name == null");
-
-        SchemaFactory schemaFactory = SchemaFactory.newInstance(W3C_XML_SCHEMA_NS_URI);
         Source xsdSource = createXsdSource(name);
         return schemaFactory.newSchema(xsdSource);
     }
@@ -161,9 +161,7 @@ public final class LogDef {
     private Document validateXmlFileAgainstSchema(NamedSchema schema, String fileName) throws IOException, SAXException {
         log(LogLevel.DEBUG, "Loading XML document \"" + fileName + '.');
         Document document = resolver.loadInputDocument(fileName);
-        if (validate) {
-            validateXmlFileAgainstSchema(schema, fileName, document);
-        }
+        validateXmlFileAgainstSchema(schema, fileName, document);
         log(LogLevel.INFO, "Loaded XML document \"" + fileName + '.');
         return document;
     }
@@ -186,7 +184,7 @@ public final class LogDef {
         try {
             validator.validate(source);
         } catch (SAXException cause) {
-            String detailMessage = "Failed to validate " + fileName + " against XSD.";
+            String detailMessage = "Failed to validate " + fileName + " against \"" + schema.getName() + "\" XSD.";
             log(LogLevel.ERROR, detailMessage, cause);
             throw new IOException(detailMessage, cause);
         }
