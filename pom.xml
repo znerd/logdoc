@@ -3,7 +3,7 @@
   <groupId>org.znerd</groupId>
   <artifactId>logdoc</artifactId>
   <packaging>pom</packaging>
-  <version>0.21-SNAPSHOT</version>
+  <version>0.21</version>
 
   <name>Logdoc</name>
   <description>Contract-first logging tool, featuring internationalization and generation of code/web docs</description>
@@ -38,7 +38,7 @@
     <maven-reporting-impl.version>2.1</maven-reporting-impl.version>
     <maven-surefire-plugin.version>2.9</maven-surefire-plugin.version>
     <plexus-utils.version>3.0</plexus-utils.version>
-    <znerd-util.version>0.6-SNAPSHOT</znerd-util.version>
+    <znerd-util.version>0.6</znerd-util.version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
