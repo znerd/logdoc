@@ -29,11 +29,6 @@
       <version>${maven-project.version}</version>
     </dependency>
     <dependency>
-      <groupId>atg</groupId>
-      <artifactId>das</artifactId>
-      <version>${atg.version}</version>
-    </dependency>
-    <dependency>
       <groupId>org.apache.maven.reporting</groupId>
       <artifactId>maven-reporting-api</artifactId>
       <version>${maven-reporting-api.version}</version>
@@ -44,9 +39,14 @@
       <version>${maven-reporting-impl.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.codehaus.plexus</groupId>
-      <artifactId>plexus-utils</artifactId>
-      <version>${plexus-utils.version}</version>
+      <groupId>org.znerd</groupId>
+      <artifactId>znerd-util</artifactId>
+      <version>${znerd-util.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven.doxia</groupId>
+      <artifactId>doxia-site-renderer</artifactId>
+      <version>${doxia-site-renderer.version}</version>
     </dependency>
   </dependencies>
 </project>
