@@ -94,10 +94,10 @@ public class PrintWriterLogBridgeTest extends AbstractLogBridgeTest {
         String groupId = "sample";
         String entryId = "9876";
         LogLevel level = LogLevel.FATAL;
-        String message = "Blablabla2 é";
+        String message = "Blablabla2 √©";
         String contextId = "TEST-CONTEXT-ID-543";
-        Throwable causeException = new Error("some mëssåge");
-        Throwable exception = new RuntimeException("5ome øthêr messa9e", causeException);
+        Throwable causeException = new Error("some m√´ss√•ge");
+        Throwable exception = new RuntimeException("5ome √∏th√´r messa9√®", causeException);
         LogBridge logBridge = getLogBridge();
         logBridge.putContextId(contextId);
 
