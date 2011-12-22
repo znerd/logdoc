@@ -87,5 +87,39 @@ public class PrintWriterLogBridgeTest extends AbstractLogBridgeTest {
         }
     }
 
-    // TODO: With exception
+    @Test
+    public void testLogOneMessageWithException() {
+        String fqcn = getClass().getName();
+        String domain = "org.znerd";
+        String groupId = "sample";
+        String entryId = "9876";
+        LogLevel level = LogLevel.FATAL;
+        String message = "Blablabla2 Ž";
+        String contextId = "TEST-CONTEXT-ID-543";
+        Throwable causeException = new Error("some m‘ssŒge");
+        Throwable exception = new RuntimeException("5ome ¿thr messa9e", causeException);
+        LogBridge logBridge = getLogBridge();
+        logBridge.putContextId(contextId);
+
+        String stackTrace = stackTraceToString(exception);
+        assertNotNull(stackTrace);
+        assertTrue(stackTrace.length() > 0);
+
+        String expectedComposedMessage = level.name() + " [" + contextId + "] " + domain + "." + groupId + '.' + entryId + ' ' + message + System.getProperty("line.separator") + stackTrace;
+        try {
+            logBridge.logOneMessage(fqcn, domain, groupId, entryId, level, message, exception);
+            String outputString = stringWriter.toString();
+            assertEquals("Actual message is: " + outputString, expectedComposedMessage, outputString);
+        } finally {
+            logBridge.unputContextId();
+        }
+    }
+
+    private String stackTraceToString(Throwable exception) {
+        final StringWriter stringWriter = new StringWriter();
+        final PrintWriter printWriter = new PrintWriter(stringWriter);
+        exception.printStackTrace(printWriter);
+        printWriter.flush();
+        return stringWriter.toString();
+    }
 }
