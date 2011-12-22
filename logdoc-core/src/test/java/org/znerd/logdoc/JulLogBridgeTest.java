@@ -5,8 +5,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.logging.Formatter;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -20,7 +18,7 @@ import org.znerd.util.log.LogLevel;
 
 public class JulLogBridgeTest extends AbstractLogBridgeTest {
 
-    private TestHandler testHandler;
+    private JulTestHandler testHandler;
     private Level originalLevel;
     private boolean originalStackTraceAtMessageLevel;
     private static String DEFAULT_FQCN = JulLogBridgeTest.class.getName();
@@ -37,7 +35,7 @@ public class JulLogBridgeTest extends AbstractLogBridgeTest {
 
     @Before
     public void setUp() {
-        testHandler = new TestHandler();
+        testHandler = new JulTestHandler();
         Formatter formatter = new SimpleFormatter();
         testHandler.setFormatter(formatter);
 
