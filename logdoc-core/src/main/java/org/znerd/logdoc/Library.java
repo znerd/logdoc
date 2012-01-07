@@ -32,7 +32,7 @@ public final class Library {
     
     static {
         DEFAULT_LOCALE = "en_US";
-        DEFAULT_LOG_BRIDGE = new StderrLogBridge();
+        DEFAULT_LOG_BRIDGE = JulLogBridge.getInstance();
         VERSION = Library.class.getPackage().getImplementationVersion();
         CURRENT_LOCALE = determineStartupLocale();
         CURRENT_LOG_BRIDGE = DEFAULT_LOG_BRIDGE;
