@@ -1,6 +1,7 @@
 --- CHANGES INTRODUCED IN LOGDOC 0.22 ----------------------------------------
 
 * Default is now JUL log framework; default LogBridge is now JulLogBridge.
+* Added static StderrLogBridge.getInstance(), made constructor private.
 * No longer printing message about LogFilter at initialization.
 * Simplified class initialization in Library class.
 
