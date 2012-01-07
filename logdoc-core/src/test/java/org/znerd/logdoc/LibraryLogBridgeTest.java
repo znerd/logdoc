@@ -23,8 +23,8 @@ public class LibraryLogBridgeTest {
     
 
     @Test
-    public void testDefaultLogBridgeGoesToStderr() {
-        assertTrue(Library.getLogBridge() instanceof StderrLogBridge);
+    public void testDefaultLogBridgeGoesToJul() {
+        assertTrue(Library.getLogBridge() instanceof JulLogBridge);
     }
 
     @Test
