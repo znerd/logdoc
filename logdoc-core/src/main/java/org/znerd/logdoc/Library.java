@@ -17,20 +17,29 @@ import org.znerd.util.log.LogLevel;
  */
 public final class Library {
 
-    public static final String DEFAULT_LOCALE = "en_US";
-    private static final LogBridge DEFAULT_LOG_BRIDGE = new StderrLogBridge();
-    private static final String VERSION = Library.class.getPackage().getImplementationVersion();
-    private static String CURRENT_LOCALE = determineStartupLocale();
-    private static LogBridge CURRENT_LOG_BRIDGE = DEFAULT_LOG_BRIDGE;
-    private static final String LOG_LOCALE_PROPERTY = "org.znerd.logdoc.locale";
-    private static boolean STACK_TRACE_AT_MESSAGE_LEVEL = false;
+    public static final String DEFAULT_LOCALE;
+    private static final LogBridge DEFAULT_LOG_BRIDGE;
+    private static final String VERSION;
+    private static String CURRENT_LOCALE;
+    private static LogBridge CURRENT_LOG_BRIDGE;
+    private static final String LOG_FILTER_PROPERTY;
+    private static final String LOG_LOCALE_PROPERTY;
+    private static boolean STACK_TRACE_AT_MESSAGE_LEVEL;
     private static LogFilter LOG_FILTER;
 
     private Library() {
     }
-
+    
     static {
-        initLogFilter();
+        DEFAULT_LOCALE = "en_US";
+        DEFAULT_LOG_BRIDGE = new StderrLogBridge();
+        VERSION = Library.class.getPackage().getImplementationVersion();
+        CURRENT_LOCALE = determineStartupLocale();
+        CURRENT_LOG_BRIDGE = DEFAULT_LOG_BRIDGE;
+        LOG_FILTER_PROPERTY = "org.znerd.logdoc.filterClass";
+        LOG_LOCALE_PROPERTY = "org.znerd.logdoc.locale";
+        STACK_TRACE_AT_MESSAGE_LEVEL = false;
+        LOG_FILTER = initLogFilter();
     }
 
     private static String determineStartupLocale() {
@@ -42,24 +51,26 @@ public final class Library {
         }
     }
 
-    private static void initLogFilter() {
+    private static LogFilter initLogFilter() {
         try {
-            initLogFilterImpl();
-        } catch (Throwable cause) {
+            return initLogFilterImpl();
+        } catch (Exception cause) {
             throw new RuntimeException("Failed to initialize log filter.", cause);
         }
     }
 
-    private static void initLogFilterImpl() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+    private static LogFilter initLogFilterImpl() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
         String s = System.getProperty(LOG_FILTER_PROPERTY);
         if (s == null || s.trim().length() < 1) {
-            setLogFilter(new SimpleLogFilter());
+            return new SimpleLogFilter();
         } else {
-            setLogFilterByClassName(s);
+            return createLogFilterByClassName(s);
         }
     }
 
-    private static final String LOG_FILTER_PROPERTY = "org.znerd.logdoc.filterClass";
+    private static LogFilter createLogFilterByClassName(String className) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+        return (LogFilter) Class.forName(className).newInstance();
+    }
 
     public static final void main(String[] args) {
         System.out.println(getNameAndVersion());
@@ -188,10 +199,6 @@ public final class Library {
         Preconditions.checkArgument(className == null, "className == null");
         LogFilter logFilter = createLogFilterByClassName(className);
         setLogFilter(logFilter);
-    }
-
-    private static LogFilter createLogFilterByClassName(String className) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-        return (LogFilter) Class.forName(className).newInstance();
     }
 
     /**
