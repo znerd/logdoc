@@ -16,7 +16,7 @@
     <dependency>
       <groupId>org.znerd</groupId>
       <artifactId>logdoc-core</artifactId>
-      <version>0.21</version>
+      <version>0.22-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.ant</groupId>
