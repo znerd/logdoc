@@ -4,6 +4,7 @@
 * Added static StderrLogBridge.getInstance(), made constructor private.
 * No longer printing message about LogFilter at initialization.
 * Simplified class initialization in Library class.
+* Fixed bug: ATG ApplicationLoggingImpl now initialized with 'true' flag.
 
 
 --- CHANGES INTRODUCED IN LOGDOC 0.21 ----------------------------------------

@@ -62,7 +62,7 @@ public final class AtgLogBridge extends AbstractLogBridge {
 
     private ApplicationLogging getApplicationLogging(String domain, String groupId) {
         String componentId = domain + '.' + groupId;
-        return new ApplicationLoggingImpl(componentId);
+        return new ApplicationLoggingImpl(componentId, true);
     }
 
     private void log(ApplicationLogging logger, String entryId, LogLevel level, String message, Throwable exception) {
