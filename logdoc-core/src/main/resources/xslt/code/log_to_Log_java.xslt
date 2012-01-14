@@ -67,14 +67,14 @@ package </xsl:text>
      * @param newContextId the new diagnostic context identifier for this thread, cannot be <code>null</code>.
      */
     public static void putContextId(String newContextId) {
-        org.znerd.logdoc.internal.LogFacade.putContextId(newContextId);
+        org.znerd.logdoc.LogFacade.putContextId(newContextId);
     }
 
     /**
      * Unsets the diagnostic context identifier for this thread.
      */
     public static void unputContextId() {
-        org.znerd.logdoc.internal.LogFacade.unputContextId();
+        org.znerd.logdoc.LogFacade.unputContextId();
     }
 
     /**
@@ -83,7 +83,7 @@ package </xsl:text>
      * @return the context ID for this thread, or <code>null</code> if none.
      */
     public static String getContextId() {
-        return org.znerd.logdoc.internal.LogFacade.getContextId();
+        return org.znerd.logdoc.LogFacade.getContextId();
     }
 
     /**
@@ -190,7 +190,7 @@ package </xsl:text>
       <xsl:text>);</xsl:text>
     </xsl:for-each>
     <xsl:text>) {
-      if (org.znerd.logdoc.internal.LogFacade.shouldLog("</xsl:text>
+      if (org.znerd.logdoc.LogFacade.shouldLog("</xsl:text>
     <xsl:value-of select="$domain" />
     <xsl:text>", "</xsl:text>
     <xsl:value-of select="../@id" />
@@ -212,7 +212,7 @@ package </xsl:text>
       <xsl:value-of select="@name" />
     </xsl:for-each>
     <xsl:text>);
-         org.znerd.logdoc.internal.LogFacade.log(</xsl:text>
+         org.znerd.logdoc.LogFacade.log(</xsl:text>
     <xsl:text>FQCN, "</xsl:text>
     <xsl:value-of select="$domain" />
     <xsl:text>", "</xsl:text>
