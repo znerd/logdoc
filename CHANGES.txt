@@ -5,6 +5,7 @@
 * No longer printing message about LogFilter at initialization.
 * Simplified class initialization in Library class.
 * Fixed bug: ATG ApplicationLoggingImpl now initialized with 'true' flag.
+* By default, exceptions are now logged on the message level.
 
 
 --- CHANGES INTRODUCED IN LOGDOC 0.21 ----------------------------------------

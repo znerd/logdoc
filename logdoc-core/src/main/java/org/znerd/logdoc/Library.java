@@ -38,6 +38,7 @@ public final class Library {
         VERSION = Library.class.getPackage().getImplementationVersion();
         CURRENT_LOCALE = determineStartupLocale();
         CURRENT_LOG_BRIDGE = DEFAULT_LOG_BRIDGE;
+        STACK_TRACE_AT_MESSAGE_LEVEL = true;
         LOG_FILTER = initLogFilter();
     }
 
