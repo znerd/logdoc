@@ -24,8 +24,9 @@ public final class CodeGenerator extends Generator {
 
     @Override
     protected void generateImpl(LogDef logDef, File destDir) throws IOException {
-        String domainPath = logDef.getDomainName().replace(".", "/");
-        File outDir = new File(destDir, domainPath);
+        String packageName = logDef.getPackageName();
+        String packagePath = packageName.replace(".", "/");
+        File outDir = new File(destDir, packagePath);
 
         Limb.log(LogLevel.INFO, "Generating code.");
         Processor processor = new Processor(logDef, outDir);
@@ -56,10 +57,12 @@ public final class CodeGenerator extends Generator {
             final String xsltPath = "log_to_" + className + "_java" + ".xslt";
             final String outFileName = className + ".java";
             final String domainName = def.getDomainName();
+            final String packageName = def.getPackageName();
             final String accessLevel = def.isPublic() ? "public" : "protected";
 
             final Map<String, String> xsltParams = new HashMap<String, String>();
-            xsltParams.put("package_name", domainName);
+            xsltParams.put("domain_name", domainName);
+            xsltParams.put("package_name", packageName);
             xsltParams.put("accesslevel", accessLevel);
 
             new Xformer(def, "code/").transform(source, xsltPath, xsltParams, outDir, outFileName);
@@ -70,10 +73,12 @@ public final class CodeGenerator extends Generator {
             final String xsltPath = "translation-bundle_to_java.xslt";
             final String outFileName = "TranslationBundle_" + locale + ".java";
             final String domainName = def.getDomainName();
+            final String packageName = def.getPackageName();
             final String accesslevel = def.isPublic() ? "public" : "protected";
 
             final Map<String, String> xsltParams = new HashMap<String, String>();
-            xsltParams.put("package_name", domainName);
+            xsltParams.put("domain_name", domainName);
+            xsltParams.put("package_name", packageName);
             xsltParams.put("accesslevel", accesslevel);
             xsltParams.put("locale", locale);
 

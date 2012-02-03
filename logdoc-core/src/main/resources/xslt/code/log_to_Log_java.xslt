@@ -3,6 +3,7 @@
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
+  <xsl:param name="domain_name" />
   <xsl:param name="package_name" />
   <xsl:param name="accesslevel"  />
 
@@ -20,7 +21,7 @@ package </xsl:text>
 
 /**
  * Logger for the <em>]]></xsl:text>
-    <xsl:value-of select="$domain" />
+    <xsl:value-of select="$domain_name" />
     <xsl:text><![CDATA[</em> domain.]]></xsl:text>
       <xsl:if test="string-length(@since) &gt; 0">
          <xsl:text>
@@ -133,7 +134,7 @@ package </xsl:text>
   </xsl:template>
 
   <xsl:template match="group/entry">
-    <xsl:variable name="category" select="concat($package_name, '.', ../@id, '.', @id)" />
+    <xsl:variable name="category" select="concat($domain_name, '.', ../@id, '.', @id)" />
     <xsl:variable name="exception" select="@exception = 'true'" />
     <xsl:variable name="exceptionClass">
       <xsl:choose>
@@ -191,7 +192,7 @@ package </xsl:text>
     </xsl:for-each>
     <xsl:text>) {
       if (org.znerd.logdoc.LogFacade.shouldLog("</xsl:text>
-    <xsl:value-of select="$domain" />
+    <xsl:value-of select="$domain_name" />
     <xsl:text>", "</xsl:text>
     <xsl:value-of select="../@id" />
     <xsl:text>", "</xsl:text>
@@ -214,7 +215,7 @@ package </xsl:text>
     <xsl:text>);
          org.znerd.logdoc.LogFacade.log(</xsl:text>
     <xsl:text>FQCN, "</xsl:text>
-    <xsl:value-of select="$domain" />
+    <xsl:value-of select="$domain_name" />
     <xsl:text>", "</xsl:text>
     <xsl:value-of select="../@id" />
     <xsl:text>", "</xsl:text>

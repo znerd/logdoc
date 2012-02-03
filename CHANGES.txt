@@ -1,6 +1,7 @@
 --- CHANGES INTRODUCED IN LOGDOC 0.23 ----------------------------------------
 
 * Relaxed validations for EntryGroupID, allow [A-Z] and '_' everywhere.
+* Added support for 'packageName' attribute on <log> element.
 
 
 --- CHANGES INTRODUCED IN LOGDOC 0.22 ----------------------------------------

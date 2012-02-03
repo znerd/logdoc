@@ -40,6 +40,7 @@ public final class LogDef {
     private final Resolver resolver;
     private final Document xml;
     private final String domainName;
+    private final String packageName;
     private final boolean publicLog;
     private final Map<String, Document> translations;
     private final List<Group> groups;
@@ -52,13 +53,15 @@ public final class LogDef {
         resolver = new Resolver(sourceDir, "");
         xml = validateXmlFileAgainstSchema(LOG_SCHEMA, "log.xml");
 
-        // Parse the domain name and determine access level
+        // Parse the domain/package names and determine access level
         Element docElem = xml.getDocumentElement();
-        domainName = docElem.getAttribute("domain");
-        publicLog = Boolean.parseBoolean(docElem.getAttribute("public"));
+        this.domainName = docElem.getAttribute("domain");
+        String packageNameAttr = docElem.getAttribute("packageName");
+        this.packageName = isEmpty(packageNameAttr) ? domainName : packageNameAttr;
+        this.publicLog = Boolean.parseBoolean(docElem.getAttribute("public"));
 
         // Load the translation bundles
-        translations = new HashMap<String, Document>();
+        this.translations = new HashMap<String, Document>();
         NodeList elems = docElem.getElementsByTagName("translation-bundle");
         for (int index = 0; index < elems.getLength(); index++) {
             Element elem = (Element) elems.item(index);
@@ -68,7 +71,11 @@ public final class LogDef {
             translations.put(locale, tbXML);
         }
 
-        groups = parseGroupsAndContainedEntries(docElem);
+        this.groups = parseGroupsAndContainedEntries(docElem);
+    }
+
+    private boolean isEmpty(String s) {
+        return s == null || s.trim().isEmpty();
     }
 
     static {
@@ -110,7 +117,7 @@ public final class LogDef {
         List<Group> groups = new ArrayList<Group>();
 
         NodeList children = element.getChildNodes();
-        int childCount = (children == null) ? 0 : children.getLength();
+        int childCount = children == null ? 0 : children.getLength();
 
         for (int i = 0; i < childCount; i++) {
             Node childNode = children.item(i);
@@ -135,7 +142,7 @@ public final class LogDef {
         List<Entry> entries = new ArrayList<Entry>();
 
         NodeList children = element.getChildNodes();
-        int childCount = (children == null) ? 0 : children.getLength();
+        int childCount = children == null ? 0 : children.getLength();
 
         for (int i = 0; i < childCount; i++) {
             Node childNode = children.item(i);
@@ -204,6 +211,10 @@ public final class LogDef {
 
     public final String getDomainName() {
         return domainName;
+    }
+
+    public final String getPackageName() {
+        return packageName;
     }
 
     public final boolean isPublic() {

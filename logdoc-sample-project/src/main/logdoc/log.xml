@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<log since="MyLibrary 5.5.3" domain="com.znerd.mylibrary" public="true">
+<log since="MyLibrary 5.5.3" domain="znerd.mylibrary" packageName="org.znerd.mylibrary" public="true">
 	<translation-bundle locale="en_US" />
 
 	<group id="transactions" name="Transactions">

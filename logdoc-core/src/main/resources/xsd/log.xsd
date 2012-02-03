@@ -119,9 +119,10 @@
 			<xsd:element name="group"              type="EntryGroupDef"        maxOccurs="unbounded" />
 		</xsd:sequence>
 
-		<xsd:attribute name="since"  type="xsd:string" use="optional" />
-		<xsd:attribute name="domain" type="DomainName" use="required" />
-		<xsd:attribute name="public" type="Boolean"    use="required" />
+		<xsd:attribute name="since"       type="xsd:string"  use="optional" />
+		<xsd:attribute name="domain"      type="DomainName"  use="required" />
+        <xsd:attribute name="packageName" type="PackageName" use="optional" />
+		<xsd:attribute name="public"      type="Boolean"     use="required" />
 	</xsd:complexType>
 
 	<xsd:simpleType name="LogLevel">
@@ -138,5 +139,12 @@
 	<xsd:complexType name="TranslationBundleRef">
 		<xsd:attribute name="locale" type="LocaleName" use="required" />
 	</xsd:complexType>
+  
+    
+  <xsd:simpleType name="PackageName">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[A-Za-z_][A-Za-z0-9_]+(\.[A-Za-z_][A-Za-z0-9_]+)*" />
+    </xsd:restriction>
+  </xsd:simpleType>
 
 </xsd:schema>
