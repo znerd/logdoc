@@ -1,6 +1,7 @@
 --- CHANGES INTRODUCED IN LOGDOC 0.24 ----------------------------------------
 
 * Removed dependency on commons-io.
+* Removed 'provided' dependency from logdoc-core on ATG DAS library.
 
 
 --- CHANGES INTRODUCED IN LOGDOC 0.23 ----------------------------------------

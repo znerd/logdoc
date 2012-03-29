@@ -29,12 +29,6 @@
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>atg</groupId>
-      <artifactId>das</artifactId>
-      <version>${atg.version}</version>
-      <scope>provided</scope>
-    </dependency>
   </dependencies>
 
   <build>
