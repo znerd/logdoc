@@ -3,6 +3,7 @@
 * Removed dependency on commons-io.
 * Removed (unnecessary) dependency from logdoc-core on ATG DAS library.
 * Removed (unnecessary) dependency on library commons-lang.
+* Upgraded Maven Eclipse Plugin: 2.8 to 2.9.
 
 
 --- CHANGES INTRODUCED IN LOGDOC 0.23 ----------------------------------------
