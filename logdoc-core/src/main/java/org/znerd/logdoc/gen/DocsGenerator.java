@@ -5,13 +5,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
 
-import org.apache.commons.io.IOUtils;
 import org.znerd.logdoc.Library;
 import org.znerd.logdoc.LogDef;
 import org.znerd.logdoc.NoSuchResourceException;
@@ -116,9 +116,17 @@ public final class DocsGenerator extends Generator {
 
         private void writeCssToStream(String fileName, InputStream inStream, FileOutputStream outStream) throws IOException {
             try {
-                IOUtils.copy(inStream, outStream);
+                copy(inStream, outStream);
             } catch (IOException cause) {
                 throw new IOException("Failed to write \"" + fileName + "\" to output directory \"" + _destDir.getAbsolutePath() + "\".");
+            }
+        }
+
+        private void copy(InputStream input, OutputStream output) throws IOException {
+            byte[] buffer = new byte[1024];
+            int n = 0;
+            while (-1 != (n = input.read(buffer))) {
+                output.write(buffer, 0, n);
             }
         }
     }

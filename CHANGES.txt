@@ -1,3 +1,8 @@
+--- CHANGES INTRODUCED IN LOGDOC 0.24 ----------------------------------------
+
+* Removed dependency on commons-io.
+
+
 --- CHANGES INTRODUCED IN LOGDOC 0.23 ----------------------------------------
 
 * Relaxed validations for EntryGroupID, allow [A-Z] and '_' everywhere.
