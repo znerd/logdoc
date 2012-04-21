@@ -1,4 +1,4 @@
---- CHANGES INTRODUCED IN LOGDOC 0.24 ----------------------------------------
+--- CHANGES INTRODUCED IN LOGDOC 1.0 -----------------------------------------
 
 * Removed dependency on commons-io.
 * Removed (unnecessary) dependency from logdoc-core on ATG DAS library.
@@ -12,7 +12,7 @@
 * Upgraded Doxia Site Renderer dependency: 1.1.2 -> 1.3.
 * Upgraded Maven Reporting Impl dependency: 2.1 -> 2.2.
 * Upgraded Log4J dependency: 1.2.15 -> 1.2.16.
-* Upgraded Apache Ant: 1.8.2 -> 1.8.3.
+* Upgraded Apache Ant dependency: 1.8.2 -> 1.8.3.
 
 
 --- CHANGES INTRODUCED IN LOGDOC 0.23 ----------------------------------------
