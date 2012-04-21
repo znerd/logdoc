@@ -1,8 +1,8 @@
 This is Logdoc, a tool for managing log messages for Java code, in a contract-
 first manner. 
 
-This software is available under the terms of a BSD-style license, see
-the accompanied COPYRIGHT file.
+This software is available under the terms of a 2-clause BSD-style license,
+see the COPYRIGHT file.
 
 
 EXAMPLE
@@ -63,23 +63,18 @@ To trigger the Maven plugin from your Maven-based project, declare the plugin in
       <plugin>
         <groupId>org.znerd</groupId>
         <artifactId>logdoc-maven-plugin</artifactId>
-        <version>0.20</version>
+        <version>1.0</version>
         <executions>
           <execution>
             <phase>generate-sources</phase>
             <goals>
               <goal>java</goal>
             </goals>
-            <configuration>
-              <loggingFramework>log4j</loggingFramework>
-            </configuration>
           </execution>
         </executions>
       </plugin>
     </plugins>
   </build>
-
-Instead of 'log4j', you can also configure 'atg' as a log framework backend.
 
 
 MODULES
@@ -94,10 +89,19 @@ Logdoc consists of the following modules:
    logdoc-maven-plugin - Maven plugins that make the Logdoc functionality
                          available for Maven projects.
 
+   logdoc-atg          - ATG logging plugin. Allows you to configure Logdoc to
+                         send all its messages to the ATG logging framework.
+
+   logdoc-log4j        - Log4J logging plugin. Allows you to configure Logdoc
+                         to send all its messages to Log4J.
+
+   logdoc-slf4j        - SLF4J logging plugin. Allows you to configure Logdoc
+                         to send all its messages to SLF4J.
+
 
 BUILDING LOGDOC
 
-To build Logdoc self, use Maven and execute:
+The Logdoc source code is built using Maven. To build it for yourself, run:
 
    mvn package
 
