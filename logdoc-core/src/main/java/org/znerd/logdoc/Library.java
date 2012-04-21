@@ -188,7 +188,7 @@ public final class Library {
      */
     public static synchronized void setLogFilter(LogFilter logFilter) {
         Preconditions.checkArgument(logFilter == null, "logFilter == null");
-        Limb.log(LogLevel.INFO, "Set LogFilter to instance of class " + logFilter.getClass().getName() + '.');
+        Limb.log(LogLevel.DEBUG, "Set LogFilter to instance of class " + logFilter.getClass().getName() + '.');
         LOG_FILTER = logFilter;
     }
 

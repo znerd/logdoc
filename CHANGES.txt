@@ -4,6 +4,7 @@
 * Removed (unnecessary) dependency from logdoc-core on ATG DAS library.
 * Removed (unnecessary) dependency on library commons-lang.
 * Upgraded Maven Eclipse Plugin: 2.8 to 2.9.
+* Changed level of 'Set LogFilter to instance...' from INFO to DEBUG.
 
 
 --- CHANGES INTRODUCED IN LOGDOC 0.23 ----------------------------------------
