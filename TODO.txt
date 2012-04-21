@@ -1,10 +1,26 @@
 ------------------------------------------------------------------------------
 
-Allow log entries to be marked as deprecated.
+Let the Maven plugin put the generated documentation in the correct location.
 
 ------------------------------------------------------------------------------
 
-Have common way of logging DEBUG mesages?
+Update the README to explain how to use the Maven plugin.
+
+------------------------------------------------------------------------------
+
+Share the same versions of plugins across all pom.xml files.
+
+------------------------------------------------------------------------------
+
+Document the cause and resolution in the generated documentation.
+
+------------------------------------------------------------------------------
+
+Do not require a translation for all log messages. If no translation is
+available, then fall back to a default format that displays the parameters in
+a quoted form. E.g.:
+
+   10202 transaction="FNC-5569"; label=null; grtID=null; grxID="1233890-22"
 
 ------------------------------------------------------------------------------
 
@@ -13,29 +29,16 @@ plugin.
 
 ------------------------------------------------------------------------------
 
+Automatically add the znerd-logdoc dependency to projects that use the 
+Maven plugin. If possible.
+
+------------------------------------------------------------------------------
+
+Allow log entries to be marked as deprecated.
+
+------------------------------------------------------------------------------
+
 Allow the name of the Log class to be specified.
-
-------------------------------------------------------------------------------
-
-Allow the name of the package to be specified.
-
-------------------------------------------------------------------------------
-
-Allow the following piece of code to be generated?
-
-   static {
-      Logdoc.setLogBridge(new Log4jLogBridge());
-   }
-
-------------------------------------------------------------------------------
-
-Avoid the following being printed to System.err:
-
-INFO Set LogFilter to instance of class org.znerd.logdoc.SimpleLogFilter.
-
-------------------------------------------------------------------------------
-
-Update the README to explain how to use the Maven plugin.
 
 ------------------------------------------------------------------------------
 
@@ -65,23 +68,6 @@ Add an automated test for the Maven task.
 
 ------------------------------------------------------------------------------
 
-Automatically add the znerd-logdoc dependency to projects that use the 
-Maven plugin. If possible.
-
-------------------------------------------------------------------------------
-
-Document the cause and resolution in the generated documentation.
-
-------------------------------------------------------------------------------
-
-Do not require a translation for all log messages. If no translation is
-available, then fall back to a default format that displays the parameters in
-a quoted form. E.g.:
-
-   10202 transaction="FNC-5569"; label=null; grtID=null; grxID="1233890-22"
-
-------------------------------------------------------------------------------
-
 Print the Logdoc version when logging at INFO level. So for example when
 using:
 
@@ -89,24 +75,11 @@ using:
 
 ------------------------------------------------------------------------------
 
-Let the Maven plugin put the generated documentation in the correct location.
-
-------------------------------------------------------------------------------
-
 Only allow 'exceptionClass' attribute if 'exception' attribute is also set.
 
 ------------------------------------------------------------------------------
 
-Share the same versions of plugins across all pom.xml files.
-
-------------------------------------------------------------------------------
-
 Make the automated test that tests the Logdoc version work.
-
-------------------------------------------------------------------------------
-
-Support custom code generation, letting the user specify how to generate code.
-This requires the user to provide XSLT.
 
 ------------------------------------------------------------------------------
 
