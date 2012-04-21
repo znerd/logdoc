@@ -3,9 +3,16 @@
 * Removed dependency on commons-io.
 * Removed (unnecessary) dependency from logdoc-core on ATG DAS library.
 * Removed (unnecessary) dependency on library commons-lang.
-* Upgraded Maven Eclipse Plugin: 2.8 to 2.9.
 * Changed level of 'Set LogFilter to instance...' from INFO to DEBUG.
 * Added lots of metadata to root POM.
+* Reorganized (plugin) dependencies across POMs.
+* Upgraded Maven Eclipse Plugin dependency: 2.8 -> 2.9.
+* Upgraded JUnit dependency: 4.8.2 -> 4.10.
+* Upgraded Maven Plugin API dependency: 3.0.3 -> 3.0.4.
+* Upgraded Doxia Site Renderer dependency: 1.1.2 -> 1.3.
+* Upgraded Maven Reporting Impl dependency: 2.1 -> 2.2.
+* Upgraded Log4J dependency: 1.2.15 -> 1.2.16.
+* Upgraded Apache Ant: 1.8.2 -> 1.8.3.
 
 
 --- CHANGES INTRODUCED IN LOGDOC 0.23 ----------------------------------------
