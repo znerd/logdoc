@@ -5,6 +5,7 @@
 * Removed (unnecessary) dependency on library commons-lang.
 * Upgraded Maven Eclipse Plugin: 2.8 to 2.9.
 * Changed level of 'Set LogFilter to instance...' from INFO to DEBUG.
+* Added lots of metadata to root POM.
 
 
 --- CHANGES INTRODUCED IN LOGDOC 0.23 ----------------------------------------
