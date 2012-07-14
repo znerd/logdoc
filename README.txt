@@ -89,14 +89,14 @@ Logdoc consists of the following modules:
    logdoc-maven-plugin - Maven plugins that make the Logdoc functionality
                          available for Maven projects.
 
-   logdoc-atg          - ATG logging plugin. Allows you to configure Logdoc to
-                         send all its messages to the ATG logging framework.
-
    logdoc-log4j        - Log4J logging plugin. Allows you to configure Logdoc
                          to send all its messages to Log4J.
 
    logdoc-slf4j        - SLF4J logging plugin. Allows you to configure Logdoc
                          to send all its messages to SLF4J.
+
+Custom modules can be written to integrate with other logging frameworks, such as
+Commons Logging, ATG, etc.
 
 
 BUILDING LOGDOC
