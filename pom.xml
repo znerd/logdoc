@@ -9,6 +9,12 @@
   <description>Contract-first logging tool, featuring internationalization and generation of code/web docs</description>
   <url>https://github.com/znerd/logdoc</url>
 
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>7</version>
+  </parent>
+
   <inceptionYear>2003</inceptionYear>
 
   <licenses>
