@@ -26,9 +26,9 @@
   </licenses>
 
   <scm>
-    <url>https://github.com/znerd/logdoc/</url>
-    <connection>git://github.com/znerd/logdoc.git</connection>
-    <developerConnection>git@github.com:znerd/logdoc.git</developerConnection>
+    <connection>scm:git:git@github.com:znerd/logdoc.git</connection>
+    <developerConnection>scm:git:git@github.com:znerd/logdoc.git</developerConnection>
+    <url>git@github.com:znerd/logdoc.git</url>
   </scm>
 
   <issueManagement>
