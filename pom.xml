@@ -3,7 +3,7 @@
   <groupId>org.znerd</groupId>
   <artifactId>logdoc</artifactId>
   <packaging>pom</packaging>
-  <version>1.0</version>
+  <version>1.0-rc1</version>
 
   <name>Logdoc</name>
   <description>Contract-first logging tool, featuring internationalization and generation of code/web docs</description>
