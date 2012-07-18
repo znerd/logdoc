@@ -19,6 +19,10 @@
       <version>1.0-rc1-SNAPSHOT</version>
     </dependency>
     <dependency>
+      <groupId>org.znerd</groupId>
+      <artifactId>znerd-util</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.apache.ant</groupId>
       <artifactId>ant</artifactId>
       <version>1.8.4</version>

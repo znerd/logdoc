@@ -26,6 +26,10 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.znerd</groupId>
+      <artifactId>znerd-util</artifactId>
+    </dependency>
+    <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
       <version>1.2.16</version>
