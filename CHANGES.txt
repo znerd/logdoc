@@ -12,7 +12,8 @@
 * Upgraded Maven Plugin API dependency: 3.0.3 -> 3.0.4.
 * Upgraded Doxia Site Renderer dependency: 1.1.2 -> 1.3.
 * Upgraded Maven Reporting Impl dependency: 2.1 -> 2.2.
-* Upgraded Log4J dependency: 1.2.15 -> 1.2.16.
+* Upgraded Log4J dependency: 1.2.15 -> 1.2.17.
+* Upgraded SLF4J dependency: 1.6.4 -> 1.6.6.
 * Upgraded Apache Ant dependency: 1.8.2 -> 1.8.4.
 
 
