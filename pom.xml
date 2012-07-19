@@ -22,7 +22,7 @@
   <parent>
     <groupId>org.znerd</groupId>
     <artifactId>znerd-oss-parent</artifactId>
-    <version>1-SNAPSHOT</version>
+    <version>2</version>
   </parent>
 
   <scm>
@@ -68,7 +68,7 @@
       <dependency>
         <groupId>org.znerd</groupId>
         <artifactId>znerd-util</artifactId>
-        <version>0.7-SNAPSHOT</version>
+        <version>0.7</version>
       </dependency>
       <dependency>
         <groupId>junit</groupId>
