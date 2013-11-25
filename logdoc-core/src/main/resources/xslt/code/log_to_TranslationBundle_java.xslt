@@ -43,41 +43,37 @@
 
 		<xsl:text><![CDATA[
 
-   /**
-    * The name of this translation bundle.
-    */
-   private final String _name;
+    /**
+     * The name of this translation bundle.
+     */
+    private final String name;
 
-   /**
-    * Constructs a new <code>TranslationBundle</code> subclass instance.
-    *
-    * @param name
-    *    the name of this translation bundle, cannot be <code>null</code>.
-    *
-    * @throws IllegalArgumentException
-    *    if <code>name == null</code>.
-    */
-   protected TranslationBundle(String name)
-   throws IllegalArgumentException {
+    /**
+     * Constructs a new <code>TranslationBundle</code> subclass instance.
+     *
+     * @param name
+     *    the name of this translation bundle, cannot be <code>null</code>.
+     *
+     * @throws IllegalArgumentException
+     *    if <code>name == null</code>.
+     */
+    protected TranslationBundle(String name)
+    throws IllegalArgumentException {
+        if (name == null) {
+            throw new IllegalArgumentException("name == null");
+        }
+        this.name = name;
+    }
 
-      // Check preconditions
-      if (name == null) {
-         throw new IllegalArgumentException("name == null");
-      }
-
-      // Store information
-      _name = name;
-   }
-
-   /**
-    * Retrieves the name of this translation bundle.
-    *
-    * @return
-    *    the name of this translation bundle.
-    */
-   public final String getName() {
-      return _name;
-   }]]></xsl:text>
+    /**
+     * Retrieves the name of this translation bundle.
+     *
+     * @return
+     *    the name of this translation bundle.
+     */
+    public final String getName() {
+        return this.name;
+    }]]></xsl:text>
 
 		<xsl:apply-templates select="group/entry" />
 
@@ -92,18 +88,18 @@
 
 		<xsl:text>
 
-   /**
-    * Get the translation for the log entry with ID </xsl:text>
+    /**
+     * Get the translation for the log entry with ID </xsl:text>
 		<xsl:value-of select="@id" />
 		<xsl:text><![CDATA[, in the log entry group <em>]]></xsl:text>
 		<xsl:value-of select="../@name" />
 		<xsl:text><![CDATA[</em>.
-    * The description for this log entry is:
-    * <blockquote><em>]]></xsl:text>
+     * The description for this log entry is:
+     * <blockquote><em>]]></xsl:text>
 		<xsl:apply-templates select="description" />
 		<xsl:text><![CDATA[</em></blockquote>
-    */
-   public String translation_]]></xsl:text>
+     */
+    public String translation_]]></xsl:text>
 		<!-- TODO: Generate @param tags for parameters -->
 		<xsl:value-of select="@id" />
 		<xsl:text>(</xsl:text>
@@ -114,11 +110,11 @@
 			<xsl:with-param name="exception" select="$exception" />
 		</xsl:apply-templates>
 		<xsl:text>) {
-      return "</xsl:text>
+        return "</xsl:text>
 		<xsl:call-template name="xml_to_java_string">
 			<xsl:with-param name="text" select="$description" />
 		</xsl:call-template>
 		<xsl:text>";
-   }</xsl:text>
+    }</xsl:text>
 	</xsl:template>
 </xsl:stylesheet>
