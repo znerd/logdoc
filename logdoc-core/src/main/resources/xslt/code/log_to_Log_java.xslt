@@ -120,11 +120,13 @@ package </xsl:text>
       }
 
       @Override
+      @SuppressWarnings("synthetic-access")
       public boolean isLocaleSupported(String locale) {
          return TRANSLATION_BUNDLES_BY_NAME.containsKey(locale);
       }
 
       @Override
+      @SuppressWarnings("synthetic-access")
       public void setLocale(String newLocale) {
          CURRENT_TRANSLATION_BUNDLE = TRANSLATION_BUNDLES_BY_NAME.get(newLocale);
       }

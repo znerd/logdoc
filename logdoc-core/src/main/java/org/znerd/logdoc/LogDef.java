@@ -23,7 +23,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import org.znerd.logdoc.internal.Resolver;
+import org.znerd.logdoc.gen.Resolver;
 import org.znerd.util.Preconditions;
 import org.znerd.util.log.LogLevel;
 

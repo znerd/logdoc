@@ -15,15 +15,14 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 
 import org.znerd.logdoc.LogDef;
-import org.znerd.logdoc.internal.Resolver;
 import org.znerd.util.log.LogLevel;
 
 class Xformer {
 
     final Resolver resolver;
 
-    Xformer(LogDef logDef, String basePath) {
-        resolver = logDef.createResolver(basePath);
+    Xformer(Resolver resolver) {
+        this.resolver = resolver;
     }
     
     final void transform(Source source, String xsltPath, Map<String, String> xsltParams, File outDir, String outFileName) throws IOException {

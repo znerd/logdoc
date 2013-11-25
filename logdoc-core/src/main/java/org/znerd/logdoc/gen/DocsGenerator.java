@@ -90,7 +90,8 @@ public final class DocsGenerator extends Generator {
             String xsltPath = "log_to" + stylesheetName + "_html.xslt";
             String outFileName = outName + ".html";
 
-            new Xformer(_def, "docs/").transform(source, xsltPath, xsltParams, _destDir, outFileName);
+            Resolver resolver = _def.createResolver("docs/");
+            new Xformer(resolver).transform(source, xsltPath, xsltParams, _destDir, outFileName);
         }
 
         private final void generateCssFile() throws NoSuchResourceException, IOException {

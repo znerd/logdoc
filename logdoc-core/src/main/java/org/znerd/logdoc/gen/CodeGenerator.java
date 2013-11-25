@@ -65,7 +65,8 @@ public final class CodeGenerator extends Generator {
             xsltParams.put("package_name", packageName);
             xsltParams.put("accesslevel", accessLevel);
 
-            new Xformer(def, "code/").transform(source, xsltPath, xsltParams, outDir, outFileName);
+            Resolver resolver = def.createResolver("code/");
+            new Xformer(resolver).transform(source, xsltPath, xsltParams, outDir, outFileName);
         }
 
         private void transformToCodeForLocale(String locale, Document translationXML) throws IOException {
@@ -82,7 +83,8 @@ public final class CodeGenerator extends Generator {
             xsltParams.put("accesslevel", accesslevel);
             xsltParams.put("locale", locale);
 
-            new Xformer(def, "code/").transform(source, xsltPath, xsltParams, outDir, outFileName);
+            Resolver resolver = def.createResolver("code/");
+            new Xformer(resolver).transform(source, xsltPath, xsltParams, outDir, outFileName);
         }
     }
 }
