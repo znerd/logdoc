@@ -97,9 +97,15 @@
      * The description for this log entry is:
      * <blockquote><em>]]></xsl:text>
 		<xsl:apply-templates select="description" />
-		<xsl:text><![CDATA[</em></blockquote>
+		<xsl:text><![CDATA[</em></blockquote>]]></xsl:text>
+		<xsl:if test="$exception">
+			<xsl:text>
+     * @param _exception The exception, if any. Can be &lt;null&gt;.</xsl:text>
+		</xsl:if>
+		<xsl:apply-templates select="param" mode="javadoc" />
+		<xsl:text>
      */
-    public String translation_]]></xsl:text>
+    public String translation_</xsl:text>
 		<!-- TODO: Generate @param tags for parameters -->
 		<xsl:value-of select="@id" />
 		<xsl:text>(</xsl:text>
@@ -116,5 +122,11 @@
 		</xsl:call-template>
 		<xsl:text>";
     }</xsl:text>
+	</xsl:template>
+
+	<xsl:template match="param" mode="javadoc">
+		<xsl:text>
+     * @param </xsl:text>
+		<xsl:value-of select="@name" />
 	</xsl:template>
 </xsl:stylesheet>
