@@ -9,14 +9,14 @@
   <parent>
     <groupId>org.znerd</groupId>
     <artifactId>logdoc</artifactId>
-    <version>1.0-rc3-SNAPSHOT</version>
+    <version>1.0-rc3</version>
   </parent>
 
   <dependencies>
     <dependency>
       <groupId>org.znerd</groupId>
       <artifactId>logdoc-core</artifactId>
-      <version>1.0-rc3-SNAPSHOT</version>
+      <version>1.0-rc3</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
